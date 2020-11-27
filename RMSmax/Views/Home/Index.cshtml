@@ -1,28 +1,20 @@
-﻿<div id="container">
+﻿@model IEnumerable<Article>
+
+<div id="container">
 
     <div id="banner"></div>
     <div id="text">
         <h1>Przewijany obrazek</h1>
     </div>
 
-    <div class="news">
-        <div class="title"></div>
-        <div class="news-text">
-            <p>Tekst aktualności 1</p>
+    @foreach (var v in Model)
+    {
+        <div class="news">
+            <div class="title">@v.Title</div>
+            <div class="news-text">
+                <p>@v.Content</p>
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="news">
-        <div class="title"></div>
-        <div class="news-text">
-            <p>Tekst aktualności 2</p>
-        </div>
-    </div>
-
-    <div class="news">
-        <div class="title"></div>
-        <div class="news-text">
-            <p>Tekst aktualności 3</p>
-        </div>
-    </div>
 </div>
