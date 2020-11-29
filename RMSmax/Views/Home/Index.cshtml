@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Article>
+﻿@model ArticlesListViewModel
 
 <div id="container">
 
@@ -7,14 +7,16 @@
         <h1>Przewijany obrazek</h1>
     </div>
 
-    @foreach (var v in Model)
-    {
+    @foreach (var v in Model.Articles)
+     {
         <div class="news">
             <div class="title">@v.Title</div>
             <div class="news-text">
                 <p>@v.Content</p>
             </div>
         </div>
-    }
+     }
+
+    <div page-model="@Model.PagingInfo" page-action="Index"></div>
 
 </div>
