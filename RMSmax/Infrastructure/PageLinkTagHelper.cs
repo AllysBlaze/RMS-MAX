@@ -27,12 +27,42 @@ namespace RMSmax.Infrastructure
         {
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
-            for (int i = 1; i <= PageModel.TotalPages; i++)
+            if (PageModel.TotalPages > 5) //Zmniejszenie liczby wyswietlanych numerow stron
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = i });
-                tag.InnerHtml.Append(i.ToString());
-                result.InnerHtml.AppendHtml(tag);
+                if (PageModel.CurrentPage > 2)
+                {
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = 1 });
+                    tag.InnerHtml.Append(1.ToString());
+                    result.InnerHtml.AppendHtml(tag);
+                }
+                for (int i = PageModel.CurrentPage - 1; i <= PageModel.CurrentPage + 1; i++)
+                {
+                    if (i > 0 && i <= PageModel.TotalPages)
+                    {
+                        tag = new TagBuilder("a");
+                        tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = i });
+                        tag.InnerHtml.Append(i.ToString());
+                        result.InnerHtml.AppendHtml(tag);
+                    }
+                }
+                if (PageModel.CurrentPage < PageModel.TotalPages - 1)
+                {
+                    tag = new TagBuilder("a");
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = PageModel.TotalPages });
+                    tag.InnerHtml.Append(PageModel.TotalPages.ToString());
+                    result.InnerHtml.AppendHtml(tag);
+                }
+            }
+            else //Wszystkie numery stron
+            {
+                for (int i = 1; i <= PageModel.TotalPages; i++)
+                {
+                    TagBuilder tag = new TagBuilder("a");
+                    tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = i });
+                    tag.InnerHtml.Append(i.ToString());
+                    result.InnerHtml.AppendHtml(tag);
+                }
             }
             output.Content.AppendHtml(result.InnerHtml);
         }

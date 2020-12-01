@@ -24,5 +24,11 @@ namespace RMSmax.Controllers
                 PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = articlesRepo.Articles.Count() }
             });
         }
+
+        public IActionResult Article(int articleId)
+        {
+            Article article = articlesRepo.Articles.Where(x => x.Id == articleId).FirstOrDefault();
+            return View(article);
+        }
     }
 }
