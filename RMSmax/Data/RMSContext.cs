@@ -14,22 +14,7 @@ namespace RMSmax.Data
         {
         }
         public DbSet<Article> Articles { get; set; }
-        //seed data
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Article>().HasData(new Article
-            {
-                Id = 1,
-                Title = "Title1",
-                Content = "Content1",
-            },
-            new Article
-            {
-                Id=2,
-                Title = "Title2",
-                Content = "Content2",
-            }) ;
-
-        }
+        
+       
     }
 }

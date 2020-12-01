@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RMSmax.Data;
 
 namespace RMSmax.Models
 {
@@ -22,5 +23,7 @@ namespace RMSmax.Models
             new Article { Id = 11, Title = "Tytuł 12", Content = "Treść" },
             new Article { Id = 12, Title = "Tytuł 13", Content = "Treść" }
         }.AsQueryable<Article>();
+        
+
     }
 }
