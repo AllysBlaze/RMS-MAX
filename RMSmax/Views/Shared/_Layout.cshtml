@@ -9,55 +9,62 @@
           href="css/Layout.css" />
     <title>RMS Max!</title>
 </head>
-<body class="d-flex flex-column min-vh-100">
-    <header>
-        <p>Miejsce na baner</p>
-    </header>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2 col-sm-12 d-flex justify-content-center align-items-start">
-                <nav class="navbar navbar-expand-lg navbar-light bg-dark flex-column">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<body>
+    <nav class="navbar navbar-dark primary-color">
+        <h1>RMS Max!</h1>
+        <a class="navbar-brand" href="#">
+            <img src="https://www.polsl.pl/Wydzialy/RMS/PublishingImages/logowyd.jpg" height="70" alt="rms logo">
+        </a>
+    </nav>
+    <div class="container-fluid flex-fill">
+        <div class="row wrapper flex-column flex-sm-row min-vh-100">
+            <aside class="col-12 col-sm-2 p-0 bg-dark flex-shrink-1">
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark align-items-start flex-sm-column flex-row">
+                    <a class="navbar-brand" href="#">MENU</a>
+                    <a href class="navbar-toggler" data-toggle="collapse" data-target=".sidebar">
                         <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto flex-column">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </a>
+                    <div class="collapse navbar-collapse sidebar">
+                        <ul class="flex-column navbar-nav w-100 justify-content-between">
+                            <li class="nav-item">
+                                <a class="nav-link pl-0" href="#"> <span class="">Strona Główna</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
+                                <a class="nav-link pl-0 dropdown-toggle text-nowrap" href="#m1" data-parent="#navbar1" data-toggle="collapse" data-target="#m1" aria-expanded="false">
+                                    <span class="">Studia</span>
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="collapse" id="m1">
+                                    <ul class="flex-column nav">
+                                        <a class="nav-link px-0 text-truncate" href="#">Informatyka</a>
+                                        <a class="nav-link px-0 text-truncate" href="#">Matematyka</a>
+                                    </ul>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" href="#">Disabled</a>
+                                <a class="nav-link pl-0" href="#"> <span class="">Pracownicy</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-0" href="#"> <span class="">Kontakt</span></a>
                             </li>
                         </ul>
-                        
                     </div>
                 </nav>
-            </div>
-            <div class="col-lg-10 col-sm-12 yellow d-flex justify-content-center align-items-center">
+            </aside>
+            <main class="col bg-light py-3">
                 @RenderBody()
-            </div>
+            </main>
         </div>
-    </div>
-    <footer class="mt-auto">
-        <p>Footer</p>
-    </footer>
-    
 
+    </div>
+    <div class="mt-auto col-12">
+        <button type="button" onclick="topFunction()" id="upBtn" class="btn btn-primary float-right">Do góry</button>
+        <a id="Creators">Strona stworzona przez IOTeam</a>
+    </div>
+    <script>
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 </body>
 </html>
