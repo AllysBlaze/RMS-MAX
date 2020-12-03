@@ -14,7 +14,7 @@ namespace RMSmax.Models
         public static void EnsurePopulated(IApplicationBuilder app)
         {
             RMSContext context = app.ApplicationServices.GetRequiredService<RMSContext>();
-            //context.Database.Migrate();
+            context.Database.Migrate();
             if(!context.Articles.Any())
             {
                 context.Articles.AddRange(
@@ -24,7 +24,7 @@ namespace RMSmax.Models
                         Title = "title1",
                         Content="content1",
                     },
-                    new Article
+                    new Article 
                     {
                         Id = 2,
                         Title = "title2",
