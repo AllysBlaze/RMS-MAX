@@ -9,8 +9,8 @@ using RMSmax.Data;
 namespace RMSmax.Migrations
 {
     [DbContext(typeof(RMSContext))]
-    [Migration("20201130181131_RMSmax.Data.RMSContext")]
-    partial class RMSmaxDataRMSContext
+    [Migration("20201203175220_RMSDataBase")]
+    partial class RMSDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,20 +36,6 @@ namespace RMSmax.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Content = "Content1",
-                            Title = "Title1"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Content = "Content2",
-                            Title = "Title2"
-                        });
                 });
 #pragma warning restore 612, 618
         }
