@@ -34,20 +34,6 @@ namespace RMSmax.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Content = "Content1",
-                            Title = "Title1"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Content = "Content2",
-                            Title = "Title2"
-                        });
                 });
 #pragma warning restore 612, 618
         }
