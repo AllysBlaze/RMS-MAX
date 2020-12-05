@@ -14,7 +14,7 @@
     color:white;
   }
 
-  .container{
+  .carousel-item .container{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -32,3 +32,10 @@
     background-size: cover;
     opacity: 0.5;
   }
+
+  .card{
+      margin-top:50px;
+      margin-bottom:40px;
+  }
+
+  
