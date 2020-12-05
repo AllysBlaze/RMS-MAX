@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace RMSmax.Models.ViewModels
 {
-    public class ArticlesListViewModel : MainViewModel
+    public class EmployeeListViewModel : MainViewModel
     {
-        public IEnumerable<Article> Articles { get; set; }
+        public IEnumerable<Employee> Employees { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }
 }

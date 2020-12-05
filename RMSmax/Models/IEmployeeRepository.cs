@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RMSmax.Models
 {
-    interface IEmployeeRepository
+    public interface IEmployeeRepository
     {
         IQueryable<Employee> Employees{ get; }
     }

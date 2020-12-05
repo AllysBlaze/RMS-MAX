@@ -25,6 +25,9 @@ namespace RMSmax
             services.AddDbContext<RMSContext>(opts => opts.UseSqlServer("name=RMSDB"));
             //services.AddScoped<IDataRepository<Article>, ArticleManager>();
             services.AddTransient<IArticleRepository, ArticleRepository>();
+            services.AddTransient<IEmployeeRepository, FakeEmployeeRepository>();
+            services.AddTransient<IStudentsTimetableRepository, FakeStudentsTimetableRepository>();
+            services.AddTransient<ISubjectRepository, FakeSubjectRepository>();
             services.AddControllersWithViews();
         }
 

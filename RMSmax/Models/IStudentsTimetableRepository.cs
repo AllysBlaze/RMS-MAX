@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RMSmax.Models
 {
-    interface IStudentsTimetableRepository
+    public interface IStudentsTimetableRepository
     {
         IQueryable<StudentsTimetable> StudentsTimetables { get; }
     }

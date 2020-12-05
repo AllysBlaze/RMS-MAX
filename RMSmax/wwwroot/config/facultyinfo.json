@@ -1,0 +1,19 @@
+{
+  "Name": "RMS",
+  "Street": "Kaszubska 1",
+  "Postcode": "44-100",
+  "City": "Gliwice",
+  "Phone": "123698521",
+  "Email": "xyz@polsl.pl",
+  "MapSource": null,
+  "Courses": [
+    {
+      "Name": "Informatyka",
+      "Specialties": [ "S1", "S2", "S3", "S4" ]
+    },
+    {
+      "Name": "Matematyka",
+      "Specialties": [ "Sp1", "Sp2", "Sp3", "Sp4" ]
+    }
+  ]
+}
