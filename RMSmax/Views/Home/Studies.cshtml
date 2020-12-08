@@ -9,12 +9,12 @@
     }
     <h3>Plany zajęć</h3>
     <h5>St I</h5>
-    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == "1"))
+    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1))
     {
         <p>@v.Timetable</p>
     }
     <h5>St II</h5>
-    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == "2"))
+    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2))
     {
         <p>@v.Timetable</p>
     }

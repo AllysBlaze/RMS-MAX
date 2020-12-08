@@ -8,9 +8,9 @@ namespace RMSmax.Models
     public class StudentsTimetable
     {
         public uint Id { get; set; }
-        public string Semester { get; set; }
+        public int Semester { get; set; }
         public string Timetable { get; set; }
-        public string Degree { get; set; }
+        public int Degree { get; set; }
         public string Course { get; set; }
 
 

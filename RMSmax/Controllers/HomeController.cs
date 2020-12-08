@@ -51,7 +51,7 @@ namespace RMSmax.Controllers
                 return RedirectToAction("Index");
         }
 
-        public IActionResult Studies(string course, string degree = "", string semester = "")
+        public IActionResult Studies(string course, int? degree = null, int? semester = null)
         {
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
             if (c != null)
@@ -59,7 +59,7 @@ namespace RMSmax.Controllers
                     FacultyCourses = facultyInfo.Courses,
                     Course = c,
                     StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
-                    Subjects = subjectRepo.Subjects.Where(x => x.Course == course && (string.IsNullOrEmpty(degree) || string.IsNullOrEmpty(degree) ? true : x.Degree == degree && x.Semester == semester))//!!!
+                    Subjects = subjectRepo.Subjects.Where(x => x.Course == course && (degree == null || semester == null ? true : x.Degree == degree && x.Semester == semester))//!!!
                 });
             else
                 return RedirectToAction("Index");
