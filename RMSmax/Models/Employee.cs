@@ -18,5 +18,6 @@ namespace RMSmax.Models
         public string Mail { get; set; }
         public string Phone { get; set; }
         public string Timetable { get; set; }
+        public string Photo { get; set; }
     }
 }
