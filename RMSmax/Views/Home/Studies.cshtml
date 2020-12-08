@@ -1,0 +1,31 @@
+﻿@model StudiesViewModel
+
+<div>
+    <h1>@Model.Course.Name</h1>
+    <h3>Specjalności</h3>
+    @foreach (var v in Model.Course.Specialties)
+    {
+        <p>@v</p>
+    }
+    <h3>Plany zajęć</h3>
+    <h5>St I</h5>
+    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == "1"))
+    {
+        <p>@v.Timetable</p>
+    }
+    <h5>St II</h5>
+    @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == "2"))
+    {
+        <p>@v.Timetable</p>
+    }
+    <h3>Programy studiów</h3>
+    @foreach (var v in Model.StudyPlans)
+    {
+        <a href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a>
+    }
+    <h3>Karty przedmiotówy</h3>
+    @foreach (var v in Model.Subjects)
+    {
+        <p>@v.Name</p>
+    }
+</div>

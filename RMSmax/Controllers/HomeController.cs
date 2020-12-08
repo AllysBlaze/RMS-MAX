@@ -16,6 +16,7 @@ namespace RMSmax.Controllers
         private IStudentsTimetableRepository studentsTimetableRepo;
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
+        private IWebHostEnvironment Environment;
         public int PageSize => 5;
 
         public HomeController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
@@ -25,6 +26,7 @@ namespace RMSmax.Controllers
             studentsTimetableRepo = timetableRepo;
             this.subjectRepo = subjectRepo;
             facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
+            Environment = env;
         }
         public IActionResult Index(int page = 1)
         {
@@ -49,11 +51,16 @@ namespace RMSmax.Controllers
                 return RedirectToAction("Index");
         }
 
-        public IActionResult Studies(string course) // TO DO
+        public IActionResult Studies(string course, string degree = "", string semester = "")
         {
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
-            if(c != null)
-                return View(new StudiesViewModel { FacultyCourses = facultyInfo.Courses, Course = c});
+            if (c != null)
+                return View(new StudiesViewModel(Environment) {
+                    FacultyCourses = facultyInfo.Courses,
+                    Course = c,
+                    StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
+                    Subjects = subjectRepo.Subjects.Where(x => x.Course == course && (string.IsNullOrEmpty(degree) || string.IsNullOrEmpty(degree) ? true : x.Degree == degree && x.Semester == semester))//!!!
+                });
             else
                 return RedirectToAction("Index");
 

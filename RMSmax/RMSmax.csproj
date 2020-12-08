@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\studyPlans\" />
+    <Folder Include="wwwroot\files\studyPlans\Matematyka\" />
+    <Folder Include="wwwroot\files\studyPlans\Informatyka\" />
+    <Folder Include="wwwroot\files\subjectsDocs\Matematyka\" />
+    <Folder Include="wwwroot\files\subjectsDocs\Informatyka\" />
   </ItemGroup>
 
 </Project>

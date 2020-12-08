@@ -12,7 +12,7 @@ namespace RMSmax.Models
     public class Faculty
     {
         public static Faculty FacultyInstance { get; private set; }
-        private static string configFile = "config\\facultyinfo.json";
+        private static string configFile = "facultyinfo.json";
         public string Name { get;  set; }
         public string Street { get;  set; }
         public string Postcode { get;  set; }
@@ -27,7 +27,7 @@ namespace RMSmax.Models
         {
             FacultyInstance = this;
 
-            configFile = Path.Combine(webRoot, configFile);
+            configFile = Path.Combine(webRoot, "config", configFile);
             if (File.Exists(configFile))
             {
                 Deserialize();
