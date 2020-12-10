@@ -9,5 +9,6 @@ namespace RMSmax.Models.ViewModels
     {
         public IEnumerable<Employee> Employees { get; set; }
         public PagingInfo PagingInfo { get; set; }
+        public string CurrentSearching { get; set; }
     }
 }
