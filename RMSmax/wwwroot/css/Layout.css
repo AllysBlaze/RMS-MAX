@@ -1,20 +1,4 @@
-﻿p {
-    font-size: 20px;
-}
-#Creators {
-    padding-left: 1%;
-    font-size: 15px;
-    color: white;
-}
-#navbarDropdown {
-    padding-left: 0px;
-}
-
-#footer {
-    min-height: 40px;
-}
-
-.carousel-item {
+﻿.carousel-item {
     height: 32rem;
     background-color: rgb(8, 8, 8);
     position: relative;
