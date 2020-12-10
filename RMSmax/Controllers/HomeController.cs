@@ -17,7 +17,8 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
-        public int PageSize => 5;
+        public int ArticlesPageSize => 6;
+        public int EmployeesPageSize => 10;
 
         public HomeController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {
@@ -33,8 +34,8 @@ namespace RMSmax.Controllers
             return View(new ArticlesListViewModel
             {
                 FacultyCourses = facultyInfo.Courses,
-                Articles = articlesRepo.Articles.OrderByDescending(a => a.Id).Skip((page - 1) * PageSize).Take(PageSize),
-                PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = articlesRepo.Articles.Count() }
+                Articles = articlesRepo.Articles.OrderByDescending(a => a.Id).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
+                PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = ArticlesPageSize, TotalItems = articlesRepo.Articles.Count() }
             });
         }
 
@@ -66,29 +67,31 @@ namespace RMSmax.Controllers
 
         }
 
-        public IActionResult EmployeeList(int page = 1, string searching = "") // TO DO
+        public IActionResult EmployeeList(int page = 1, string searching = "")
         {
             IEnumerable<Employee> employees;
             if (string.IsNullOrEmpty(searching))
             {
-                employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
             }
             else
             {
-                employees = null;
+                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(searching) || x.Name.Contains(searching) || (x.Name + " " + x.LastName).Contains(searching)).OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
             }
 
             var pagingInfo = new PagingInfo
             {
                 CurrentPage = page,
-                ItemsPerPage = PageSize,
-                TotalItems = employeesRepo.Employees.Count()
+                ItemsPerPage = EmployeesPageSize,
+                TotalItems = string.IsNullOrEmpty(searching) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(searching) || x.Name.Contains(searching) || (x.Name + " " + x.LastName).Contains(searching)).Count()
             };
 
             return View(new EmployeeListViewModel
             {
+                FacultyCourses = facultyInfo.Courses,
                 Employees = employees,
-                PagingInfo = pagingInfo
+                PagingInfo = pagingInfo,
+                CurrentSearching = searching
             }); 
         }
 
