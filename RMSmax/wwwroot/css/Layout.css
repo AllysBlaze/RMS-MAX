@@ -2,17 +2,26 @@
     font-size: 20px;
 }
 #Creators {
-    font-size: 10px;
+    padding-left: 1%;
+    font-size: 15px;
+    color: white;
+}
+#navbarDropdown {
+    padding-left: 0px;
 }
 
-.carousel-item{
+#footer {
+    min-height: 40px;
+}
+
+.carousel-item {
     height: 32rem;
     background-color: rgb(8, 8, 8);
     position: relative;
     background-position: center;
     background-size: cover;
-    color:white;
-  }
+    color: white;
+}
 
   .carousel-item .container{
     position: absolute;

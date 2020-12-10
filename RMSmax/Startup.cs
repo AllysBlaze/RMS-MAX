@@ -35,9 +35,9 @@ namespace RMSmax
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
            //if (env.IsDevelopment())
-           // {
+            //{
                 app.UseDeveloperExceptionPage();
-           // }
+            //}
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();
