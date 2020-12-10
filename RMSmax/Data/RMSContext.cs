@@ -14,6 +14,9 @@ namespace RMSmax.Data
         {
         }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<StudentsTimetable> StudentsTimetables { get; set; }
         
        
     }
