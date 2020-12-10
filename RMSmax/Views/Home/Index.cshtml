@@ -4,10 +4,18 @@
     <div id="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+
                 @foreach (var v in Model.Articles)
                 {
-                    <li data-target="#carouselExampleIndicators" data-slide-to="@v.Id"></li>
+                    if (v.Id == 1)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    }
+                    else
+                    {
+
+                        <li data-target="#carouselExampleIndicators" data-slide-to="@v.Id"></li>
+                    }
                 }
             </ol>
 
