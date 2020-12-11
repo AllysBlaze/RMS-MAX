@@ -11,12 +11,14 @@ namespace RMSmax.Migrations
                 name: "Articles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Author = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Photo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhotoIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoCover = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,16 +29,17 @@ namespace RMSmax.Migrations
                 name: "Employees",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Degree = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Degree = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Department = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Function = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Room = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
                     Timetable = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Photo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -49,11 +52,12 @@ namespace RMSmax.Migrations
                 name: "StudentsTimetables",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Semester = table.Column<int>(type: "int", nullable: false),
-                    Timetable = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Timetable = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Degree = table.Column<int>(type: "int", nullable: false),
-                    Course = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Course = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,12 +68,13 @@ namespace RMSmax.Migrations
                 name: "Subjects",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Semester = table.Column<int>(type: "int", nullable: false),
                     Degree = table.Column<int>(type: "int", nullable: false),
-                    File = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Course = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    File = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Course = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

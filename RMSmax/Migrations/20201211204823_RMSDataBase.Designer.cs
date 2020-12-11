@@ -10,7 +10,7 @@ using RMSmax.Data;
 namespace RMSmax.Migrations
 {
     [DbContext(typeof(RMSContext))]
-    [Migration("20201210103401_RMSDataBase")]
+    [Migration("20201211204823_RMSDataBase")]
     partial class RMSDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,24 +23,30 @@ namespace RMSmax.Migrations
 
             modelBuilder.Entity("RMSmax.Models.Article", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Author")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("PhotoCover")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoIn")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -50,12 +56,13 @@ namespace RMSmax.Migrations
 
             modelBuilder.Entity("RMSmax.Models.Employee", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Degree")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Department")
@@ -65,16 +72,20 @@ namespace RMSmax.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Photo")
                         .HasColumnType("nvarchar(max)");
@@ -95,12 +106,13 @@ namespace RMSmax.Migrations
 
             modelBuilder.Entity("RMSmax.Models.StudentsTimetable", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Course")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Degree")
@@ -110,6 +122,7 @@ namespace RMSmax.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Timetable")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -119,21 +132,24 @@ namespace RMSmax.Migrations
 
             modelBuilder.Entity("RMSmax.Models.Subject", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.None);
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("Course")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Degree")
                         .HasColumnType("int");
 
                     b.Property<string>("File")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Semester")
