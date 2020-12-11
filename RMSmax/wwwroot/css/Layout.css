@@ -13,7 +13,10 @@
     left: 0;
     right: 0;
     padding-bottom: 50px;
+    margin-bottom:50px;
   }
+
+
 
   .overlay-image{
     position: absolute;
@@ -30,5 +33,25 @@
       margin-top:50px;
       margin-bottom:40px;
   }
+
+.containerCard {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 10px;
+    padding: 10px;
+}
+
+
+.card {
+    height: 18rem;
+    background-color: rgb(8, 8, 8);
+    position: relative;
+    background-position: center;
+    background-size: cover;
+    color: black;
+}
+  
 
   
