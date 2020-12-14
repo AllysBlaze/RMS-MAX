@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
 using RMSmax.Models.ViewModels;
+using RMSmax.Models.ViewModels.Admin;
 
 namespace RMSmax.Controllers
 {
@@ -31,7 +32,21 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View(new IndexViewModel() { FacultyCourses = facultyInfo.Courses, Faculty = facultyInfo });
+        }
+
+        [HttpPost]
+        public IActionResult EditFacultyInfo(Faculty faculty)
+        {
+            if (ModelState.IsValid)
+            {
+                facultyInfo.Update(faculty);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Index", new IndexViewModel() { FacultyCourses = facultyInfo.Courses, Faculty = faculty });
+            }
         }
 
         [HttpGet]
@@ -57,13 +72,6 @@ namespace RMSmax.Controllers
         public IActionResult DeleteCourse(Course course)
         {
             //usun dane
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult EditFacultyInfo()
-        {
-            //zapis danych
             return RedirectToAction("Index");
         }
 

@@ -3,6 +3,7 @@
   "Street": "Kaszubska 1",
   "Postcode": "44-100",
   "City": "Gliwice",
+  "State":  "Œl¹skie",
   "Phone": "123698521",
   "Email": "xyz@polsl.pl",
   "MapSource": null,
@@ -15,5 +16,7 @@
       "Name": "Matematyka",
       "Specialties": [ "Sp1", "Sp2", "Sp3", "Sp4" ]
     }
-  ]
+  ],
+  "Color": "#000000",
+  "Logo": null
 }

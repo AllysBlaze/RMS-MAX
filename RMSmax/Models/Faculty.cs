@@ -17,16 +17,17 @@ namespace RMSmax.Models
         public string Street { get;  set; }
         public string Postcode { get;  set; }
         public string City { get;  set; }
+        public string State { get; set; }
         public string Phone { get;  set; }
         public string Email { get;  set; }
         public string MapSource { get;  set; }
         public IList<Course> Courses { get;  set; }
+        public string Color { get; set; }
+        public string Logo { get; set; }
 
-        public Faculty() { FacultyInstance = this;  }
+        public Faculty() { }
         public Faculty(string webRoot)
         {
-            FacultyInstance = this;
-
             configFile = Path.Combine(webRoot, "config", configFile);
             if (File.Exists(configFile))
             {
@@ -36,9 +37,13 @@ namespace RMSmax.Models
             {
                 Courses = new List<Course>();
             }
+            FacultyInstance = this;
         }
-
-        public void Update(string name, string street, string postcode, string city, string phone, string email, string mapSource, IList<Course> courses)
+        public void Update(Faculty faculty)
+        {
+            Update(faculty.Name, faculty.Street, faculty.Postcode, faculty.City, faculty.Phone, faculty.Email, faculty.MapSource, faculty.Courses, faculty.Color, faculty.Logo);
+        }
+        public void Update(string name, string street, string postcode, string city, string phone, string email, string mapSource, IList<Course> courses, string color, string logo)
         {
             Name = name;
             Street = street;
@@ -48,6 +53,8 @@ namespace RMSmax.Models
             Email = email;
             MapSource = mapSource;
             Courses = courses;
+            Color = color;
+            Logo = logo;
 
             Serialize();
         }
