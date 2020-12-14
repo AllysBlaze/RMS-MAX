@@ -15,32 +15,24 @@ namespace RMSmax.Models
             context = ctx;
         }
         public IQueryable<Article> Articles => context.Articles;
-        public void AddArticle(string title, string content, string author, string photoCover, string photoIn)
+        public void AddArticle(Article article)
         {
-            var article = new Article
-            {
-                Title = title,
-                Content = content,
-                Author = author,
-                PhotoCover = photoCover,
-                PhotoIn = photoIn
-            };
             context.AddRange(article);
             context.SaveChanges();
         }
-        public void DeleteArticle( int id)
+        public void DeleteArticle(Article article)
         {
-            context.Remove(context.Articles.Single(a => a.Id == id));
+            context.Remove(context.Articles.Single(a => a.Id == article.Id));
             context.SaveChanges();
         }
-        public void EditArticle(int id,string title, string content, string author, string photoCover, string photoIn)
+        public void EditArticle(Article art)
         {
-            var article = context.Articles.First(a => a.Id == id);
-            article.Author = author;
-            article.Content = content;
-            article.PhotoCover = photoCover;
-            article.PhotoIn = photoIn;
-            article.Title = title;
+            var article = context.Articles.First(a => a.Id == art.Id);
+            article.Author = art.Author;
+            article.Content = art.Content;
+            article.PhotoCover = art.PhotoCover;
+            article.PhotoIn = art.PhotoIn;
+            article.Title = art.Title;
             context.SaveChanges();
         }
 

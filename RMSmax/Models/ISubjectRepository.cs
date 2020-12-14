@@ -8,5 +8,8 @@ namespace RMSmax.Models
     public interface ISubjectRepository
     {
         IQueryable<Subject> Subjects{ get; }
+        public void AddSubject(Subject subject);
+        public void DeleteSubject(Subject subject);
+        public void EditSubject(Subject sub);
     }
 }

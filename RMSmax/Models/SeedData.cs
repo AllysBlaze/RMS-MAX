@@ -60,6 +60,102 @@ namespace RMSmax.Models
                         Author = "Author",
                         PhotoIn = "pic5.jpg",
                         PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title5",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title6",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title7",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title8",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title9",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title10",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title11",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title12",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title13",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title14",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title15",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title16",
+                        Content = "content4",
+                        Author = "Author",
+                        PhotoIn = "pic5.jpg",
+                        PhotoCover = "pic5.jpg",
                     }
                     );
 
@@ -124,6 +220,161 @@ namespace RMSmax.Models
                         Room = "MS 505",
                         Timetable = "link",
 
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko6",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko7",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko8",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko9",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko10",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko11",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko12",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko13",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    },
+                    new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko13",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko14",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
+                    }, new Employee
+                    {
+                        Name = "Imię1",
+                        LastName = "Nazwisko15",
+                        Degree = "Doktor",
+                        Mail = "imie.nazwisko@polsl.pl",
+                        Phone = "000000000",
+                        Photo = "pic5.jpg",
+                        Department = "Katedra Informatyki",
+                        Function = "Prodziekan",
+                        Position = "Asystent",
+                        Room = "MS 505",
+                        Timetable = "link",
+
                     }
                     );
             }
@@ -136,7 +387,7 @@ namespace RMSmax.Models
                         Degree = 1,
                         File = "inf_I_2019.pdf",
                         Name = "Przedmiot1",
-                        Semester = 3,
+                        Semester = 1,
                     },
                     new Subject
                     {
@@ -144,7 +395,23 @@ namespace RMSmax.Models
                         Degree = 1,
                         File = "inf_I_2019.pdf",
                         Name = "Przedmiot2",
-                        Semester = 1,
+                        Semester = 2,
+                    },
+                    new Subject
+                    {
+                        Course = "Informatyka",
+                        Degree = 1,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot3",
+                        Semester = 3,
+                    },
+                    new Subject
+                    {
+                        Course = "Informatyka",
+                        Degree = 1,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot3",
+                        Semester = 4,
                     },
                     new Subject
                     {
@@ -153,6 +420,22 @@ namespace RMSmax.Models
                         File = "inf_I_2019.pdf",
                         Name = "Przedmiot3",
                         Semester = 5,
+                    },
+                    new Subject
+                    {
+                        Course = "Informatyka",
+                        Degree = 2,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot1",
+                        Semester = 1,
+                    },
+                    new Subject
+                    {
+                        Course = "Informatyka",
+                        Degree = 2,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot2",
+                        Semester = 2,
                     },
                     new Subject
                     {
@@ -168,7 +451,7 @@ namespace RMSmax.Models
                         Degree = 1,
                         File = "inf_I_2019.pdf",
                         Name = "Przedmiot5",
-                        Semester = 3,
+                        Semester = 2,
                     },
                     new Subject
                     {
@@ -176,7 +459,28 @@ namespace RMSmax.Models
                         Degree = 1,
                         File = "inf_I_2019.pdf",
                         Name = "Przedmiot6",
-                        Semester = 5,
+                        Semester = 3,
+                    }, new Subject
+                    {
+                        Course = "Matematyka",
+                        Degree = 1,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot6",
+                        Semester = 4,
+                    }, new Subject
+                    {
+                        Course = "Matematyka",
+                        Degree = 2,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot6",
+                        Semester = 1,
+                    }, new Subject
+                    {
+                        Course = "Matematyka",
+                        Degree = 2,
+                        File = "inf_I_2019.pdf",
+                        Name = "Przedmiot6",
+                        Semester = 2,
                     }
                     );
             }
@@ -190,20 +494,65 @@ namespace RMSmax.Models
                         Semester = 1,
                         Timetable = "link"
                     },
+
                     new StudentsTimetable
                     {
                         Course = "Matematyka",
                         Degree = 1,
+                        Semester = 4,
+                        Timetable = "link"
+                    },
+                    new StudentsTimetable
+                    {
+                        Course = "Matematyka",
+                        Degree = 2,
+                        Semester = 2,
+                        Timetable = "link"
+                    },
+                    new StudentsTimetable
+                    {
+                        Course = "Matematyka",
+                        Degree = 2,
                         Semester = 3,
                         Timetable = "link"
                     },
                     new StudentsTimetable
                     {
-                        Course = "Matematyka",
+                        Course = "Informatyka",
                         Degree = 1,
-                        Semester = 5,
+                        Semester = 1,
                         Timetable = "link"
                     },
+                    new StudentsTimetable
+                    {
+                        Course = "Informatyka",
+                        Degree = 1,
+                        Semester = 2,
+                        Timetable = "link"
+
+                    }, new StudentsTimetable
+                    {
+                        Course = "Informatyka",
+                        Degree = 1,
+                        Semester = 3,
+                        Timetable = "link"
+
+                    }, new StudentsTimetable
+                    {
+                        Course = "Informatyka",
+                        Degree = 1,
+                        Semester = 4,
+                        Timetable = "link"
+
+                    },
+                     new StudentsTimetable
+                     {
+                         Course = "Informatyka",
+                         Degree = 1,
+                         Semester = 5,
+                         Timetable = "link"
+
+                     },
                     new StudentsTimetable
                     {
                         Course = "Informatyka",
@@ -213,9 +562,9 @@ namespace RMSmax.Models
                     },
                     new StudentsTimetable
                     {
-                        Course = "Matematyka",
+                        Course = "Informatyka",
                         Degree = 2,
-                        Semester = 3,
+                        Semester = 2,
                         Timetable = "link"
 
                     }
