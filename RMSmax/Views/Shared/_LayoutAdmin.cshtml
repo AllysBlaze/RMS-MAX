@@ -11,6 +11,7 @@
 <body>
     <nav class="navbar navbar-dark primary-color">
         <h1>RMS Max!</h1>
+        <p>Tryb administratora</p>
         <a class="navbar-brand" href="#">
             <img src="https://www.polsl.pl/Wydzialy/RMS/PublishingImages/logowyd.jpg" height="70" alt="rms logo">
         </a>
@@ -26,24 +27,16 @@
                     <div class="collapse navbar-collapse sidebar">
                         <ul class="flex-column navbar-nav w-100 justify-content-between">
                             <li class="nav-item">
-                                <a class="nav-link pl-0" asp-controller="Home" asp-action="Index"> <span class="">Strona Główna</span></a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pl-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Studia
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @foreach (var v in Model.FacultyCourses)
-                                    {
-                                        <a class="dropdown-item" asp-controller="Home" asp-action="Studies" asp-route-course="@v.Name">@v.Name</a>
-                                    }
-                                </div>
+                                <a class="nav-link pl-0" asp-controller="Admin" asp-action="AdminIndex" style="border-bottom: solid 2px grey"> <span class="">Strona Administracyjna</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" asp-controller="Home" asp-action="EmployeeList"> <span class="">Pracownicy</span></a>
+                                <a class="nav-link pl-0" asp-controller="Admin" asp-action="AdminFacultyInfo" style="border-bottom: solid 2px grey"> <span class="">Informacje o wydziale</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pl-0" asp-controller="Home" asp-action="Contact" style="border-bottom: solid 2px grey"> <span class="">Kontakt</span></a>
+                                <a class="nav-link pl-0" asp-controller="Admin" asp-action="AdminArticleList" style="border-bottom: solid 2px grey"> <span class="">Lista artykułów</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link pl-0" asp-controller="Admin" asp-action="AdminEmployeeList" style="border-bottom: solid 2px grey"> <span class="">Lista Pracowników</span></a>
                             </li>
                         </ul>
                     </div>
@@ -57,6 +50,7 @@
     </div>
     <div class="row mt-auto col-12 bg-dark my-auto justify-content-between align-content-center mx-0" style="height:50px">
         <p class="text-white bg-dark pl-3 ml-3" id="Creators">Strona stworzona przez IOTeam</p>
+        <a class="nav-link pl-0" asp-controller="Home" asp-action="Index"> <span class="">WYLOGUJ</span></a>
         <button type="button" onclick="topFunction()" id="upBtn" class="btn btn-primary float-right" style="height: 40px">Do góry</button>
     </div>
 

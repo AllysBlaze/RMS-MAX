@@ -33,6 +33,21 @@ namespace RMSmax.Controllers
         {
             return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
         }
+        [HttpGet]
+        public IActionResult AdminFacultyInfo()
+        {
+            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+        }
+        [HttpGet]
+        public IActionResult AdminArticleList()
+        {
+            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+        }
+        [HttpGet]
+        public IActionResult AdminEmployeeList()
+        {
+            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+        }
 
         [HttpGet]
         public IActionResult EditCourse()
