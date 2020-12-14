@@ -3,4 +3,100 @@
     Layout = "_LayoutAdmin";
 }
 
-Strona administracyjna Admin Index
+
+<form>
+    <div class="form-group">
+        <label>Nazwa</label>
+        <input type="text" class="form-control" placeholder="Nazwa wydziału">
+    </div>
+    <div class="form-group">
+        <label>Adres</label>
+        <input type="text" class="form-control" placeholder="Podaj ulicę i numer">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label>Miasto</label>
+            <input type="text" class="form-control" placeholder="Podaj miasto">
+        </div>
+        <div class="form-group col-md-4">
+            <label>Województwo</label>
+            <select class="form-control">
+                <option selected></option>
+                <option>Dolnośląskie</option>
+                <option>Kujawsko-pomorskie</option>
+                <option>Lubelskie</option>
+                <option>Lubuskie</option>
+                <option>Łódzkie</option>
+                <option>Małopolskie</option>
+                <option>Mazowieckie</option>
+                <option>Opolskie</option>
+                <option>Podkarpackie</option>
+                <option>Podlaskie</option>
+                <option>Pomorskie</option>
+                <option>Śląskie</option>
+                <option>Świętokrzyskie</option>
+                <option>Warmińsko-mazurskie</option>
+                <option>Wielkopolskie</option>
+                <option>Zachodniopomorskie</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label>Kod pocztowy</label>
+            <input type="text" class="form-control" value="44-100" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Telefon</label>
+            <input type="tel" class="form-control" placeholder="Numer telefonu">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label>Mapa</label>
+            <input type="url" class="form-control" placeholder="Podaj adres url mapy">
+        </div>
+        <div class="form-group col-md-2">
+            <label>Motyw</label>
+            <input type="color" class="form-control">
+        </div>
+        <div class="form-group col-md-5">
+            <label>Logo</label>
+            <input type="file" class="form-control-file" accept="image/*" />
+        </div>
+    </div>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
+</form>
+
+<div class="row align-content-center justify-content-center">
+    <div class="col-6">
+        <form>
+            <div class="form-group">
+                <label>Login</label>
+                <input type="text" class="form-control" placeholder="Login">
+            </div>
+            <div class="form-group">
+                <label>Stare hasło</label>
+                <input type="password" class="form-control" placeholder="Stare hasło">
+            </div>
+            <div class="form-group">
+                <label>Nowe hasło</label>
+                <input type="password" class="form-control" placeholder="Nowe hasło">
+            </div>
+            <div class="form-group">
+                <label>Powtórz nowe hasło</label>
+                <input type="password" class="form-control" placeholder="Powtórz nowe hasło">
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Zmień hasło</button>
+            </div>
+        </form>
+    </div>
+</div>
