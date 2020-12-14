@@ -6,7 +6,7 @@ using RMSmax.Data;
 
 namespace RMSmax.Models
 {
-    public class FakeArticleRepository : IArticleRepository
+    public class FakeArticleRepository 
     {
         public IQueryable<Article> Articles => new List<Article> {
             new Article { Id = 0, Title = "Tytuł 1", Content = "Treść" },
@@ -23,7 +23,14 @@ namespace RMSmax.Models
             new Article { Id = 11, Title = "Tytuł 12", Content = "Treść" },
             new Article { Id = 12, Title = "Tytuł 13", Content = "Treść" }
         }.AsQueryable<Article>();
-        
 
+        public void AddArticle(string title, string content, string author, string photoCover, string photoIn)
+        {
+            return;
+        }
+        public void DeleteArticle(int id)
+        {
+            return;
+        }
     }
 }

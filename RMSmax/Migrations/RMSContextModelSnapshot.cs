@@ -35,6 +35,7 @@ namespace RMSmax.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhotoCover")

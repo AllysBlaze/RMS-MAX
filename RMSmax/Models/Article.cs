@@ -16,7 +16,7 @@ namespace RMSmax.Models
         public string Content { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DateTime { get; set; }
+        public DateTime DateTime{ get; set; } = DateTime.Now;
         [Required]
         public string Author { get; set; }
         public string PhotoIn { get; set; }

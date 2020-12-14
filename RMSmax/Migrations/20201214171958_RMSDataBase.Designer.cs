@@ -10,7 +10,7 @@ using RMSmax.Data;
 namespace RMSmax.Migrations
 {
     [DbContext(typeof(RMSContext))]
-    [Migration("20201211204823_RMSDataBase")]
+    [Migration("20201214171958_RMSDataBase")]
     partial class RMSDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,7 @@ namespace RMSmax.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhotoCover")
