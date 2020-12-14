@@ -31,7 +31,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View("AdminIndex", new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
         }
 
         [HttpGet]
@@ -50,21 +50,21 @@ namespace RMSmax.Controllers
         public IActionResult EditCourse(Course course, IList<StudentsTimetable> timetables)
         {
             //zapis danych
-            return RedirectToAction("AdminIndex");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult DeleteCourse(Course course)
         {
             //usun dane
-            return RedirectToAction("AdminIndex");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult EditFacultyInfo()
         {
             //zapis danych
-            return RedirectToAction("AdminIndex");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
