@@ -29,9 +29,9 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult AdminIndex()
+        public IActionResult Index()
         {
-            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View("AdminIndex", new MainViewModel() { FacultyCourses = facultyInfo.Courses });
         }
 
         [HttpGet]
@@ -40,11 +40,91 @@ namespace RMSmax.Controllers
             return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
         }
 
+        [HttpGet]
+        public IActionResult AddCourse()
+        {
+            return View("EditCourse", new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+        }
+
         [HttpPost]
         public IActionResult EditCourse(Course course, IList<StudentsTimetable> timetables)
         {
             //zapis danych
-            return RedirectToAction(nameof(AdminIndex));
+            return RedirectToAction("AdminIndex");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCourse(Course course)
+        {
+            //usun dane
+            return RedirectToAction("AdminIndex");
+        }
+
+        [HttpPost]
+        public IActionResult EditFacultyInfo()
+        {
+            //zapis danych
+            return RedirectToAction("AdminIndex");
+        }
+
+        [HttpGet]
+        public IActionResult ArticleList()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult EditArticle()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddArticle()
+        {
+            return View("EditArticle");
+        }
+
+        [HttpPost]
+        public IActionResult EditArticle(Article article)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteArticle(Article article)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult EmployeeList()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult EditEmployee()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult AddEmployee()
+        {
+            return View("EditEmployee");
+        }
+
+        [HttpPost]
+        public IActionResult EditEmployee(Employee employee)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteEmployee()
+        {
+            return View();
         }
     }
 }
