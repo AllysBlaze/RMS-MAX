@@ -77,7 +77,9 @@ namespace RMSmax.Models
                 this.Email = f.Email;
                 this.MapSource = f.MapSource;
                 this.Courses = f.Courses;
-                Console.WriteLine();
+                this.Color = f.Color;
+                this.Logo = f.Logo;
+                this.State = f.State;
             }
             catch (Exception e)
             {
