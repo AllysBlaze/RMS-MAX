@@ -95,7 +95,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EditArticle()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
@@ -107,7 +107,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult EditArticle(Article article)
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpPost]
@@ -125,7 +125,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EditEmployee()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
@@ -144,6 +144,27 @@ namespace RMSmax.Controllers
         public IActionResult DeleteEmployee()
         {
             return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpGet]
+        public IActionResult SubjectsList()
+        {
+            return View(new MainViewModel() { Faculty = facultyInfo, });
+        }
+        [HttpGet]
+        public IActionResult EditSubject()
+        {
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
     }
 }
