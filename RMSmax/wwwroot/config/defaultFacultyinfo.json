@@ -1,0 +1,13 @@
+{
+  "Name": "Nazwa wydzia³u",
+  "Street": "Ulica numer",
+  "Postcode": "Kod pocztowy",
+  "City": "Miejscowoœæ",
+  "State": "Województwo",
+  "Phone": "123698521",
+  "Email": "xyz@polsl.pl",
+  "MapSource": "https://www.google.com/maps/",
+  "Courses": [],
+  "Color": "#555555",
+  "Logo": null
+}

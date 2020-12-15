@@ -17,50 +17,41 @@ namespace RMSmax.Models
         public string Street { get;  set; }
         public string Postcode { get;  set; }
         public string City { get;  set; }
+        public string State { get; set; }
         public string Phone { get;  set; }
         public string Email { get;  set; }
         public string MapSource { get;  set; }
         public IList<Course> Courses { get;  set; }
+        public string Color { get; set; }
+        public string Logo { get; set; }
 
-        public Faculty() { FacultyInstance = this;  }
+        public Faculty() { }
         public Faculty(string webRoot)
         {
-            FacultyInstance = this;
-
             configFile = Path.Combine(webRoot, "config", configFile);
             if (File.Exists(configFile))
             {
-                Deserialize();
+                Deserialize(configFile);
             }
             else
             {
+                string path = Path.Combine(webRoot, "config", "defaultFacultyinfo.json");
+                Deserialize(path);
                 Courses = new List<Course>();
             }
+            FacultyInstance = this;
         }
 
-        public void Update(string name, string street, string postcode, string city, string phone, string email, string mapSource, IList<Course> courses)
+        public void Serialize()
         {
-            Name = name;
-            Street = street;
-            Postcode = postcode;
-            City = city;
-            Phone = phone;
-            Email = email;
-            MapSource = mapSource;
-            Courses = courses;
-
-            Serialize();
-        }
-        private void Serialize()
-        {
-            string data = JsonSerializer.Serialize(this);
+            string data = JsonSerializer.Serialize(FacultyInstance);
             File.WriteAllText(configFile, data);
         }
-        private void Deserialize()
+        private void Deserialize(string path)
         {
            try
             {
-                string data = File.ReadAllText(configFile);
+                string data = File.ReadAllText(path);
                 Faculty f = JsonSerializer.Deserialize<Faculty>(data);
                 this.Name = f.Name;
                 this.Street = f.Street;
@@ -70,7 +61,9 @@ namespace RMSmax.Models
                 this.Email = f.Email;
                 this.MapSource = f.MapSource;
                 this.Courses = f.Courses;
-                Console.WriteLine();
+                this.Color = f.Color;
+                this.Logo = f.Logo;
+                this.State = f.State;
             }
             catch (Exception e)
             {

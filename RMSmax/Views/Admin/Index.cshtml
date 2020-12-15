@@ -1,6 +1,163 @@
-﻿@model MainViewModel
-@{ 
+﻿@model IndexViewModel
+@{
     Layout = "_LayoutAdmin";
 }
 
-Strona administracyjna Admin Index
+<form asp-controller="Admin" asp-action="EditFacultyInfo" method="post">
+    <div class="form-group">
+        <label asp-for="Faculty.Name">Nazwa</label>
+        <input asp-for="Faculty.Name" type="text" class="form-control" placeholder="Nazwa wydziału" required>
+    </div>
+    <div class="form-group">
+        <label asp-for="Faculty.Street">Adres</label>
+        <input asp-for="Faculty.Street" type="text" class="form-control" placeholder="Podaj ulicę i numer" required>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label asp-for="Faculty.City">Miasto</label>
+            <input asp-for="Faculty.City" type="text" class="form-control" placeholder="Podaj miasto" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Faculty.State">Województwo</label>
+            <select class="form-control" asp-for="Faculty.State" required>
+                <option selected></option>
+                <option>Dolnośląskie</option>
+                <option>Kujawsko-pomorskie</option>
+                <option>Lubelskie</option>
+                <option>Lubuskie</option>
+                <option>Łódzkie</option>
+                <option>Małopolskie</option>
+                <option>Mazowieckie</option>
+                <option>Opolskie</option>
+                <option>Podkarpackie</option>
+                <option>Podlaskie</option>
+                <option>Pomorskie</option>
+                <option>Śląskie</option>
+                <option>Świętokrzyskie</option>
+                <option>Warmińsko-mazurskie</option>
+                <option>Wielkopolskie</option>
+                <option>Zachodniopomorskie</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Faculty.Postcode">Kod pocztowy</label>
+            <input asp-for="Faculty.Postcode" type="text" class="form-control" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Faculty.Phone">Telefon</label>
+            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Faculty.Email">Email</label>
+            <input asp-for="Faculty.Email" type="email" class="form-control" placeholder="Email" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label asp-for="Faculty.MapSource">Mapa</label>
+            <input asp-for="Faculty.MapSource" type="url" class="form-control" placeholder="Podaj adres url mapy" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="Faculty.Color">Motyw</label>
+            <input asp-for="Faculty.Color" type="color" class="form-control" required>
+        </div>
+        <div class="form-group col-md-5">
+            <label asp-for="Faculty.Logo">Logo</label>
+            <input asp-for="Faculty.Logo" type="file" class="form-control-file" accept="image/*"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <input asp-for="Faculty.Courses" type="hidden" />
+    </div>
+
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
+</form>
+
+
+<div class="row align-content-center justify-content-center" style="border-bottom: solid 2px grey; border-top: solid 2px grey;">
+    <div class="col-6" style="padding-top: 10px;">
+        <form>
+            <div class="form-group">
+                <label>Login</label>
+                <input type="text" class="form-control" placeholder="Login">
+            </div>
+            <div class="form-group">
+                <label>Stare hasło</label>
+                <input type="password" class="form-control" placeholder="Stare hasło">
+            </div>
+            <div class="form-group">
+                <label>Nowe hasło</label>
+                <input type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip">
+                <small id="passwordTip" class="form-text text-muted">
+                    Hasło powinno mieć co najmniej 8 znaków, zawierać jedną dużą literę i jeden znak specjalny.
+                </small>
+            </div>
+            <div class="form-group">
+                <label>Powtórz nowe hasło</label>
+                <input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2">
+                <small id="passwordTip2" class="form-text text-muted">
+                    Hasła muszą być takie same.
+                </small>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Zmień hasło</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nazwa Kierunku</th>
+            <th scope="col">Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.Faculty.Courses)
+            {
+            <tr>
+            <td>@v.Name</td>
+            <td>
+                <a class="btn btn-primary btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Lista przedmiotów" asp-controller="Admin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                    </svg>
+                </a>
+                <a class="btn btn-info btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Edytuj" asp-controller="Admin" asp-action="EditCourse">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                    </svg>
+                </a>
+                <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                    </svg>
+                </a>
+            </td>
+            </tr>
+            }
+    </tbody>
+</table>
+
+
+
+<div class="row align-content-center justify-content-center">
+    <a class="btn btn-success" role="button" asp-controller="Admin" asp-action="ArticleList">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+        </svg>
+        <span>Dodaj</span>
+    </a>
+</div>
+
+
+
+
+

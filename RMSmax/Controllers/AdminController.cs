@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
 using RMSmax.Models.ViewModels;
+using RMSmax.Models.ViewModels.Admin;
 
 namespace RMSmax.Controllers
 {
@@ -31,19 +32,44 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View(new IndexViewModel() { Faculty = facultyInfo });
+        }
+
+        [HttpPost]
+        public IActionResult EditFacultyInfo(Faculty faculty)
+        {
+            if (ModelState.IsValid)
+            {
+                facultyInfo.Name = faculty.Name;
+                facultyInfo.Street = faculty.Street;
+                facultyInfo.Postcode = faculty.Postcode;
+                facultyInfo.City = faculty.City;
+                facultyInfo.State = faculty.State;
+                facultyInfo.Phone = faculty.Phone;
+                facultyInfo.Email = faculty.Email;
+                facultyInfo.MapSource = faculty.MapSource;
+                facultyInfo.Color = faculty.Color;
+                facultyInfo.Logo = faculty.Logo;
+                facultyInfo.Serialize();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+            }
         }
 
         [HttpGet]
         public IActionResult EditCourse()
         {
-            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
         public IActionResult AddCourse()
         {
-            return View("EditCourse", new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View("EditCourse", new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpPost]
@@ -60,17 +86,10 @@ namespace RMSmax.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult EditFacultyInfo()
-        {
-            //zapis danych
-            return RedirectToAction("Index");
-        }
-
         [HttpGet]
         public IActionResult ArticleList()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
@@ -100,7 +119,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EmployeeList()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]

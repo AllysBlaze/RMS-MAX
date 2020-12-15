@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RMSmax.Models.ViewModels
+namespace RMSmax.Models.ViewModels.Admin
 {
-    public class MainViewModel
+    public class IndexViewModel : MainViewModel
     {
-        public Faculty Faculty { get; set; }
     }
 }
