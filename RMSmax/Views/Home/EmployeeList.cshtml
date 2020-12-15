@@ -1,10 +1,73 @@
 ﻿@model EmployeeListViewModel
 
 <div>
-    @foreach (var v in Model.Employees)
-    {
-        <p>@(v.Name + " " + v.LastName)</p>
-    }
 
-    <div page-model="@Model.PagingInfo" page-action="EmployeeList" page-argument-searching="@Model.CurrentSearching"class="btn-group pull-right m-1"></div>
+    <div class="container-fluid padding">
+        <div class="row">
+            <div id="employeeHeader" class="mx-auto">
+                <h1>Pracownicy</h1>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-5">
+            <div class="col-md-3 mb-1">
+                <input type="text" class="form-control" placeholder="Imię" aria-label="Imię">
+            </div>
+            <div class="col-md-3 mb-1">
+                <input type="text" class="form-control" placeholder="Nazwisko" aria-label="Nazwisko">
+            </div>
+            <div class="col-md-1 mb-1">
+                <button class="btn btn-outline-dark">Wyszukaj</button>
+            </div>
+        </div>
+
+        @*
+        <div class="row">
+            <table class="table table-striped table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Imię</th>
+                        <th scope="col">Nazwisko</th>
+                        <th scope="col">Mail</th>
+                        <th scope="col">Sala</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var v in Model.Employees)
+                    {
+                        /*<p>@(v.Name + " " + v.LastName)</p>*/
+
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>@v.Name</td>
+                            <td>@v.LastName</td>
+                            <td>jakismail@gmail</td>
+                            <td>201</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        *@
+        <div class="containere">
+            <div class="row">
+                <div class="col-lg-9">
+                    <p>Imie</p>
+                    <p>nazwisko</p>
+                    <p>sala</p>
+                    <p>mail</p>
+                </div>
+                <div class="col-md-6">
+                    <img src="~/pictures/picsArticle/pic2.jpg" class="img-fluid"/>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div page-model="@Model.PagingInfo" page-action="EmployeeList" page-argument-searching="@Model.CurrentSearching" class="btn-group pull-right m-1"></div>
+    </div>
 </div>

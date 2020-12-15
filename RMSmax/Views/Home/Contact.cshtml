@@ -11,22 +11,25 @@
         -->
     
     <div class="container-fluid padding">
+        <div id="contactHeader" class="mx-auto mb-3">
+            <h1>Kontakt</h1>
+        </div>
         <div class="row padding">
-            <div class="col-lg-2">
+            <div class="col-lg-3">
 
                 <p>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-laptop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M13.5 3h-11a.5.5 0 0 0-.5.5V11h12V3.5a.5.5 0 0 0-.5-.5zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2h-11z" />
                         <path d="M0 12h16v.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5V12z" />
                     </svg>
-                    <span>@Model.FacultyInfo.Name</span>
+                    <span>@Model.Faculty.Name</span>
                 </p>
                 <p>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                         <path fill-rule="evenodd" d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>
-                    <span>@Model.FacultyInfo.City, @Model.FacultyInfo.Postcode</span>
+                    <span>@Model.Faculty.City, @Model.FacultyInfo.Postcode</span>
                 </p>
 
                 <p>
@@ -34,38 +37,35 @@
                         <path fill-rule="evenodd" d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
                         <path fill-rule="evenodd" d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                     </svg>
-                    <span>ul. @Model.FacultyInfo.Street</span>
+                    <span>ul. @Model.Faculty.Street</span>
                 </p>
 
                 <p>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-telephone-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z" />
                     </svg>
-                    <span>@Model.FacultyInfo.Phone</span>
+                    <span>@Model.Faculty.Phone</span>
                 </p>
 
                 <p>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
                     </svg>
-                    <span>@Model.FacultyInfo.Email</span>
+                    <span>@Model.Faculty.Email</span>
                 </p>
 
-               
+
 
             </div>
             <div class="col-lg-6">
                 <div class="iframe-container">
-
-                    <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 500px">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2549.0335120370814!2d18.677992215954227!3d50.29130230670013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47113101aa2975c3%3A0x83e49355483d09fa!2sBiblioteka%20Politechniki%20%C5%9Al%C4%85skiej!5e0!3m2!1spl!2spl!4v1607591819744!5m2!1spl!2spl" width="600" height="500" frameborder="0"
-                                style="border:0" allowfullscreen></iframe>
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2549.01464973141!2d18.672342315910203!3d50.29165440667493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471130fe1a0b28ed%3A0x474fd2f733a7a370!2zUG9saXRlY2huaWthIMWabMSFc2th!5e0!3m2!1spl!2spl!4v1607870522350!5m2!1spl!2spl"></iframe>
                     </div>
                 </div>
 
-               <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2549.0335120370814!2d18.677992215954227!3d50.29130230670013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47113101aa2975c3%3A0x83e49355483d09fa!2sBiblioteka%20Politechniki%20%C5%9Al%C4%85skiej!5e0!3m2!1spl!2spl!4v1607595474349!5m2!1spl!2spl" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> -->
             </div>
-            </div>
+
         </div>
     </div>
 </div>
