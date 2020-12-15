@@ -89,7 +89,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult ArticleList()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
@@ -119,7 +119,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EmployeeList()
         {
-            return View();
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
