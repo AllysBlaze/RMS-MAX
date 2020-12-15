@@ -3,4 +3,70 @@
     Layout = "_LayoutAdmin";
 }
 
-Edycja pracownika
+<form>
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label>Stopień</label>
+            <select class="form-control" required>
+                <option selected></option>
+                <option>mgr</option>
+                <option>dr</option>
+                <option>prof</option>
+                <option>prof hab.</option>
+                <option>inż</option>
+                <option>dr inż.</option>
+                <option>mgr inż.</option>
+            </select>
+        </div>
+        <div class="form-group col-md-5">
+            <label>Imię</label>
+            <input type="text" class="form-control" placeholder="Podaj imię" required>
+        </div>
+        <div class="form-group col-md-5">
+            <label>Nazwisko</label>
+            <input type="text" class="form-control" placeholder="Podaj nazwisko" required>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Katedra</label>
+            <input type="text" class="form-control" placeholder="Podaj katedrę">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Funkcja</label>
+            <input type="text" class="form-control" placeholder="Podaj funkcję">
+        </div>
+        <div class="form-group col-md-3">
+            <label>Stanowisko</label>
+            <input type="text" class="form-control" placeholder="Podaj stanowisko">
+        </div>
+        <div class="form-group col-md-2">
+            <label>Pokój</label>
+            <input type="number" min="1" max="9999" class="form-control" placeholder="Podaj numer pokoju">
+        </div>
+    </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Telefon</label>
+                <input type="tel" class="form-control" maxlength="9" placeholder="Podaj numer telefonu" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Podaj e-mail" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Adres planu zajęć</label>
+                <input type="url" class="form-control" placeholder="Podaj link do planu zajęć">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Zdjęcie</label>
+                <input type="file" class="form-control-file" accept="image/*" />
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </div>
+</form>

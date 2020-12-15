@@ -3,4 +3,43 @@
     Layout = "_LayoutAdmin";
 }
 
-Edycja przedmiotu
+<form>
+    <div class="align-content-center justify-content-center">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label>Nazwa</label>
+                <input type="text" class="form-control" placeholder="Podaj nazwę przedmiotu" required>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label>Semestr</label>
+                <input type="range" name="semesterRange" min="1" max="8" value="1" oninput="this.form.semesterInput.value=this.value" />
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <input type="number" name="semesterInput" min="1" max="8" value="1" oninput="this.form.semesterRange.value=this.value" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <label>Stopień</label>
+                <input type="range" name="degreeRange" min="1" max="2" value="1" oninput="this.form.degreeInput.value=this.value" />
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" name="degreeInput" min="1" max="2" value="1" oninput="this.form.degreeRange.value=this.value" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label>Karta Przedmiotu</label>
+                <input type="file" class="form-control-file" accept=".pdf" />
+            </div>
+        </div>
+    </div>
+        <div class="form-group text-center" style="padding-top:15px;">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </div>
+</form>
