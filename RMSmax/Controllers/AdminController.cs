@@ -63,13 +63,13 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EditCourse()
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return View(new MainViewModel() { Faculty = facultyInfo });
         }
 
         [HttpGet]
         public IActionResult AddCourse()
         {
-            return View("EditCourse", new MainViewModel() { Faculty = facultyInfo, });
+            return View("EditCourse", new MainViewModel() { Faculty = facultyInfo });
         }
 
         [HttpPost]

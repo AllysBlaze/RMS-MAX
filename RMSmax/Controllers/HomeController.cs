@@ -100,8 +100,7 @@ namespace RMSmax.Controllers
         {
             return View(new ContactViewModel
             {
-                Faculty = facultyInfo,
-                FacultyInfo = facultyInfo
+                Faculty = facultyInfo
             });
         }
     }

@@ -7,6 +7,5 @@ namespace RMSmax.Models.ViewModels
 {
     public class ContactViewModel : MainViewModel
     {
-        public Faculty FacultyInfo { get; set; }
     }
 }
