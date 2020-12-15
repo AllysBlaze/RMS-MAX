@@ -1,27 +1,25 @@
 ﻿@model IndexViewModel
-@{ 
+@{
     Layout = "_LayoutAdmin";
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-      rel="stylesheet" type='text/css'>
 
 <form asp-controller="Admin" asp-action="EditFacultyInfo" method="post">
     <div class="form-group">
         <label asp-for="Faculty.Name">Nazwa</label>
-        <input asp-for="Faculty.Name" type="text" class="form-control" placeholder="Nazwa wydziału">
+        <input asp-for="Faculty.Name" type="text" class="form-control" placeholder="Nazwa wydziału" required>
     </div>
     <div class="form-group">
         <label asp-for="Faculty.Street">Adres</label>
-        <input asp-for="Faculty.Street" type="text" class="form-control" placeholder="Podaj ulicę i numer">
+        <input asp-for="Faculty.Street" type="text" class="form-control" placeholder="Podaj ulicę i numer" required>
     </div>
     <div class="form-row">
         <div class="form-group col-md-5">
             <label asp-for="Faculty.City">Miasto</label>
-            <input asp-for="Faculty.City" type="text" class="form-control" placeholder="Podaj miasto">
+            <input asp-for="Faculty.City" type="text" class="form-control" placeholder="Podaj miasto" required>
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Faculty.State">Województwo</label>
-            <select class="form-control" asp-for="Faculty.State">
+            <select class="form-control" asp-for="Faculty.State" required>
                 <option selected></option>
                 <option>Dolnośląskie</option>
                 <option>Kujawsko-pomorskie</option>
@@ -43,35 +41,35 @@
         </div>
         <div class="form-group col-md-3">
             <label asp-for="Faculty.Postcode">Kod pocztowy</label>
-            <input asp-for="Faculty.Postcode" type="text" class="form-control" value="44-100" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required>
+            <input asp-for="Faculty.Postcode" type="text" class="form-control" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Phone">Telefon</label>
-            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu">
+            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" required>
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Email">Email</label>
-            <input asp-for="Faculty.Email" type="email" class="form-control" placeholder="Email">
+            <input asp-for="Faculty.Email" type="email" class="form-control" placeholder="Email" required>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-5">
             <label asp-for="Faculty.MapSource">Mapa</label>
-            <input asp-for="Faculty.MapSource" type="url" class="form-control" placeholder="Podaj adres url mapy">
+            <input asp-for="Faculty.MapSource" type="url" class="form-control" placeholder="Podaj adres url mapy" required>
         </div>
         <div class="form-group col-md-2">
             <label asp-for="Faculty.Color">Motyw</label>
-            <input asp-for="Faculty.Color" type="color" class="form-control">
+            <input asp-for="Faculty.Color" type="color" class="form-control" required>
         </div>
         <div class="form-group col-md-5">
             <label asp-for="Faculty.Logo">Logo</label>
-            <input asp-for="Faculty.Logo" type="file" class="form-control-file" accept="image/*" />
+            <input asp-for="Faculty.Logo" type="file" class="form-control-file" accept="image/*"/>
         </div>
     </div>
     <div class="form-group">
-        <input asp-for="Faculty.Courses" type="hidden"/>
+        <input asp-for="Faculty.Courses" type="hidden" />
     </div>
 
     <div class="form-group text-center">
@@ -101,7 +99,10 @@
             </div>
             <div class="form-group">
                 <label>Powtórz nowe hasło</label>
-                <input type="password" class="form-control" placeholder="Powtórz nowe hasło">
+                <input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2">
+                <small id="passwordTip2" class="form-text text-muted">
+                    Hasła muszą być takie same.
+                </small>
             </div>
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Zmień hasło</button>
@@ -120,35 +121,30 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>Informatyka</td>
+        @foreach (var v in Model.FacultyCourses)
+            {
+            <tr>
+            <td>@v.Name</td>
             <td>
-                <button class="btn btn-primary btn-xs" data-toggle="tooltip" title="Tooltip on top">
-                    <i class="fa fa-pencil-square-o"></i>
-                </button>
-                <button class="btn btn-primary btn-xs" data-toggle="tooltip" title="Tooltip on top">
-                    <i class="fa fa-step-backward"></i>
-                </button>
+                <a class="btn btn-primary btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Lista przedmiotów" asp-controller="Admin">
+                    <i class="fa fa-list"></i>
+                </a>
+                <a class="btn btn-info btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Edytuj" asp-controller="Admin" asp-action="EditCourse">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
+                    <i class="fa fa-times"></i>
+                </a>
             </td>
-        </tr>
-        <tr>
-            <td>Matematyka</td>
-            <td>
-                <button class="btn btn-primary btn-xs" data-toggle="tooltip" title="Tooltip on top">
-                    <i class="fa fa-pencil-square-o"></i>
-                </button>
-                <button class="btn btn-primary btn-xs" data-toggle="tooltip" title="Tooltip on top">
-                    <i class="fa fa-step-backward"></i>
-                </button>
-            </td>
-        </tr>
+            </tr>
+            }
     </tbody>
 </table>
 
 
 
 <div class="row align-content-center justify-content-center">
-    <a class="btn btn-info" role="button" asp-controller="Admin" asp-action="ArticleList">
+    <a class="btn btn-success" role="button" asp-controller="Admin" asp-action="ArticleList">
         <i class="fa fa-plus"></i>
         <span>Dodaj</span>
     </a>
