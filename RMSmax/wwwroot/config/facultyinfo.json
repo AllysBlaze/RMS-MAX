@@ -1,12 +1,12 @@
 {
-  "Name": "Wydzia\u0142 Super Cool",
-  "Street": "Kaszanka",
+  "Name": "Wydzia\u0142 MS",
+  "Street": "Kaszanka 10",
   "Postcode": "44-100",
-  "City": "Gliwice-Witam",
-  "State": "\uFFFDl\uFFFDskie",
+  "City": "Gliwice",
+  "State": "\u015Al\u0105skie",
   "Phone": "123698521",
   "Email": "xyz@polsl.pl",
-  "MapSource": null,
+  "MapSource": "https://www.google.com/maps/",
   "Courses": [
     {
       "Name": "Informatyka",
@@ -17,7 +17,6 @@
       "Specialties": [ "S1", "S2", "S3" ]
     }
   ],
-
-  "Color": "#743434",
-  "Logo": "Zadanie1.png"
+  "Color": "#e19494",
+  "Logo": null
 }

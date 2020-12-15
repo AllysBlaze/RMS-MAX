@@ -33,7 +33,7 @@ namespace RMSmax.Controllers
         {
             return View(new ArticlesListViewModel
             {
-                FacultyCourses = facultyInfo.Courses,
+                Faculty = facultyInfo,
                 Articles = articlesRepo.Articles.OrderByDescending(a => a.Id).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
                 PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = ArticlesPageSize, TotalItems = articlesRepo.Articles.Count() }
             });
@@ -45,7 +45,7 @@ namespace RMSmax.Controllers
             if (art != null)
                 return View(new AricleViewModel
                 {
-                    FacultyCourses = facultyInfo.Courses,
+                    Faculty = facultyInfo,
                     Article = art
                 });
             else
@@ -57,7 +57,7 @@ namespace RMSmax.Controllers
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
             if (c != null)
                 return View(new StudiesViewModel(Environment) {
-                    FacultyCourses = facultyInfo.Courses,
+                    Faculty = facultyInfo,
                     Course = c,
                     StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
                     Subjects = subjectRepo.Subjects.Where(x => x.Course == course && (degree == null || semester == null ? true : x.Degree == degree && x.Semester == semester))//!!!
@@ -67,31 +67,32 @@ namespace RMSmax.Controllers
 
         }
 
-        public IActionResult EmployeeList(int page = 1, string searching = "")
+        public IActionResult EmployeeList(int page = 1, string name = "", string surname="")
         {
             IEnumerable<Employee> employees;
-            if (string.IsNullOrEmpty(searching))
+            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname))
             {
                 employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
             }
             else
             {
-                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(searching) || x.Name.Contains(searching) || (x.Name + " " + x.LastName).Contains(searching)).OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
+                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
             }
 
             var pagingInfo = new PagingInfo
             {
                 CurrentPage = page,
                 ItemsPerPage = EmployeesPageSize,
-                TotalItems = string.IsNullOrEmpty(searching) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(searching) || x.Name.Contains(searching) || (x.Name + " " + x.LastName).Contains(searching)).Count()
+                TotalItems = string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).Count()
             };
 
             return View(new EmployeeListViewModel
             {
-                FacultyCourses = facultyInfo.Courses,
+                Faculty = facultyInfo,
                 Employees = employees,
                 PagingInfo = pagingInfo,
-                CurrentSearching = searching
+                CurrentSearchingName = name,
+                CurrentSearchingSurname = surname
             }); 
         }
 
@@ -99,7 +100,7 @@ namespace RMSmax.Controllers
         {
             return View(new ContactViewModel
             {
-                FacultyCourses = facultyInfo.Courses,
+                Faculty = facultyInfo,
                 FacultyInfo = facultyInfo
             });
         }

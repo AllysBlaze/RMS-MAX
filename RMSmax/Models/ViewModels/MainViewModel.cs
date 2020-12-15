@@ -7,6 +7,6 @@ namespace RMSmax.Models.ViewModels
 {
     public class MainViewModel
     {
-        public IList<Course> FacultyCourses { get; set; }
+        public Faculty Faculty { get; set; }
     }
 }

@@ -7,6 +7,5 @@ namespace RMSmax.Models.ViewModels.Admin
 {
     public class IndexViewModel : MainViewModel
     {
-        public Faculty Faculty { get; set; }
     }
 }

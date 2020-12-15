@@ -10,7 +10,7 @@
 </head>
 <body> 
     <nav class="navbar navbar-dark primary-color">
-        <h1>RMS</h1>
+        <h1>@Model.Faculty.Name</h1>
         <a class="navbar-brand" href="#">
             <img src="https://www.polsl.pl/Wydzialy/RMS/PublishingImages/logowyd.jpg" height="70" alt="rms logo">
         </a>
@@ -33,7 +33,7 @@
                                     Studia
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @foreach (var v in Model.FacultyCourses)
+                                    @foreach (var v in Model.Faculty.Courses)
                                     {
                                         <a class="dropdown-item" asp-controller="Home" asp-action="Studies" asp-route-course="@v.Name">@v.Name</a>
                                     }

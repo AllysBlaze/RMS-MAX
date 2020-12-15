@@ -31,43 +31,27 @@ namespace RMSmax.Models
             configFile = Path.Combine(webRoot, "config", configFile);
             if (File.Exists(configFile))
             {
-                Deserialize();
+                Deserialize(configFile);
             }
             else
             {
+                string path = Path.Combine(webRoot, "config", "defaultFacultyinfo.json");
+                Deserialize(path);
                 Courses = new List<Course>();
             }
             FacultyInstance = this;
         }
-        public void Update(Faculty faculty)
-        {
-            Update(faculty.Name, faculty.Street, faculty.Postcode, faculty.City, faculty.Phone, faculty.Email, faculty.MapSource, faculty.Courses, faculty.Color, faculty.Logo);
-        }
-        public void Update(string name, string street, string postcode, string city, string phone, string email, string mapSource, IList<Course> courses, string color, string logo)
-        {
-            Name = name;
-            Street = street;
-            Postcode = postcode;
-            City = city;
-            Phone = phone;
-            Email = email;
-            MapSource = mapSource;
-            Courses = courses;
-            Color = color;
-            Logo = logo;
 
-            Serialize();
-        }
-        private void Serialize()
+        public void Serialize()
         {
-            string data = JsonSerializer.Serialize(this);
+            string data = JsonSerializer.Serialize(FacultyInstance);
             File.WriteAllText(configFile, data);
         }
-        private void Deserialize()
+        private void Deserialize(string path)
         {
            try
             {
-                string data = File.ReadAllText(configFile);
+                string data = File.ReadAllText(path);
                 Faculty f = JsonSerializer.Deserialize<Faculty>(data);
                 this.Name = f.Name;
                 this.Street = f.Street;

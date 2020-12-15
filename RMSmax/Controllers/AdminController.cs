@@ -32,7 +32,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new IndexViewModel() { FacultyCourses = facultyInfo.Courses, Faculty = facultyInfo });
+            return View(new IndexViewModel() { Faculty = facultyInfo });
         }
 
         [HttpPost]
@@ -40,25 +40,36 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                facultyInfo.Update(faculty);
+                facultyInfo.Name = faculty.Name;
+                facultyInfo.Street = faculty.Street;
+                facultyInfo.Postcode = faculty.Postcode;
+                facultyInfo.City = faculty.City;
+                facultyInfo.State = faculty.State;
+                facultyInfo.Phone = faculty.Phone;
+                facultyInfo.Email = faculty.Email;
+                facultyInfo.MapSource = faculty.MapSource;
+                facultyInfo.Color = faculty.Color;
+                facultyInfo.Logo = faculty.Logo;
+                facultyInfo.Serialize();
+
                 return RedirectToAction("Index");
             }
             else
             {
-                return View("Index", new IndexViewModel() { FacultyCourses = facultyInfo.Courses, Faculty = faculty });
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
             }
         }
 
         [HttpGet]
         public IActionResult EditCourse()
         {
-            return View(new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View(new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpGet]
         public IActionResult AddCourse()
         {
-            return View("EditCourse", new MainViewModel() { FacultyCourses = facultyInfo.Courses });
+            return View("EditCourse", new MainViewModel() { Faculty = facultyInfo, });
         }
 
         [HttpPost]
