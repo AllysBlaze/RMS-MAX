@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace RMSmax.Models.ViewModels.Admin
 {
-    public class IndexViewModel : MainViewModel
+    public class SubjectsListViewModel : MainViewModel
     {
-        public IFormFile LogoFile { set; get; }
+        public IEnumerable<Subject> Subjects { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model MainViewModel
+﻿@model RMSmax.Models.ViewModels.Admin.ArticleListViewModel
 @{
     Layout = "_LayoutAdmin";
 }
@@ -40,4 +40,10 @@
         </svg>
         <span>Dodaj</span>
     </a>
+</div>
+
+<div id="pages">
+    <div class="row padding mx-auto">
+        <div page-model="@Model.PagingInfo" page-action="ArticleList" class="btn-group pull-right m-1">></div>
+    </div>
 </div>

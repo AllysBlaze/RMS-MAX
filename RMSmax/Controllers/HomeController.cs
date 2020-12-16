@@ -34,7 +34,7 @@ namespace RMSmax.Controllers
             return View(new ArticlesListViewModel
             {
                 Faculty = facultyInfo,
-                Articles = articlesRepo.Articles.OrderByDescending(a => a.Id).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
+                Articles = articlesRepo.Articles.OrderByDescending(a => a.DateTime).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
                 PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = ArticlesPageSize, TotalItems = articlesRepo.Articles.Count() }
             });
         }

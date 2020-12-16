@@ -16,6 +16,7 @@
     <Folder Include="wwwroot\files\studyPlans\Informatyka\" />
     <Folder Include="wwwroot\files\subjectsDocs\Matematyka\" />
     <Folder Include="wwwroot\files\subjectsDocs\Informatyka\" />
+    <Folder Include="wwwroot\pictures\logo\" />
   </ItemGroup>
 
 </Project>

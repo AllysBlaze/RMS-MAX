@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
 using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
+using System.IO;
 
 namespace RMSmax.Controllers
 {
@@ -19,6 +21,7 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
+        public int PageSize => 20;
         public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {
             articlesRepo = artsRepo;
@@ -36,7 +39,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditFacultyInfo(Faculty faculty)
+        public IActionResult EditFacultyInfo(Faculty faculty, IFormFile logoFile)
         {
             if (ModelState.IsValid)
             {
@@ -49,27 +52,39 @@ namespace RMSmax.Controllers
                 facultyInfo.Email = faculty.Email;
                 facultyInfo.MapSource = faculty.MapSource;
                 facultyInfo.Color = faculty.Color;
-                facultyInfo.Logo = faculty.Logo;
+                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "logo", facultyInfo.Logo));
+                facultyInfo.Logo = logoFile.FileName;
                 facultyInfo.Serialize();
+
+                string path = Path.Combine(Environment.WebRootPath, "pictures", "logo", logoFile.FileName);
+                logoFile.CopyTo(new FileStream(path, FileMode.Create));
 
                 return RedirectToAction("Index");
             }
             else
             {
-                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo, LogoFile = logoFile }); ;
             }
         }
 
         [HttpGet]
-        public IActionResult EditCourse()
+        public IActionResult EditCourse(string course)// TO DO
         {
-            return View(new MainViewModel() { Faculty = facultyInfo });
+            string path = Path.Combine(Environment.WebRootPath, "files", "studyPlans", course);
+            //IFormFileCollection files = new DirectoryInfo(path).GetFiles();
+
+            return View(new EditCourseViewModel()
+            { 
+                Faculty = facultyInfo, 
+                Course = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course), 
+            });
         }
 
         [HttpGet]
         public IActionResult AddCourse()
         {
-            return View("EditCourse", new MainViewModel() { Faculty = facultyInfo });
+            return View("EditCourse", new EditCourseViewModel() { Faculty = facultyInfo, Course = new Course() });
         }
 
         [HttpPost]
@@ -87,9 +102,13 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult ArticleList()
+        public IActionResult ArticleList(int page = 1)// TO DO Wyszukiwanie
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return base.View(new ArticleListViewModel() {
+                Faculty = facultyInfo,
+                Articles = articlesRepo.Articles.OrderByDescending(a => a.DateTime).Skip((page - 1) * PageSize).Take(PageSize),
+                PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = articlesRepo.Articles.Count() }
+            });
         }
 
         [HttpGet]
@@ -117,9 +136,30 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmployeeList()
+        public IActionResult EmployeeList(int page = 1, string name = "", string surname = "")
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname))
+            {
+                employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+            }
+            else
+            {
+                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+            }
+            var pagingInfo = new PagingInfo
+            {
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).Count()
+            };
+
+            return View(new EmployeesListViewModel()
+            {
+                Faculty = facultyInfo,
+                Employees = employees,
+                PagingInfo = pagingInfo
+            });
         }
 
         [HttpGet]
@@ -146,20 +186,12 @@ namespace RMSmax.Controllers
             return View();
         }
 
-
-
-
-
-
-
-
-
-
+        //!
 
         [HttpGet]
-        public IActionResult SubjectsList()
+        public IActionResult SubjectsList(string course)
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course)});
         }
         [HttpGet]
         public IActionResult EditSubject()

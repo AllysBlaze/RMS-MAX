@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace RMSmax.Models
 {
@@ -24,7 +26,7 @@ namespace RMSmax.Models
         public IList<Course> Courses { get;  set; }
         public string Color { get; set; }
         public string Logo { get; set; }
-
+        
         public Faculty() { }
         public Faculty(string webRoot)
         {

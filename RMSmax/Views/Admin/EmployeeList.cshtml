@@ -1,4 +1,4 @@
-﻿@model MainViewModel
+﻿@model EmployeesListViewModel
 @{
     Layout = "_LayoutAdmin";
 }
@@ -56,3 +56,5 @@
         <span>Dodaj</span>
     </a>
 </div>
+
+<div page-model="@Model.PagingInfo" page-action="EmployeeList" page-argument-name="@Model.CurrentSearchingName" page-argument-surname="@Model.CurrentSearchingSurname" class="btn-group pull-right m-1"></div>
