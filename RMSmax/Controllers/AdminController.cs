@@ -112,27 +112,67 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditArticle()
+        public IActionResult EditArticle(int id)
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return View(new EditArticleViewModel() { Faculty = facultyInfo, Article  = articlesRepo.Articles.FirstOrDefault(x => x.Id == id)});
         }
 
         [HttpGet]
         public IActionResult AddArticle()
         {
-            return View("EditArticle");
+            return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = new Article() }) ;
         }
 
         [HttpPost]
-        public IActionResult EditArticle(Article article)
+        public IActionResult EditArticle(Article article, IFormFile photoIn = null, IFormFile photoCover = null)
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            if (ModelState.IsValid)
+            {
+                if (photoIn != null)
+                {
+                    if(System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
+
+                    article.PhotoIn = photoIn.FileName;
+                    photoIn.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", photoIn.FileName), FileMode.Create));
+                }
+                if (photoCover != null)
+                {
+                    if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
+                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
+
+                    article.PhotoCover = photoCover.FileName;
+                    photoCover.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", photoCover.FileName), FileMode.Create));
+                }
+
+                if (article.Id == 0)
+                {
+                    articlesRepo.AddArticle(article);
+                }
+                else
+                {
+                    articlesRepo.EditArticle(article);
+                }
+
+                return RedirectToAction("ArticleList");
+            }
+            else
+            {
+                return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article }); ;
+            }
         }
 
         [HttpPost]
         public IActionResult DeleteArticle(Article article)
         {
-            return View();
+            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
+
+            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
+                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
+
+            articlesRepo.DeleteArticle(article);
+            return RedirectToAction("ArticleList");
         }
 
         [HttpGet]
@@ -163,27 +203,56 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult EditEmployee()
+        public IActionResult EditEmployee(int id)
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return View(new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employeesRepo.Employees.FirstOrDefault(x => x.Id == id) });
         }
 
         [HttpGet]
         public IActionResult AddEmployee()
         {
-            return View("EditEmployee");
+            return View("EditEmployee", new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = new Employee() }) ;
         }
 
         [HttpPost]
-        public IActionResult EditEmployee(Employee employee)
+        public IActionResult EditEmployee(Employee employee, IFormFile photo)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                if (photo != null)
+                {
+                    if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
+
+                    employee.Photo = photo.FileName;
+                    photo.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", photo.FileName), FileMode.Create));
+                }
+
+                if (employee.Id == 0)
+                {
+                    employeesRepo.AddEmployee(employee);
+                }
+                else
+                {
+                    employeesRepo.EditEmployee(employee);
+                }
+
+                return RedirectToAction("EmployeeList");
+            }
+            else
+            {
+                return View("EditEmployee", new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employee }); ;
+            }
         }
 
         [HttpPost]
-        public IActionResult DeleteEmployee()
+        public IActionResult DeleteEmployee(Employee employee)
         {
-            return View();
+            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
+
+            employeesRepo.DeleteEmployee(employee);
+            return RedirectToAction("EmployeeList");
         }
 
         //!
