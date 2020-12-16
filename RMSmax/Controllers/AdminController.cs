@@ -269,5 +269,10 @@ namespace RMSmax.Controllers
         {
             return View(new MainViewModel() { Faculty = facultyInfo, });
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View(new MainViewModel() { Faculty = facultyInfo, });
+        }
     }
 }
