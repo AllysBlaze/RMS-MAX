@@ -20,9 +20,9 @@ namespace RMSmax.Models
             context.AddRange(article);
             context.SaveChanges();
         }
-        public void DeleteArticle(Article article)
+        public void DeleteArticle(int id)
         {
-            context.Remove(context.Articles.Single(a => a.Id == article.Id));
+            context.Remove(context.Articles.Single(a => a.Id == id));
             context.SaveChanges();
         }
         public void EditArticle(Article art)

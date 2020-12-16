@@ -19,9 +19,9 @@ namespace RMSmax.Models
             context.AddRange(employee);
             context.SaveChanges();
         }
-        public void DeleteEmployee(Employee employee)
+        public void DeleteEmployee(int id)
         {
-            context.Remove(context.Employees.Single(a => a.Id == employee.Id));
+            context.Remove(context.Employees.Single(a => a.Id == id));
             context.SaveChanges();
         }
         public void EditEmployee(Employee emp)

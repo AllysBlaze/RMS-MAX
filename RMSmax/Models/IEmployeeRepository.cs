@@ -9,7 +9,7 @@ namespace RMSmax.Models
     {
         IQueryable<Employee> Employees{ get; }
         public void AddEmployee(Employee employee);
-        public void DeleteEmployee(Employee employee);
+        public void DeleteEmployee(int id);
         public void EditEmployee(Employee emp);
     }
 }

@@ -130,7 +130,7 @@ namespace RMSmax.Controllers
             {
                 if (photoIn != null)
                 {
-                    if(System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
 
                     article.PhotoIn = photoIn.FileName;
@@ -138,7 +138,9 @@ namespace RMSmax.Controllers
                 }
                 if (photoCover != null)
                 {
-                    if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
+                    //if (photoIn.FileName == photoCover.FileName) { }
+
+                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
 
                     article.PhotoCover = photoCover.FileName;
@@ -163,15 +165,15 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteArticle(Article article)
+        public IActionResult DeleteArticle(int id)
         {
-            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
-                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
+            //if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                //System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
 
-            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
-                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
-
-            articlesRepo.DeleteArticle(article);
+            //if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
+                //System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
+            
+            articlesRepo.DeleteArticle(id);
             return RedirectToAction("ArticleList");
         }
 
@@ -221,7 +223,7 @@ namespace RMSmax.Controllers
             {
                 if (photo != null)
                 {
-                    if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
 
                     employee.Photo = photo.FileName;
@@ -246,12 +248,12 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteEmployee(Employee employee)
+        public IActionResult DeleteEmployee(int id)
         {
-            if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
-                System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
+            //if (System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+               // System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
 
-            employeesRepo.DeleteEmployee(employee);
+            employeesRepo.DeleteEmployee(id);
             return RedirectToAction("EmployeeList");
         }
 

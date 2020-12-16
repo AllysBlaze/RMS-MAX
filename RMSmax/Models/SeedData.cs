@@ -20,7 +20,7 @@ namespace RMSmax.Models
                 context.Articles.AddRange(
                     new Article
                     {
-                        Title = "title1",
+                        Title = "Testowy obrazek",
                         Content = "content1",
                         Author = "Author",
                         PhotoIn = "pic5.jpg",

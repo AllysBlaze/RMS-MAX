@@ -9,7 +9,7 @@ namespace RMSmax.Models
     {
         IQueryable<Article> Articles { get; }
         public void AddArticle(Article article);
-        public void DeleteArticle(Article article);
+        public void DeleteArticle(int id);
         public void EditArticle(Article art);
 
 
