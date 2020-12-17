@@ -138,24 +138,24 @@ namespace RMSmax.Models
                         Title = "title14",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title15",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic1.jpg",
+                        PhotoCover = "pic1.jpg",
                     },
                     new Article
                     {
                         Title = "title16",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic7.jpg",
+                        PhotoCover = "pic7.jpg",
                     }
                     );
 
