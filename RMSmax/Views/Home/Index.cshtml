@@ -46,28 +46,7 @@
         </a>
     </div>
 
-    @*
-        <div class="container-fluid padding">
-            <div class="row text-center">
-                <h3>Aktualności</h3>
-            </div>
-            <div class="row padding">
-
-            @foreach (var v in Model.Articles)
-            {
-                 <div class="col-lg-4">
-                     <div class="card">
-                         <img class="card-img-top" src="~/pictures/picsArticle/pic1.jpg" alt="Card image cap">
-                         <div class="card-body">
-                             <h5 class="card-title">@v.Title</h5>
-                             <p class="card-text">@v.Content</p>
-                             <a class="btn btn-primary" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id">Zobacz więcej</a>
-                         </div>
-                     </div>
-                 </div>
-            }
-
-    *@
+   
     <div id="articleHeader" class="mx-auto my-5" style="width: 200px;">
         <h1>Aktualności</h1>
     </div>
@@ -76,112 +55,34 @@
                 
                 @foreach (var v in Model.Articles)
                 {
-                  string picfile = "pictures/picsArticle/"+v.PhotoCover;
-                 <div class="col-lg-4">
-                    <div class="card">
-                        <div class="overlay-image" style="background-image: url('@picfile') "></div>
-                        <div class="containerCard">
-                            <h3>@v.Title</h3>
-                            <p class="font-weight-bold">@v.Content</p>
-                            <a class="btn btn-outline-dark" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id">Zobacz więcej</a>
+                     string picfile = "pictures/picsArticle/"+v.PhotoCover;
+                     <div class="col-lg-4">
+                        <div class="card">
+                            <div class="overlay-image" style="background-image: url('@picfile') "></div>
+                            <div class="containerCard">
+                                <h3>@v.Title</h3>
+                                
+                                @if (v.Content.Length> 280)
+                                {
+                                    string newContent = v.Content.Substring(0, 280);
+                                    string fullContent = string.Concat(newContent, "...");
+                                    <p class="font-weight-bold">@fullContent</p>
+                                }
+                                else
+                                {
+                                    <p class="font-weight-bold">@v.Content</p>
+                                }
+                                <a class="btn btn-outline-dark" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id">Zobacz więcej</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
         </div>
     </div>
 
 
 
-            @*
-                to są autkulności pisane na spotkaniu, próby z obrazkami różnej wielkości
-                <div class="col-lg-4">
-                    <div class="card text-white bg-dark mb-3">
-                        <img class="card-img-top" src="~/picturesSlider/pic4.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">ddddfrfref</h5>
-                            <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an un</p>
-                            <a class="btn btn-primary" asp-controller="Home" asp-action="Article" asp-route-articleID="">Jakis link</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card mb-3 text-white bg-dark mb-3">
-                        <img class="card-img-top" src="~/picturesSlider/pic5.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title">ddddfrfref</h5>
-                            <p class="card-text">bkjbkjb</p>
-                            <a class="btn btn-primary" asp-controller="Home" asp-action="Article" asp-route-articleID="">Jakis link</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card text-white bg-dark mb-3">
-
-                        <div class="card-body">
-                            <h5 class="card-title">ddddfrfref</h5>
-                            <p class="card-text">3ef43f3df3</p>
-                            <a class="btn btn-primary" asp-controller="Home" asp-action="Article" asp-route-articleID="">Jakis link</a>
-                        </div>
-                    </div>
-                </div>
-            *@
-
-
-            <!--
-
-                    Aktualności z różnymi obrazkami wersja pierwsza
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="~/picturesSlider/pic2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="~/picturesSlider/pic3.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="~/picturesSlider/pic4.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="~/picturesSlider/pic6.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="~/picturesSlider/pic7.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-                -->
+           
         <div id="pages">
             <div class="row padding mx-auto">
                  <div page-model="@Model.PagingInfo" page-action="Index" class="btn-group pull-right m-1">></div>
