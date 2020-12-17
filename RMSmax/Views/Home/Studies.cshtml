@@ -3,7 +3,13 @@
 <div>
     <h1>@Model.Course.Name</h1>
     <h3>Specjalności</h3>
-    @foreach (var v in Model.Course.Specialties)
+    <h5>St I</h5>
+    @foreach (var v in Model.Course.FirstDegreeSpecialties)
+    {
+        <p>@v</p>
+    }
+    <h5>St II</h5>
+    @foreach (var v in Model.Course.SecondDegreeSpecialties)
     {
         <p>@v</p>
     }

@@ -67,7 +67,7 @@ namespace RMSmax.Models
                 this.Logo = f.Logo;
                 this.State = f.State;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Courses = new List<Course>();
             }
@@ -77,6 +77,7 @@ namespace RMSmax.Models
     public class Course
     {
         public string Name { get; set; }
-        public IList<string> Specialties { get; set; }
+        public IList<string> FirstDegreeSpecialties { get; set; }
+        public IList<string> SecondDegreeSpecialties { get; set; }
     }
 }
