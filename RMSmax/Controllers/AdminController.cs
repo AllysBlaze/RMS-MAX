@@ -341,7 +341,7 @@ namespace RMSmax.Controllers
         {
             Employee employee = employeesRepo.Employees.Where(x => x.Id == id).FirstOrDefault();
             if(employee != null)
-                if (!string.IsNullOrEmpty(employee.Phone) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+                if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
                     try
                     {
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
