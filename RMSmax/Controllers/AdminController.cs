@@ -125,13 +125,13 @@ namespace RMSmax.Controllers
                 IEnumerable<StudentsTimetable> timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name);
                 foreach (var v in timetables)
                 {
-                    studentsTimetableRepo.DeleteStudentsTimetable(v);
+                    studentsTimetableRepo.DeleteStudentsTimetable(v.Id);
                 }
                 //usun przedmioty
                 IEnumerable<Subject> subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name);
                 foreach (var v in subjects)
                 {
-                    subjectRepo.DeleteSubject(v);
+                    subjectRepo.DeleteSubject(v.Id);
                 }
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name)))
                 {
@@ -152,16 +152,181 @@ namespace RMSmax.Controllers
                 }
                 //usun kierunek
                 facultyInfo.Courses.Remove(course);
+                facultyInfo.Serialize();
             }
 
             return RedirectToAction("Index");
         }
         #region skladowe edycji
         [HttpPost]
-        public IActionResult EditCourse(Course course, IList<StudentsTimetable> timetables)
+        public IActionResult EditCourseName(string previousName, string newName)
         {
-            //zapis danych
-            return RedirectToAction("Index");
+            Course course = facultyInfo.Courses.Where(x => x.Name == previousName).FirstOrDefault();
+            if (course != null)
+            {
+                course.Name = newName;
+                facultyInfo.Serialize();
+
+                return RedirectToAction("EditCourse", "Admin", newName);
+            }
+            else
+            {
+                return View("EditCourse", new EditCourseViewModel(Environment)
+                {
+                    Faculty = facultyInfo,
+                    Course = facultyInfo.Courses.Where(x => x.Name == previousName).FirstOrDefault(),
+                    StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == previousName)
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddSpeciality(string courseName, string spec, int degree)
+        {
+            Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
+            if (course != null)
+            {
+                if (!string.IsNullOrEmpty(spec))
+                {
+                    if (degree == 1 && !course.FirstDegreeSpecialties.Contains(spec))
+                    {
+                        course.FirstDegreeSpecialties.Add(spec);
+                        facultyInfo.Serialize();
+
+                        return RedirectToAction("EditCourse", "Admin", courseName);
+                    }
+                    else if (degree == 2 && !course.SecondDegreeSpecialties.Contains(spec))
+                    {
+                        course.SecondDegreeSpecialties.Add(spec);
+                        facultyInfo.Serialize();
+
+                        return RedirectToAction("EditCourse", "Admin", courseName);
+                    }
+                }
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteSpeciality(string courseName, string spec, int degree)
+        {
+            Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
+            if (course != null)
+            {
+                if (!string.IsNullOrEmpty(spec))
+                {
+                    if (degree == 1 && course.FirstDegreeSpecialties.Contains(spec))
+                    {
+                        course.FirstDegreeSpecialties.Remove(spec);
+                        facultyInfo.Serialize();
+
+                        return RedirectToAction("EditCourse", "Admin", courseName);
+                    }
+                    else if (degree == 2 && course.SecondDegreeSpecialties.Contains(spec))
+                    {
+                        course.SecondDegreeSpecialties.Remove(spec);
+                        facultyInfo.Serialize();
+
+                        return RedirectToAction("EditCourse", "Admin", courseName);
+                    }
+                }
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
+        }
+
+        [HttpPost]
+        public IActionResult AddTimetable(string courseName, StudentsTimetable studentsTimetable)
+        {
+            if (ModelState.IsValid)
+            {
+                if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && studentsTimetable != null)
+                {
+                    studentsTimetableRepo.AddStudentsTimetable(studentsTimetable);
+
+                    return RedirectToAction("EditCourse", "Admin", courseName);
+                }
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteTimetable(string courseName, int studentsTimetableId)
+        {
+            if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null)
+            {
+                studentsTimetableRepo.DeleteStudentsTimetable(studentsTimetableId);
+
+                return RedirectToAction("EditCourse", "Admin", courseName);
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
+        }
+
+        [HttpPost]
+        public IActionResult AddStudyPlan(string courseName, IFormFile file)
+        {
+            if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && Path.GetExtension(file.FileName) == ".pdf")
+            {
+                string path = Path.Combine(Environment.WebRootPath, "files", "studyPlans", courseName, file.FileName);
+                if (!System.IO.File.Exists(path))
+                {
+                    file.CopyTo(new FileStream(path, FileMode.Create));
+
+                    return RedirectToAction("EditCourse", "Admin", courseName);
+                }
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteStudyPlan(string courseName, string file)
+        {
+            if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null)
+            {
+                string path = Path.Combine(Environment.WebRootPath, "files", "studyPlans", courseName, file);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+
+                    return RedirectToAction("EditCourse", "Admin", courseName);
+                }
+            }
+
+            return View("EditCourse", new EditCourseViewModel(Environment)
+            {
+                Faculty = facultyInfo,
+                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+            });
         }
         #endregion
         #endregion
@@ -353,18 +518,68 @@ namespace RMSmax.Controllers
         }
         #endregion
 
-        //!
-
+        #region Subject
         [HttpGet]
         public IActionResult SubjectsList(string course)
         {
-            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course)});
+            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course) });
         }
         [HttpGet]
-        public IActionResult EditSubject()
+        public IActionResult EditSubject(int subjectId)
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            Subject subject = subjectRepo.Subjects.Where(x => x.Id == subjectId).FirstOrDefault();
+            if (subject != null)
+                return View(new EditSubjectViewModel() { Faculty = facultyInfo, Subject = subject});
+            else
+                return RedirectToAction("Index");
         }
+
+        public IActionResult AddSubject(string course)
+        {
+            return View("EditSubject", new EditSubjectViewModel() { Faculty = facultyInfo, Subject = new Subject() { Course = course } });
+        }
+
+        [HttpPost]
+        public IActionResult EditSubject(Subject subject, IFormFile doc = null)
+        {
+            if (ModelState.IsValid && subject != null)
+            {
+                if (doc != null)
+                {
+                    subject.File = doc.FileName;
+                    string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, doc.FileName);
+                    doc.CopyTo(new FileStream(path, FileMode.Create));
+                }
+                subjectRepo.AddSubject(subject);
+
+                return RedirectToAction("SubjectsList", "Admin", subject.Course);
+            }
+            else
+                return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteSubject(int subjectId)
+        {
+            Subject subject = subjectRepo.Subjects.Where(x => x.Id == subjectId).FirstOrDefault();
+            if (subject != null)
+            {
+                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subject.File);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                subjectRepo.DeleteSubject(subjectId);
+
+                return RedirectToAction("SubjectsList", "Admin", subject.Course);
+            }
+            else
+                return RedirectToAction("Index");
+        }
+        #endregion
+
+        //!
+
         [HttpGet]
         public IActionResult Login()
         {

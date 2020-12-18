@@ -19,9 +19,9 @@ namespace RMSmax.Models
             context.AddRange(subject);
             context.SaveChanges();
         }
-        public void DeleteSubject(Subject subject)
+        public void DeleteSubject(int subjectId)
         {
-            context.Remove(context.Subjects.Single(a => a.Id == subject.Id));
+            context.Remove(context.Subjects.Single(a => a.Id == subjectId));
             context.SaveChanges();
         }
         public void EditSubject(Subject sub)

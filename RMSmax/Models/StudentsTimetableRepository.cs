@@ -18,9 +18,9 @@ namespace RMSmax.Models
             context.AddRange(studentsTimetable);
             context.SaveChanges();
         }
-        public void DeleteStudentsTimetable(StudentsTimetable studentsTimetable)
+        public void DeleteStudentsTimetable(int studentsTimetableId)
         {
-            context.Remove(context.StudentsTimetables.Single(a => a.Id == studentsTimetable.Id));
+            context.Remove(context.StudentsTimetables.Single(a => a.Id == studentsTimetableId));
             context.SaveChanges();
         }
         public void EditStudentsTimetable(StudentsTimetable stu)

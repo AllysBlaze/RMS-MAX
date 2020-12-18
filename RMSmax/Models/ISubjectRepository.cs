@@ -9,7 +9,7 @@ namespace RMSmax.Models
     {
         IQueryable<Subject> Subjects{ get; }
         public void AddSubject(Subject subject);
-        public void DeleteSubject(Subject subject);
+        public void DeleteSubject(int subjectId);
         public void EditSubject(Subject sub);
     }
 }
