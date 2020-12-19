@@ -522,7 +522,8 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult SubjectsList(string course)
         {
-            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course) });
+            Console.WriteLine();
+            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course), CourseName = course});
         }
         [HttpGet]
         public IActionResult EditSubject(int subjectId)
@@ -550,9 +551,18 @@ namespace RMSmax.Controllers
                     string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, doc.FileName);
                     doc.CopyTo(new FileStream(path, FileMode.Create));
                 }
-                subjectRepo.AddSubject(subject);
+                if (subject.Id == 0)
+                {
+                    subjectRepo.AddSubject(subject);
+                }
+                else 
+                {
+                    subjectRepo.EditSubject(subject);
+                }
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", subject.Course);
 
-                return RedirectToAction("SubjectsList", "Admin", subject.Course);
+                return RedirectToAction("SubjectsList", "Admin", routeValues);
             }
             else
                 return RedirectToAction("Index");
@@ -570,8 +580,10 @@ namespace RMSmax.Controllers
                     System.IO.File.Delete(path);
                 }
                 subjectRepo.DeleteSubject(subjectId);
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", subject.Course);
 
-                return RedirectToAction("SubjectsList", "Admin", subject.Course);
+                return RedirectToAction("SubjectsList", "Admin", routeValues);
             }
             else
                 return RedirectToAction("Index");

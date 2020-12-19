@@ -384,10 +384,10 @@ namespace RMSmax.Models
                     new Subject
                     {
                         Course = "Informatyka",
-                        Degree = 1,
+                        Degree = 2,
                         File = "inf_I_2019.pdf",
-                        Name = "Przedmiot1",
-                        Semester = 1,
+                        Name = "PrzedmiotTestowy",
+                        Semester = 2,
                     },
                     new Subject
                     {

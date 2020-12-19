@@ -3,43 +3,40 @@
     Layout = "_LayoutAdmin";
 }
 
-<form>
+<form asp-controller="Admin" asp-action="EditSubject" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for="Subject.Id" />
+    <input type="hidden" asp-for="Subject.Course" />
+    <input type="hidden" asp-for="Subject.File" value="0"/>
     <div class="align-content-center justify-content-center">
         <div class="form-row">
             <div class="form-group col-md-12">
-                <label>Nazwa</label>
-                <input type="text" class="form-control" placeholder="Podaj nazwę przedmiotu" required>
+                <label asp-for="Subject.Name">Nazwa</label>
+                <input asp-for="Subject.Name" type="text" class="form-control" placeholder="Podaj nazwę przedmiotu" required>
             </div>
 
         </div>
         <div class="form-row">
-            <div class="form-group col-md-2">
-                <label>Semestr</label>
-                <input type="range" name="semesterRange" min="1" max="8" value="1" oninput="this.form.semesterInput.value=this.value" />
-            </div>
-
 
             <div class="form-group col-md-6">
-                <input type="number" name="semesterInput" min="1" max="8" value="1" oninput="this.form.semesterRange.value=this.value" />
+                <label asp-for="Subject.Semester">Semestr</label>
+                <input asp-for="Subject.Semester" type="number" min="1" max="8" required />
             </div>
         </div>
         <div class="form-row">
-            <div class="form-group col-md-2">
-                <label>Stopień</label>
-                <input type="range" name="degreeRange" min="1" max="2" value="1" oninput="this.form.degreeInput.value=this.value" />
-            </div>
             <div class="form-group col-md-6">
-                <input type="number" name="degreeInput" min="1" max="2" value="1" oninput="this.form.degreeRange.value=this.value" />
+                <label asp-for="Subject.Degree">Stopień</label>
+                <input asp-for="Subject.Degree" type="number" min="1" max="2" required />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label>Karta Przedmiotu</label>
-                <input type="file" class="form-control-file" accept=".pdf" />
+                <label asp-for="Doc">Karta Przedmiotu</label>
+                <input asp-for="Doc" type="file" class="form-control-file" accept=".pdf" required />
             </div>
         </div>
     </div>
-        <div class="form-group text-center" style="padding-top:15px;">
-            <button type="submit" class="btn btn-primary">Zapisz</button>
-        </div>
+    <div class="form-group text-center" style="padding-top:15px;">
+        <a role="button" class="btn btn-danger" asp-controller="Admin" asp-action="SubjectsList" asp-route-course="@Model.Subject.Course">Anuluj</a>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
 </form>
