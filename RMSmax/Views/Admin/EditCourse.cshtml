@@ -6,11 +6,12 @@
 
 
 
-<form>
+<form asp-controller="Admin" asp-action="EditCourseName" method="post">
+    <input type="hidden" name="previousName" value="@Model.Course.Name"/>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <label>Nazwa kierunku</label>
-            <input type="text" class="form-control" placeholder="Podaj nazwę kierunku" required>
+            <label name="newName" >Nazwa kierunku</label>
+            <input name="newName" value="@Model.Course.Name" type="text" class="form-control" placeholder="Podaj nazwę kierunku" required>
         </div>
     </div>
     <div class="form-group text-center">

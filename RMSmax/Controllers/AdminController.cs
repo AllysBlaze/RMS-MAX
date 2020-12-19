@@ -166,8 +166,9 @@ namespace RMSmax.Controllers
             {
                 course.Name = newName;
                 facultyInfo.Serialize();
-
-                return RedirectToAction("EditCourse", "Admin", newName);
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", course.Name);
+                return RedirectToAction("EditCourse", "Admin", routeValues);
             }
             else
             {

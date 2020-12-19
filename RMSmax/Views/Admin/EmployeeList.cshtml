@@ -13,9 +13,9 @@
     <tbody>
         @foreach (var v in Model.Employees)
             {
-        <tr>
-            <td>@string.Concat(v.Degree, " ", v.Name, " ", v.LastName, " ") &#60;@v.Mail&#62;</td>
-            <td>
+            <tr>
+                <td>@string.Concat(v.Degree, " ", v.Name, " ", v.LastName, " ") &#60;@v.Mail&#62;</td>
+                <td>
                 <form asp-controller="Admin" asp-action="DeleteEmployee" method="post">
                     <div class="row">
                         <a class="btn btn-info btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Edytuj" asp-controller="Admin" asp-action="EditEmployee" asp-route-id="@v.Id" style="margin-right:5px;">
@@ -32,8 +32,8 @@
                         </button>
                     </div>
                 </form>
-            </td>
-        </tr>
+                </td>
+            </tr>
             }
     </tbody>
 </table>
