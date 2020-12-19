@@ -1,10 +1,10 @@
 ﻿@model EmployeeListViewModel
 
 <div>
-
+ 
     <div class="container-fluid padding">
         <div class="row">
-            <div id="employeeHeader" class="mx-auto">
+            <div id="employeeHeader" class="mx-auto my-2">
                 <h1>Pracownicy</h1>
             </div>
         </div>
@@ -17,54 +17,40 @@
                 <input type="text" class="form-control" placeholder="Nazwisko" aria-label="Nazwisko">
             </div>
             <div class="col-md-1 mb-1">
-                <button class="btn btn-outline-dark">Wyszukaj</button>
+                <button class="btn btn-outline-dark" type="submit">Wyszukaj</button>
             </div>
         </div>
 
-        @*
-        <div class="row">
-            <table class="table table-striped table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Imię</th>
-                        <th scope="col">Nazwisko</th>
-                        <th scope="col">Mail</th>
-                        <th scope="col">Sala</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var v in Model.Employees)
-                    {
-                        /*<p>@(v.Name + " " + v.LastName)</p>*/
-
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>@v.Name</td>
-                            <td>@v.LastName</td>
-                            <td>jakismail@gmail</td>
-                            <td>201</td>
-                        </tr>
-                    }
-
-                </tbody>
-            </table>
-        </div>
-        *@
-        <div class="containere">
-            <div class="row">
-                <div class="col-lg-9">
-                    <p>Imie</p>
-                    <p>nazwisko</p>
-                    <p>sala</p>
-                    <p>mail</p>
-                </div>
-                <div class="col-md-6">
-                    <img src="~/pictures/picsArticle/pic2.jpg" class="img-fluid"/>
-                </div>
-            </div>
-        </div>
         
+    <div class="container-fluid">
+        @foreach (var v in Model.Employees)
+        {
+            <div class="row my-4 border-bottom border-secondary" style="width:30%;">
+                <div class="col-lg-12">
+                     <h5>@v.Degree @v.Name @v.LastName</h5>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-lg-9">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Sala: @v.Room</li>
+                        <li style="word-break:break-word;" class="list-group-item">Telefon: @v.Phone</li>
+                        <li class="list-group-item">Mail: @v.Mail</li>
+                        <li class="list-group-item">Katedra: @v.Department</li>
+                        <li class="list-group-item">Funkcja: @v.Function</li>
+                        <li class="list-group-item">Stanowisko: @v.Position</li>
+                        <li class="list-group-item">Plan zajęć: @v.Timetable</li>
+                    </ul>
+
+                </div>
+                <div class="col-lg-3 d-flex flex-wrap align-items-center">
+                    <img class="mx-auto my-3 rounded" src="~/pictures/picsArticle/pic4.jpg" style="height:150px; max-width:300px" />
+                </div>
+            </div>
+        }
+
+    </div>
+
 
 
 
