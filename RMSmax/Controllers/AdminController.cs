@@ -100,7 +100,7 @@ namespace RMSmax.Controllers
         public IActionResult AddCourse(string name)
         {
             if (string.IsNullOrEmpty(name) || facultyInfo.Courses.Where(x => x.Name == name).FirstOrDefault() != null)
-                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo, NewCourseName = name });
             else
             {
                 facultyInfo.Courses.Add(new Course() { Name = name, FirstDegreeSpecialties = new List<string>(), SecondDegreeSpecialties = new List<string>() });
@@ -111,7 +111,10 @@ namespace RMSmax.Controllers
                 if (!System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", name)))
                     System.IO.Directory.CreateDirectory(Path.Combine(Environment.WebRootPath, "files", "studyPlans", name));
 
-                return RedirectToAction("EditCourse", "Admin", name);
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", name);
+
+                return RedirectToAction("EditCourse", "Admin", routeValues);
             }
         }
 
@@ -168,6 +171,7 @@ namespace RMSmax.Controllers
                 facultyInfo.Serialize();
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", course.Name);
+
                 return RedirectToAction("EditCourse", "Admin", routeValues);
             }
             else
@@ -193,15 +197,19 @@ namespace RMSmax.Controllers
                     {
                         course.FirstDegreeSpecialties.Add(spec);
                         facultyInfo.Serialize();
+                        Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                        routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", courseName);
+                        return RedirectToAction("EditCourse", "Admin", routeValues);
                     }
                     else if (degree == 2 && !course.SecondDegreeSpecialties.Contains(spec))
                     {
                         course.SecondDegreeSpecialties.Add(spec);
                         facultyInfo.Serialize();
+                        Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                        routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", courseName);
+                        return RedirectToAction("EditCourse", "Admin", routeValues);
                     }
                 }
             }
@@ -226,15 +234,19 @@ namespace RMSmax.Controllers
                     {
                         course.FirstDegreeSpecialties.Remove(spec);
                         facultyInfo.Serialize();
+                        Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                        routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", courseName);
+                        return RedirectToAction("EditCourse", "Admin", routeValues);
                     }
                     else if (degree == 2 && course.SecondDegreeSpecialties.Contains(spec))
                     {
                         course.SecondDegreeSpecialties.Remove(spec);
                         facultyInfo.Serialize();
+                        Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                        routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", courseName);
+                        return RedirectToAction("EditCourse", "Admin", routeValues);
                     }
                 }
             }
@@ -255,8 +267,11 @@ namespace RMSmax.Controllers
                 if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && studentsTimetable != null)
                 {
                     studentsTimetableRepo.AddStudentsTimetable(studentsTimetable);
+                    
+                    Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                    routeValues.Add("course", courseName);
 
-                    return RedirectToAction("EditCourse", "Admin", courseName);
+                    return RedirectToAction("EditCourse", "Admin", routeValues);
                 }
             }
 
@@ -275,7 +290,10 @@ namespace RMSmax.Controllers
             {
                 studentsTimetableRepo.DeleteStudentsTimetable(studentsTimetableId);
 
-                return RedirectToAction("EditCourse", "Admin", courseName);
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", courseName);
+
+                return RedirectToAction("EditCourse", "Admin", routeValues);
             }
 
             return View("EditCourse", new EditCourseViewModel(Environment)
@@ -296,7 +314,10 @@ namespace RMSmax.Controllers
                 {
                     file.CopyTo(new FileStream(path, FileMode.Create));
 
-                    return RedirectToAction("EditCourse", "Admin", courseName);
+                    Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                    routeValues.Add("course", courseName);
+
+                    return RedirectToAction("EditCourse", "Admin", routeValues);
                 }
             }
 
@@ -318,7 +339,10 @@ namespace RMSmax.Controllers
                 {
                     System.IO.File.Delete(path);
 
-                    return RedirectToAction("EditCourse", "Admin", courseName);
+                    Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                    routeValues.Add("course", courseName);
+
+                    return RedirectToAction("EditCourse", "Admin", routeValues);
                 }
             }
 
@@ -544,19 +568,16 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult EditSubject(Subject subject, IFormFile doc = null)
         {
-            if (ModelState.IsValid && subject != null)
+            if (ModelState.IsValid && subject != null && doc != null)
             {
-                if (doc != null)
-                {
-                    subject.File = doc.FileName;
-                    string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, doc.FileName);
-                    doc.CopyTo(new FileStream(path, FileMode.Create));
-                }
+                subject.File = doc.FileName;
+                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, doc.FileName);
+                doc.CopyTo(new FileStream(path, FileMode.Create));
                 if (subject.Id == 0)
                 {
                     subjectRepo.AddSubject(subject);
                 }
-                else 
+                else
                 {
                     subjectRepo.EditSubject(subject);
                 }
@@ -564,6 +585,10 @@ namespace RMSmax.Controllers
                 routeValues.Add("course", subject.Course);
 
                 return RedirectToAction("SubjectsList", "Admin", routeValues);
+            }
+            else if (subject != null)
+            {
+                return View("EditSubject", new EditSubjectViewModel() { Faculty = facultyInfo, Subject = subject});
             }
             else
                 return RedirectToAction("Index");
