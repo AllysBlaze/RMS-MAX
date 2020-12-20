@@ -3,23 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RMSmax.Data;
 
-namespace RMSmax.Migrations
+namespace RMSmax.Migrations.RMS
 {
     [DbContext(typeof(RMSContext))]
-    [Migration("20201214171958_RMSDataBase")]
-    partial class RMSDataBase
+    partial class RMSContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("RMSmax.Models.Article", b =>
                 {
@@ -37,7 +35,6 @@ namespace RMSmax.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateTime")
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhotoCover")

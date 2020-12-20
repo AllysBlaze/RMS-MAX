@@ -9,7 +9,7 @@ namespace RMSmax.Data
 {
     public class RMSContext : DbContext
     {
-        public RMSContext(DbContextOptions options)
+        public RMSContext(DbContextOptions<RMSContext> options)
             : base(options)
         {
         }

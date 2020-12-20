@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RMSmax.Migrations
+namespace RMSmax.Migrations.RMS
 {
     public partial class RMSDataBase : Migration
     {

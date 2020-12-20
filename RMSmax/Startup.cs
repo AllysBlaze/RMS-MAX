@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using RMSmax.Models;
 using Microsoft.EntityFrameworkCore;
 using RMSmax.Data;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace RMSmax
@@ -22,7 +23,12 @@ namespace RMSmax
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<RMSContext>(opts => opts.UseSqlServer("name=RMSDB"));
+            services.AddDbContext<RMSContext>(opts => opts.UseSqlServer("name=RMSDataB"));
+            services.AddDbContext<AppIdentityDbContext>(opts => opts.UseSqlServer("name=RMSIdentity"));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppIdentityDbContext>()
+            .AddDefaultTokenProviders();
+
             //services.AddScoped<IDataRepository<Article>, ArticleManager>();
             services.AddTransient<IArticleRepository, ArticleRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
@@ -41,6 +47,7 @@ namespace RMSmax
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
