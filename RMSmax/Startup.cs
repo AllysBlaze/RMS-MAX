@@ -54,6 +54,7 @@ namespace RMSmax
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
             SeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
