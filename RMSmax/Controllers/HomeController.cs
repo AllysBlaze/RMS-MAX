@@ -18,7 +18,7 @@ namespace RMSmax.Controllers
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
         public int ArticlesPageSize => 6;
-        public int EmployeesPageSize => 10;
+        public int EmployeesPageSize => 5;
 
         public HomeController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {

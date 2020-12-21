@@ -125,34 +125,33 @@ namespace RMSmax.Controllers
             if (course != null)
             {
                 //usun plany zajec
-                IEnumerable<int> timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name).Select(x => x.Id);
-
-                foreach (var v in timetables)
+                int[] timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
+                foreach(var v in timetables)
                 {
                     studentsTimetableRepo.DeleteStudentsTimetable(v);
                 }
                 //usun przedmioty
-                IEnumerable<int> subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id);
+                int[] subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
                 foreach (var v in subjects)
                 {
                     subjectRepo.DeleteSubject(v);
                 }
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name)))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name), true);
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
                 }
                 //usun plany studiow
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name)))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name), true);
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
                 }
                 //usun kierunek
                 facultyInfo.Courses.Remove(course);
@@ -543,11 +542,11 @@ namespace RMSmax.Controllers
             Employee employee = employeesRepo.Employees.Where(x => x.Id == id).FirstOrDefault();
             if(employee != null)
                 if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
 
             employeesRepo.DeleteEmployee(id);
             return RedirectToAction("EmployeeList");
