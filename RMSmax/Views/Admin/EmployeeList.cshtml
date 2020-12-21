@@ -2,6 +2,20 @@
 @{
     Layout = "_LayoutAdmin";
 }
+<form asp-controller="Admin" asp-action="EmployeeList" method="get">
+    <div class="row" style="margin-bottom: 25px;">
+        <div class="col-lg-5 col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Imię" aria-label="Imię" style="margin-bottom: 18px;">
+        </div>
+        <div class="col-lg-5 col-md-6">
+            <input type="text" name="surname" class="form-control" placeholder="Nazwisko" aria-label="Nazwisko" style="margin-bottom: 18px;">
+        </div>
+        <div class="col-lg-2 col-md-12 text-center">
+            <button role="button" class="btn btn-primary">Wyszukaj</button>
+
+        </div>
+    </div>
+</form>
 
 <table class="table table-striped">
     <thead>

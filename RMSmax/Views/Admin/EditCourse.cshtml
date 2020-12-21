@@ -55,8 +55,8 @@
 
 
 <!--Specjalizacje 1 st. formularz-->
-<form id="specialities1Form" style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
-    <input type="hidden" name="scroll" value="specialities1Form" />
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
+    <input type="hidden" name="scroll" value="specialities1Table" />
     <input type="hidden" name="courseName" value="@Model.Course.Name" />
     <input type="hidden" name="degree" value="1" />
     <div class="form-row">
@@ -114,8 +114,8 @@
 
 
 <!--Specjalizacje 2 st. formularz-->
-<form id="specialities2Form" style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
-    <input type="hidden" name="scroll" value="specialities2Form" />
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
+    <input type="hidden" name="scroll" value="specialities2Table" />
     <input type="hidden" name="courseName" value="@Model.Course.Name" />
     <input type="hidden" name="degree" value="2" />
     <div class="form-row">
@@ -173,17 +173,17 @@
 
 
 <!--Plan zajęć formularz-->
-<form id="studentsTimetableForm" style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddTimetable" method="post">
-    <input type="hidden" name="scroll" value="studentsTimetableForm" />
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddTimetable" method="post">
+    <input type="hidden" name="scroll" value="studentsTimetableTable" />
     <input type="hidden" name="studentsTimetable.Course" value="@Model.Course.Name" />
     <div class="form-row">
         <div class="form-group col-md-3">
             <label>Semestr</label>
-            <input name="studentsTimetable.Semester" type="number" class="form-control" placeholder="Podaj semestr" required />
+            <input name="studentsTimetable.Semester" type="number" min="1" max="10" class="form-control" placeholder="Podaj semestr" required />
         </div>
         <div class="form-group col-md-3">
             <label>Stopień</label>
-            <input name="studentsTimetable.Degree" type="number" class="form-control" placeholder="Podaj stopień" required />
+            <input name="studentsTimetable.Degree" type="number" min="1" max="2"class="form-control" placeholder="Podaj stopień" required />
         </div>
         <div class="form-group col-md-6">
             <label>Link do planu</label>
@@ -237,8 +237,8 @@
 </table>
 
 <!--Plany studiów formularz-->
-<form id="studentsStudyPlansForm" asp-controller="Admin" asp-action="AddStudyPlan" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="scroll" value="studentsStudyPlansForm" />
+<form asp-controller="Admin" asp-action="AddStudyPlan" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="scroll" value="studentsStudyPlansTable" />
     <input type="hidden" name="courseName" value="@Model.Course.Name" />
     <div class="form-row">
         <div class="col-12">

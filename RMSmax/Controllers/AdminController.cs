@@ -125,16 +125,17 @@ namespace RMSmax.Controllers
             if (course != null)
             {
                 //usun plany zajec
-                IEnumerable<StudentsTimetable> timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name);
+                IEnumerable<int> timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name).Select(x => x.Id);
+
                 foreach (var v in timetables)
                 {
-                    studentsTimetableRepo.DeleteStudentsTimetable(v.Id);
+                    studentsTimetableRepo.DeleteStudentsTimetable(v);
                 }
                 //usun przedmioty
-                IEnumerable<Subject> subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name);
+                IEnumerable<int> subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id);
                 foreach (var v in subjects)
                 {
-                    subjectRepo.DeleteSubject(v.Id);
+                    subjectRepo.DeleteSubject(v);
                 }
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name)))
                 {
@@ -465,6 +466,14 @@ namespace RMSmax.Controllers
             else
             {
                 employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                if (string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
+                {
+                    employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                }
+                if (string.IsNullOrEmpty(surname) && !string.IsNullOrEmpty(name)) 
+                {
+                    employees = employeesRepo.Employees.Where(x => x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                }
             }
             var pagingInfo = new PagingInfo
             {
