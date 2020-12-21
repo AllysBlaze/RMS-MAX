@@ -119,7 +119,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteCourse(string courseName)
+        public IActionResult DeleteCourse(string courseName, string scroll)
         {
             Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
             if (course != null)
@@ -158,7 +158,7 @@ namespace RMSmax.Controllers
                 facultyInfo.Serialize();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Admin", scroll);
         }
         #region skladowe edycji
         [HttpPost]
