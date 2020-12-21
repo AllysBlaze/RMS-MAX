@@ -11,10 +11,7 @@ namespace RMSmax.Models.ViewModels.Admin
     public class EditCourseViewModel : MainViewModel
     {
         public Course Course { get; set; }
-        public string NewSpec1 { get; set; }
-        public string NewSpec2 { get; set; }
         public IEnumerable<StudentsTimetable> StudentsTimetables { get; set; }
-        public StudentsTimetable NewStudentsTimetable { get; set; }
         private string rootPath;
         public IList<string> StudyPlans
         {
@@ -29,8 +26,6 @@ namespace RMSmax.Models.ViewModels.Admin
                 return files;
             }
         }
-        public IFormFile NewStudyPlan { get; set; }
-
         public EditCourseViewModel(IWebHostEnvironment env)
         {
             rootPath = env.WebRootPath;

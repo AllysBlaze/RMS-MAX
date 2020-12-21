@@ -1,4 +1,4 @@
-﻿.carousel-item {
+.carousel-item {
     height: 32rem;
     background-color: rgb(8, 8, 8);
     position: relative;
@@ -7,18 +7,18 @@
     color: white;
 }
 
-  .carousel-item .container{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 50px;
-    margin-bottom:50px;
-  }
+    .carousel-item .container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-bottom: 50px;
+        margin-bottom: 50px;
+    }
 
 
 
-  .overlay-image{
+.overlay-image {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -27,12 +27,12 @@
     background-position: center;
     background-size: cover;
     opacity: 0.5;
-  }
+}
 
-  .card{
-      margin-top:50px;
-      margin-bottom:40px;
-  }
+.card {
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
 
 .containerCard {
     position: absolute;
@@ -52,5 +52,3 @@
     background-size: cover;
     color: black;
 }
-
-
