@@ -1,4 +1,4 @@
-﻿@model RMSmax.Models.ViewModels.MainViewModel
+﻿@model RMSmax.Models.ViewModels.LoginModel
 @{
     Layout = null;
 }
@@ -19,7 +19,8 @@
             <div class="col-lg-3 col-md-2"></div>
             <div class="col-lg-6 col-md-8" style="margin-top: 90px; height: auto; text-align: center; border-radius: 20px; border: solid 3px gray;">
                 <div class="col-lg-12" style="margin-top: 25px;">
-                    <img src="~/pictures/logo/@Model.Faculty.Logo" height="100" alt="rms logo">
+                    <!--<img src="~/pictures/logo/ height="100" alt="rms logo">-->
+
                 </div>
                 <div class="col-lg-12" style="margin-top: 15px; text-align: center; font-size: 30px; margin-top: 15px; font-weight: bold;">
                     Logowanie do Panelu Administracyjnego
@@ -27,14 +28,21 @@
 
                 <div class="col-lg-12">
                     <div class="col-lg-12" style="margin-top: 25px; text-align: left;">
-                        <form>
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            <input type="hidden" asp-for="ReturnUrl"/>                            
                             <div class="form-group" style="margin-bottom: 25px;">
-                                <label class="form-control-label" style="font-weight: bold;">Login</label>
-                                <input type="text" class="form-control" placeholder="Podaj login" required autocomplete="off">
+                                <label asp-for="Name" class="form-control-label" style="font-weight: bold;">Login</label>
+                                <div>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Name" type="text" class="form-control" placeholder="Podaj login" required autocomplete="off">
                             </div>
                             <div class="form-group" style="margin-bottom: 25px;">
-                                <label class="form-control-label" style="font-weight: bold;">Hasło</label>
-                                <input type="password" class="form-control" placeholder="Podaj hasło" required autocomplete="off">
+                                <label asp-for="Password" class="form-control-label" style="font-weight: bold;">Hasło</label>
+                                <div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Podaj hasło" required autocomplete="off">
                             </div>
                             <div class="col-lg-12">
                                 <div class="col-lg-12 text-center">

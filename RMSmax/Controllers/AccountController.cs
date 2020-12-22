@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RMSmax.Models.ViewModels;
 
+
 namespace RMSmax.Controllers
 {
     [Authorize]
@@ -22,7 +23,7 @@ namespace RMSmax.Controllers
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
-            return View(new LoginModel { ReturnUrl = returnUrl });
+            return View(new LoginModel { ReturnUrl = returnUrl});
         }
         [HttpPost]
         [AllowAnonymous]

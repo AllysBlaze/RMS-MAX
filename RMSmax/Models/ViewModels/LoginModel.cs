@@ -14,5 +14,6 @@ namespace RMSmax.Models.ViewModels
         [UIHint("password")]
         public string Password { get; set; }
         public string ReturnUrl { get; set; } = "/";
+
     }
 }
