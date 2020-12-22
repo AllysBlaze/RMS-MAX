@@ -1,25 +1,30 @@
 ﻿@model AricleViewModel
 
+<style>
+    .showText p {
+        width: 100%;
+    }
+</style>
+
 <div>
   
     <div class="container-fluid padding">
-        <div class="row padding">
+        <div class="row padding showText">
             @if (string.IsNullOrEmpty(Model.Article.PhotoIn) == true)
             {
                 <h4>@Model.Article.Title</h4>
-                <p>@Model.Article.Content</p>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                @Html.Raw(Model.Article.Content)
+                   
             }
             else
             {
                 <div class="col-lg-6">
                     <h4>@Model.Article.Title</h4>
-                    <p>@Model.Article.Content</p>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    @Html.Raw(Model.Article.Content)
                 </div>
                 <div class="col-lg-6">
-                        @{string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoIn;}
-                        <img src="@picfile" class="img-fluid" />
+                    @{string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoIn;}
+                    <img src="@picfile" class="img-fluid" />
                 </div>
             }
         </div>

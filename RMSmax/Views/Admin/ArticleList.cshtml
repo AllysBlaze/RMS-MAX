@@ -6,28 +6,28 @@
 
 <form asp-controller="Admin" asp-action="ArticleList" method="get">
     <div class="row" style="margin-bottom: 25px;">
-        <div class="col-lg-5 col-md-6">
+        <div class="col-lg-6">
             <input type="text" name="name" class="form-control" placeholder="Tytuł" aria-label="Tytuł" style="margin-bottom: 18px;" autocomplete="off">
         </div>
-        <div class="col-lg-5 col-md-6">
+        <div class="col-lg-6">
             <input type="text" name="surname" class="form-control" placeholder="Autor" aria-label="Autor" style="margin-bottom: 18px;" autocomplete="off">
         </div>
-        <div class="col-lg-5 col-md-6">
-            <input type="date" id="date1" value="" />
+        <div class="col-lg-2">
+            <p>Zakres dat: </p>
         </div>
-        <div class="col-lg-5 col-md-6">
-            <input type="date" id="date2" name="date2" value="" />
+        <div class="col-lg-3 pt-1">
+            <label>Od</label>
+            <input type="date" id="date1" onchange="checkCondition()" value="" />
         </div>
-        
-        <div class="col-lg-2 col-md-12 text-center">
-            <button role="button" class="btn btn-primary">Wyszukaj</button>
+        <div class="col-lg-3 pt-1" style="margin-bottom:5px;">
+            <label>Do</label>
+            <input type="date" id="date2" onchange="checkCondition()" value="" />
+        </div>
+        <div class="col-lg-12 text-center">
+            <button role="button" id="submitBtn" class="btn btn-primary">Wyszukaj</button>
         </div>
     </div>
 </form>
-<div class="col-lg-2 col-md-12 text-center">
-    <button role="button" id="btnCheck" class="btn btn-primary" onclick="">Sprawdź warunek</button>
-</div>
-
 
 
 <table class="table table-striped">

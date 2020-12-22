@@ -1,18 +1,23 @@
-﻿window.addEventListener('load',
-    function () {
-        var n = document.querySelector("#btnCheck");
-        n.addEventListener('click', checkCondition, true);
-    }
-);
-
-
-function checkCondition () {
+﻿
+function checkCondition() {
     var date1 = document.getElementById("date1");
     var date2 = document.getElementById("date2");
+    var submitBtn = document.querySelector("#submitBtn");
+    
+    var o1 = new Date(date1.value);
+    var d1 = o1.getTime();
+    var o2 = new Date(date2.value);
+    var  d2 = o2.getTime();
 
-    console.log("Działa");
-    console.log(date1);
-    console.log(date1.nodeValue);
-    console.log(date1.value);
-    //jak warunek jest zly to zablokowac szukanie ! button- disabled.
+
+    if (d1 <= d2 || !d1 && !(!d2) || !d2 && !(!d1)) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+
+
+    
+    
+
 }
