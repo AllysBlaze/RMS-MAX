@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using RMSmax.Models.ViewModels;
-
+using RMSmax.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RMSmax.Controllers
 {
@@ -15,15 +16,17 @@ namespace RMSmax.Controllers
     {
         private UserManager<IdentityUser> userManager;
         private SignInManager<IdentityUser> signInManager;
-        public AccountController(UserManager<IdentityUser> user, SignInManager<IdentityUser> signIn)
+        private Faculty facultyInfo;
+        public AccountController(UserManager<IdentityUser> user, SignInManager<IdentityUser> signIn, IWebHostEnvironment env)
         {
+            facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
             userManager = user;
             signInManager = signIn;
         }
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
-            return View(new LoginModel { ReturnUrl = returnUrl});
+            return View(new LoginModel { ReturnUrl = returnUrl, Faculty = facultyInfo});
         }
         [HttpPost]
         [AllowAnonymous]
@@ -43,6 +46,7 @@ namespace RMSmax.Controllers
                 }
             }
             ModelState.AddModelError("", "Nieprawidłowa nazwa lub hasło");
+            loginModel.Faculty = facultyInfo;
             return View(loginModel);
         }
 

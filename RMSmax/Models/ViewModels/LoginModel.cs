@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RMSmax.Models.ViewModels
 {
-    public class LoginModel
+    public class LoginModel : MainViewModel
     {
         [Required]
         public string Name { get; set; }

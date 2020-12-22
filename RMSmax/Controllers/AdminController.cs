@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
 using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
+using Microsoft.AspNetCore.Authorization;
 using System.IO;
 
 namespace RMSmax.Controllers
 {
+    //[Authorize]
     public class AdminController : Controller
     {
         private IArticleRepository articlesRepo;
@@ -21,7 +23,7 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
-        public int PageSize => 20;
+        public int PageSize => 15;
         public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {
             articlesRepo = artsRepo;
