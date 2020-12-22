@@ -6,20 +6,20 @@
 <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label asp-for="Faculty.Name">Nazwa</label>
-        <input asp-for="Faculty.Name" type="text" class="form-control" placeholder="Nazwa wydziału" required>
+        <input asp-for="Faculty.Name" type="text" class="form-control" placeholder="Nazwa wydziału" required autocomplete="off">
     </div>
     <div class="form-group">
         <label asp-for="Faculty.Street">Adres</label>
-        <input asp-for="Faculty.Street" type="text" class="form-control" placeholder="Podaj ulicę i numer" required>
+        <input asp-for="Faculty.Street" type="text" class="form-control" placeholder="Podaj ulicę i numer" required autocomplete="off">
     </div>
     <div class="form-row">
         <div class="form-group col-md-5">
             <label asp-for="Faculty.City">Miasto</label>
-            <input asp-for="Faculty.City" type="text" class="form-control" placeholder="Podaj miasto" required>
+            <input asp-for="Faculty.City" type="text" class="form-control" placeholder="Podaj miasto" required autocomplete="off">
         </div>
         <div class="form-group col-md-4">
             <label asp-for="Faculty.State">Województwo</label>
-            <select class="form-control" asp-for="Faculty.State" required>
+            <select class="form-control" asp-for="Faculty.State" required autocomplete="off">
                 <option selected></option>
                 <option>Dolnośląskie</option>
                 <option>Kujawsko-pomorskie</option>
@@ -41,23 +41,23 @@
         </div>
         <div class="form-group col-md-3">
             <label asp-for="Faculty.Postcode">Kod pocztowy</label>
-            <input asp-for="Faculty.Postcode" type="text" class="form-control" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required>
+            <input asp-for="Faculty.Postcode" type="text" class="form-control" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required autocomplete="off">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Phone">Telefon</label>
-            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" required>
+            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" required autocomplete="off">
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Email">Email</label>
-            <input asp-for="Faculty.Email" type="email" class="form-control" placeholder="Email" required>
+            <input asp-for="Faculty.Email" type="email" class="form-control" placeholder="Email" required autocomplete="off">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-5">
             <label asp-for="Faculty.MapSource">Mapa</label>
-            <input asp-for="Faculty.MapSource" type="url" class="form-control" placeholder="Podaj adres url mapy" required>
+            <input asp-for="Faculty.MapSource" type="url" class="form-control" placeholder="Podaj adres url mapy" required autocomplete="off">
         </div>
         <div class="form-group col-md-2">
             <label asp-for="Faculty.Color">Motyw</label>
@@ -83,22 +83,22 @@
         <form>
             <div class="form-group">
                 <label>Login</label>
-                <input type="text" class="form-control" placeholder="Login">
+                <input type="text" class="form-control" placeholder="Login" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Stare hasło</label>
-                <input type="password" class="form-control" placeholder="Stare hasło">
+                <input type="password" class="form-control" placeholder="Stare hasło" autocomplete="off">
             </div>
             <div class="form-group">
                 <label>Nowe hasło</label>
-                <input type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip">
+                <input type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip" autocomplete="off">
                 <small id="passwordTip" class="form-text text-muted">
                     Hasło powinno mieć co najmniej 8 znaków, zawierać jedną dużą literę i jeden znak specjalny.
                 </small>
             </div>
             <div class="form-group">
                 <label>Powtórz nowe hasło</label>
-                <input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2">
+                <input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2" autocomplete="off">
                 <small id="passwordTip2" class="form-text text-muted">
                     Hasła muszą być takie same.
                 </small>
@@ -161,7 +161,7 @@
             <div class="form-row">
                 <div class="form-group col-12">
                     <label asp-for="NewCourseName">Nazwa kierunku</label>
-                    <input asp-for="NewCourseName" type="text" class="form-control" placeholder="Podaj nazwę kierunku" style="width: 100%;" required>
+                    <input asp-for="NewCourseName" type="text" class="form-control" placeholder="Podaj nazwę kierunku" style="width: 100%;" required autocomplete="off">
                 </div>
             </div>
             <div class="form-group text-center">

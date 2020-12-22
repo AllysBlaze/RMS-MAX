@@ -21,11 +21,11 @@
         </div>
         <div class="form-group col-md-5">
             <label asp-for="Employee.Name">Imię</label>
-            <input asp-for="Employee.Name" type="text" class="form-control" placeholder="Podaj imię" required>
+            <input asp-for="Employee.Name" type="text" class="form-control" placeholder="Podaj imię" required autocomplete="off">
         </div>
         <div class="form-group col-md-5">
             <label asp-for="Employee.LastName">Nazwisko</label>
-            <input asp-for="Employee.LastName" type="text" class="form-control" placeholder="Podaj nazwisko" required>
+            <input asp-for="Employee.LastName" type="text" class="form-control" placeholder="Podaj nazwisko" required autocomplete="off">
         </div>
     </div>
     <div class="form-row">
@@ -43,23 +43,23 @@
         </div>
         <div class="form-group col-md-2">
             <label asp-for="Employee.Room">Pokój</label>
-            <input asp-for="Employee.Room" type="text" class="form-control" placeholder="Podaj numer pokoju">
+            <input asp-for="Employee.Room" type="text" class="form-control" placeholder="Podaj numer pokoju" autocomplete="off">
         </div>
     </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Employee.Phone">Telefon</label>
-                <input asp-for="Employee.Phone" type="tel" class="form-control" maxlength="9" placeholder="Podaj numer telefonu" required>
+                <input asp-for="Employee.Phone" type="tel" class="form-control" maxlength="9" placeholder="Podaj numer telefonu" required autocomplete="off">
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Employee.Mail">Email</label>
-                <input asp-for="Employee.Mail" type="email" class="form-control" placeholder="Podaj e-mail" required>
+                <input asp-for="Employee.Mail" type="email" class="form-control" placeholder="Podaj e-mail" required autocomplete="off"> 
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Employee.Timetable">Adres planu zajęć</label>
-                <input asp-for="Employee.Timetable" type="url" class="form-control" placeholder="Podaj link do planu zajęć">
+                <input asp-for="Employee.Timetable" type="url" class="form-control" placeholder="Podaj link do planu zajęć" autocomplete="off">
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Photo">Zdjęcie</label>
