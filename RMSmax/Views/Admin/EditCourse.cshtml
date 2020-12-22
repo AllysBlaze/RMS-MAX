@@ -7,36 +7,46 @@
 
 
 <form asp-controller="Admin" asp-action="EditCourseName" method="post">
-    <input type="hidden" name="previousName" value="@Model.Course.Name"/>
+    <input type="hidden" name="previousName" value="@Model.Course.Name" />
     <div class="form-row">
         <div class="form-group col-md-12">
-            <label name="newName" >Nazwa kierunku</label>
-            <input name="newName" value="@Model.Course.Name" type="text" class="form-control" placeholder="Podaj nazwę kierunku" required>
+            <label name="newName">Nazwa kierunku</label>
+            <input name="newName" value="@Model.Course.Name" type="text" class="form-control" placeholder="Podaj nazwę kierunku" required autocomplete="off">
         </div>
     </div>
     <div class="form-group text-center">
         <button type="submit" class="btn btn-primary">Zmień</button>
     </div>
 </form>
-<!--Specjalizacje tabela-->
-<table class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
+<!--Specjalizacje 1 st. tabela-->
+<table id="specialities1Table" class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
     <thead>
         <tr>
             <th scope="col">Lista Specjalizacji Pierwszego Stopnia</th>
-            <th scope="col" class="align-content-center justify-content-center text-center">Akcje</th>
+            <th scope="col">Akcje</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Faculty.Courses)
+        @foreach (var v in Model.Course.FirstDegreeSpecialties)
         {
             <tr>
-                <td>@v.Name</td>
+                <td>@v</td>
                 <td class="align-content-center justify-content-center text-center">
-                    <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg>
-                    </a>
+                    <form asp-controller="Admin" asp-action="DeleteSpeciality" method="post">
+                        <div class="row">
+                            <input type="hidden" name="scroll" value="specialities1Table" />
+                            <input type="hidden" name="courseName" value="@Model.Course.Name" />
+                            <input type="hidden" name="spec" value="@v" />
+                            <input type="hidden" name="degree" value="1" />
+
+                            <button class="btn btn-danger btn-xs" type="submit" data-toggle="tooltip" data-placement="top" title="Usuń" style="margin-left: 15px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+
                 </td>
             </tr>
         }
@@ -44,12 +54,15 @@
 </table>
 
 
-<!--Specjalizacje formularz-->
-<form style="margin-bottom:60px;">
+<!--Specjalizacje 1 st. formularz-->
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
+    <input type="hidden" name="scroll" value="specialities1Table" />
+    <input type="hidden" name="courseName" value="@Model.Course.Name" />
+    <input type="hidden" name="degree" value="1" />
     <div class="form-row">
         <div class="form-group col-12">
             <label>Nazwa specjalizacji</label>
-            <input type="text" class="form-control" placeholder="Podaj nazwę specjalizacji drugiego stopnia" style="width: 100%;" required>
+            <input type="text" name="spec" class="form-control" placeholder="Podaj nazwę specjalizacji drugiego stopnia" style="width: 100%;" required autocomplete="off">
         </div>
     </div>
     <div class="form-group text-center">
@@ -65,25 +78,34 @@
 </form>
 
 
-<!--Specjalizacje tabela-->
-<table class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
+<!--Specjalizacje 2 st. tabela-->
+<table id="specialities2Table" class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
     <thead>
         <tr>
             <th scope="col">Lista Specjalizacji Drugiego Stopnia</th>
-            <th scope="col" class="align-content-center justify-content-center text-center">Akcje</th>
+            <th scope="col">Akcje</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Faculty.Courses)
+        @foreach (var v in Model.Course.SecondDegreeSpecialties)
         {
             <tr>
-                <td>@v.Name</td>
+                <td>@v</td>
                 <td class="align-content-center justify-content-center text-center">
-                    <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg>
-                    </a>
+                    <form asp-controller="Admin" asp-action="DeleteSpeciality" method="post">
+                        <div class="row">
+                            <input type="hidden" name="scroll" value="specialities2Table" />
+                            <input type="hidden" name="courseName" value="@Model.Course.Name" />
+                            <input type="hidden" name="spec" value="@v" />
+                            <input type="hidden" name="degree" value="2" />
+
+                            <button class="btn btn-danger btn-xs" type="submit" data-toggle="tooltip" data-placement="top" title="Usuń" style="margin-left: 15px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </td>
             </tr>
         }
@@ -91,12 +113,15 @@
 </table>
 
 
-<!--Specjalizacje formularz-->
-<form style="margin-bottom:60px;">
+<!--Specjalizacje 2 st. formularz-->
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
+    <input type="hidden" name="scroll" value="specialities2Table" />
+    <input type="hidden" name="courseName" value="@Model.Course.Name" />
+    <input type="hidden" name="degree" value="2" />
     <div class="form-row">
         <div class="form-group col-12">
             <label>Nazwa specjalizacji</label>
-            <input type="text" class="form-control" placeholder="Podaj nazwę specjalizacji drugiego stopnia" style="width: 100%;" required>
+            <input type="text" name="spec" class="form-control" placeholder="Podaj nazwę specjalizacji drugiego stopnia" style="width: 100%;" required autocomplete="off">
         </div>
     </div>
     <div class="form-group text-center">
@@ -114,24 +139,32 @@
 
 
 <!--Plan zajęć tabela-->
-<table class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
+<table id="studentsTimetableTable" class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
     <thead>
         <tr>
             <th scope="col">Lista Planów Zajęć</th>
-            <th scope="col" class="align-content-center justify-content-center text-center">Akcje</th>
+            <th scope="col">Akcje</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Faculty.Courses)
+        @foreach (var v in Model.StudentsTimetables)
         {
             <tr>
-                <td>@v.Name</td>
+                <td><a href="@v.Timetable">Stopień: @v.Degree Semestr: @v.Semester</a></td>
                 <td class="align-content-center justify-content-center text-center">
-                    <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg>
-                    </a>
+                    <form asp-controller="Admin" asp-action="DeleteTimetable" method="post"> 
+                        <div class="row">
+                            <input type="hidden" name="scroll" value="studentsTimetableTable" />
+                            <input type="hidden" name="courseName" value="@Model.Course.Name" />
+                            <input type="hidden" name="studentsTimetableId" value="@v.Id" />
+
+                            <button class="btn btn-danger btn-xs" type="submit" data-toggle="tooltip" data-placement="top" title="Usuń" style="margin-left: 15px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </td>
             </tr>
         }
@@ -140,21 +173,21 @@
 
 
 <!--Plan zajęć formularz-->
-<form style="margin-bottom:60px;">
-    <input type="hidden" /> <!--Id-->
-    <input type="hidden" /> <!--Course-->
+<form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddTimetable" method="post">
+    <input type="hidden" name="scroll" value="studentsTimetableTable" />
+    <input type="hidden" name="studentsTimetable.Course" value="@Model.Course.Name" />
     <div class="form-row">
         <div class="form-group col-md-3">
             <label>Semestr</label>
-            <input type="number" class="form-control" placeholder="Podaj semestr" required />
+            <input name="studentsTimetable.Semester" type="number" min="1" max="10" class="form-control" placeholder="Podaj semestr" required autocomplete="off"/>
         </div>
         <div class="form-group col-md-3">
             <label>Stopień</label>
-            <input type="number" class="form-control" placeholder="Podaj stopień" required />
+            <input name="studentsTimetable.Degree" type="number" min="1" max="2"class="form-control" placeholder="Podaj stopień" required autocomplete="off"/>
         </div>
         <div class="form-group col-md-6">
             <label>Link do planu</label>
-            <input type="url" class="form-control" placeholder="Podaj link do planu zajęć" required />
+            <input name="studentsTimetable.Timetable" type="url" class="form-control" placeholder="Podaj link do planu zajęć" required autocomplete="off"/>
         </div>
     </div>
     <div class="form-group text-center">
@@ -170,37 +203,47 @@
 
 
 
-<!--Programy studiów tabela-->
-<table class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
+<!--Plany studiów tabela-->
+<table id="studentsStudyPlansTable" class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
     <thead>
         <tr>
             <th scope="col">Programy Studiów</th>
-            <th scope="col" class="align-content-center justify-content-center text-center">Akcje</th>
+            <th scope="col">Akcje</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Faculty.Courses)
+        @foreach (var v in Model.StudyPlans)
         {
             <tr>
-                <td>@v.Name</td>
+                <td><a href="~/files/studyPlans/@Model.Course.Name/@v">@v</a></td>
                 <td class="align-content-center justify-content-center text-center">
-                    <a class="btn btn-danger btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Usuń" asp-controller="Admin">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
-                        </svg>
-                    </a>
+                    <form asp-controller="Admin" asp-action="DeleteStudyPlan" method="post">
+                        <div class="row">
+                            <input type="hidden" name="scroll" value="studentsStudyPlansTable" />
+                            <input type="hidden" name="courseName" value="@Model.Course.Name" />
+                            <input type="hidden" name="file" value="@v" />
+
+                            <button class="btn btn-danger btn-xs" type="submit" data-toggle="tooltip" data-placement="top" title="Usuń" style="margin-left: 15px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<!--Programy studiów formularz-->
-<form>
+<!--Plany studiów formularz-->
+<form asp-controller="Admin" asp-action="AddStudyPlan" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="scroll" value="studentsStudyPlansTable" />
+    <input type="hidden" name="courseName" value="@Model.Course.Name" />
     <div class="form-row">
         <div class="col-12">
             <div class="form-group">
-                <input type="file" class="form-control-file" accept=".pdf" required/>
+                <input name="file" type="file" class="form-control-file" accept=".pdf" required />
             </div>
         </div>
     </div>

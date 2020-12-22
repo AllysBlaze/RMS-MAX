@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
 using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
+using Microsoft.AspNetCore.Authorization;
 using System.IO;
 
 namespace RMSmax.Controllers
 {
+    //[Authorize]
     public class AdminController : Controller
     {
         private IArticleRepository articlesRepo;
@@ -21,7 +23,7 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
-        public int PageSize => 20;
+        public int PageSize => 15;
         public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {
             articlesRepo = artsRepo;
@@ -97,68 +99,68 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddCourse(string name)
+        public IActionResult AddCourse(string NewCourseName)
         {
-            if (string.IsNullOrEmpty(name) || facultyInfo.Courses.Where(x => x.Name == name).FirstOrDefault() != null)
-                return View("Index", new IndexViewModel() { Faculty = facultyInfo, NewCourseName = name });
+            if (string.IsNullOrEmpty(NewCourseName) || facultyInfo.Courses.Where(x => x.Name == NewCourseName).FirstOrDefault() != null)
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo, NewCourseName = NewCourseName });
             else
             {
-                facultyInfo.Courses.Add(new Course() { Name = name, FirstDegreeSpecialties = new List<string>(), SecondDegreeSpecialties = new List<string>() });
+                facultyInfo.Courses.Add(new Course() { Name = NewCourseName, FirstDegreeSpecialties = new List<string>(), SecondDegreeSpecialties = new List<string>() });
                 facultyInfo.Serialize();
 
-                if(!System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", name)))
-                    System.IO.Directory.CreateDirectory(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", name));
-                if (!System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", name)))
-                    System.IO.Directory.CreateDirectory(Path.Combine(Environment.WebRootPath, "files", "studyPlans", name));
+                if(!System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", NewCourseName)))
+                    System.IO.Directory.CreateDirectory(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", NewCourseName));
+                if (!System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", NewCourseName)))
+                    System.IO.Directory.CreateDirectory(Path.Combine(Environment.WebRootPath, "files", "studyPlans", NewCourseName));
 
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
-                routeValues.Add("course", name);
+                routeValues.Add("course", NewCourseName);
 
                 return RedirectToAction("EditCourse", "Admin", routeValues);
             }
         }
 
         [HttpPost]
-        public IActionResult DeleteCourse(string courseName)
+        public IActionResult DeleteCourse(string courseName, string scroll)
         {
             Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
             if (course != null)
             {
                 //usun plany zajec
-                IEnumerable<StudentsTimetable> timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name);
-                foreach (var v in timetables)
+                int[] timetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
+                foreach(var v in timetables)
                 {
-                    studentsTimetableRepo.DeleteStudentsTimetable(v.Id);
+                    studentsTimetableRepo.DeleteStudentsTimetable(v);
                 }
                 //usun przedmioty
-                IEnumerable<Subject> subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name);
+                int[] subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
                 foreach (var v in subjects)
                 {
-                    subjectRepo.DeleteSubject(v.Id);
+                    subjectRepo.DeleteSubject(v);
                 }
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name)))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name), true);
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
                 }
                 //usun plany studiow
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name)))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name), true);
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
                 }
                 //usun kierunek
                 facultyInfo.Courses.Remove(course);
                 facultyInfo.Serialize();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Admin", scroll);
         }
         #region skladowe edycji
         [HttpPost]
@@ -186,7 +188,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSpeciality(string courseName, string spec, int degree)
+        public IActionResult AddSpeciality(string courseName, string spec, int degree, string scroll)
         {
             Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
             if (course != null)
@@ -200,7 +202,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", routeValues);
+                        return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
                     else if (degree == 2 && !course.SecondDegreeSpecialties.Contains(spec))
                     {
@@ -209,7 +211,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", routeValues);
+                        return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
                 }
             }
@@ -223,7 +225,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteSpeciality(string courseName, string spec, int degree)
+        public IActionResult DeleteSpeciality(string courseName, string spec, int degree, string scroll)
         {
             Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
             if (course != null)
@@ -237,7 +239,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", routeValues);
+                        return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
                     else if (degree == 2 && course.SecondDegreeSpecialties.Contains(spec))
                     {
@@ -246,7 +248,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        return RedirectToAction("EditCourse", "Admin", routeValues);
+                        return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
                 }
             }
@@ -260,31 +262,33 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddTimetable(string courseName, StudentsTimetable studentsTimetable)
+        public IActionResult AddTimetable(StudentsTimetable studentsTimetable, string scroll)
         {
             if (ModelState.IsValid)
             {
-                if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && studentsTimetable != null)
+                //if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && studentsTimetable != null)
+                if(studentsTimetable != null)
                 {
+                    
                     studentsTimetableRepo.AddStudentsTimetable(studentsTimetable);
                     
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
-                    routeValues.Add("course", courseName);
+                    routeValues.Add("course", studentsTimetable.Course);
 
-                    return RedirectToAction("EditCourse", "Admin", routeValues);
+                    return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
             }
 
             return View("EditCourse", new EditCourseViewModel(Environment)
             {
                 Faculty = facultyInfo,
-                Course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault(),
-                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == courseName)
+                Course = facultyInfo.Courses.Where(x => x.Name == studentsTimetable.Course).FirstOrDefault(),
+                StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == studentsTimetable.Course)
             });
         }
 
         [HttpPost]
-        public IActionResult DeleteTimetable(string courseName, int studentsTimetableId)
+        public IActionResult DeleteTimetable(string courseName, int studentsTimetableId, string scroll)
         {
             if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null)
             {
@@ -293,7 +297,7 @@ namespace RMSmax.Controllers
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", courseName);
 
-                return RedirectToAction("EditCourse", "Admin", routeValues);
+                return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
             }
 
             return View("EditCourse", new EditCourseViewModel(Environment)
@@ -305,7 +309,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddStudyPlan(string courseName, IFormFile file)
+        public IActionResult AddStudyPlan(string courseName, IFormFile file, string scroll)
         {
             if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null && Path.GetExtension(file.FileName) == ".pdf")
             {
@@ -317,7 +321,7 @@ namespace RMSmax.Controllers
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
 
-                    return RedirectToAction("EditCourse", "Admin", routeValues);
+                    return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
             }
 
@@ -330,7 +334,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteStudyPlan(string courseName, string file)
+        public IActionResult DeleteStudyPlan(string courseName, string file, string scroll)
         {
             if (facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault() != null)
             {
@@ -342,7 +346,7 @@ namespace RMSmax.Controllers
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
 
-                    return RedirectToAction("EditCourse", "Admin", routeValues);
+                    return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
             }
 
@@ -463,6 +467,14 @@ namespace RMSmax.Controllers
             else
             {
                 employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                if (string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
+                {
+                    employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                }
+                if (string.IsNullOrEmpty(surname) && !string.IsNullOrEmpty(name)) 
+                {
+                    employees = employeesRepo.Employees.Where(x => x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                }
             }
             var pagingInfo = new PagingInfo
             {
@@ -532,11 +544,11 @@ namespace RMSmax.Controllers
             Employee employee = employeesRepo.Employees.Where(x => x.Id == id).FirstOrDefault();
             if(employee != null)
                 if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
-                    try
-                    {
+                    //try
+                    //{
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
-                    }
-                    catch (Exception) { }
+                    //}
+                    //catch (Exception) { }
 
             employeesRepo.DeleteEmployee(id);
             return RedirectToAction("EmployeeList");

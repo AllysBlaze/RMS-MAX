@@ -3,12 +3,12 @@
     Layout = "_LayoutAdmin";
 }
 
-<form asp-controller="Admin" asp-action="EditArticle" enctype="multipart/form-data" method="post" >
-    <input type="hidden" asp-for="Article.Id"/>
+<form asp-controller="Admin" asp-action="EditArticle" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for="Article.Id" />
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Article.Title">Tytuł</label>
-            <input asp-for="Article.Title" type="text" class="form-control" placeholder="Podaj tytuł artykułu" required>
+            <input asp-for="Article.Title" type="text" class="form-control" placeholder="Podaj tytuł artykułu" required autocomplete="off">
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Article.Author">Autor</label>
@@ -32,10 +32,11 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <textarea asp-for="Article.Content" required style="width:100%; height:150px;" placeholder="Podaj treść artykułu"></textarea>
+            <textarea asp-for="Article.Content" id="editor" required style="width:100%; height:150px;" placeholder="Podaj treść artykułu" autocomplete="off"></textarea>
         </div>
     </div>
-    
+
+
 
 
     <div class="form-group text-center">
@@ -43,3 +44,15 @@
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </div>
 </form>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'), {
+            toolbar: ['heading', '|', 'Alignment', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    var a = Array.from(editor.ui.componentFactory.names());
+    console.log(a);
+</script>
