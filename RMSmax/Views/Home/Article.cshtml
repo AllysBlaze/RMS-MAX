@@ -1,7 +1,7 @@
 ﻿@model AricleViewModel
 
 <style>
-    .showText p {
+    .showText p, .showText h2, .showText h3, .showText h4 {
         width: 100%;
     }
 </style>
@@ -12,14 +12,14 @@
         <div class="row padding showText">
             @if (string.IsNullOrEmpty(Model.Article.PhotoIn) == true)
             {
-                <h4>@Model.Article.Title</h4>
+                <h4 style="width: 100%;">@Model.Article.Title</h4>
                 @Html.Raw(Model.Article.Content)
                    
             }
             else
             {
                 <div class="col-lg-6">
-                    <h4>@Model.Article.Title</h4>
+                    <h4 style="width: 100%;">@Model.Article.Title</h4>
                     @Html.Raw(Model.Article.Content)
                 </div>
                 <div class="col-lg-6">
