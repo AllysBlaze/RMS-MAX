@@ -35,7 +35,7 @@
                 }
                 else
                 {
-                    string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoIn;
+                    string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoIn;
         <div class="row">
             <p class="ml-3">
                 Aktualne zdjęcie wewnętrzne:
@@ -57,7 +57,7 @@
                 }
                 else
                 {
-                    string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoCover;
+                    string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoCover;
         <div class="row">
             <p class="ml-3">
                 Aktualne zdjęcie aktualnościowe:

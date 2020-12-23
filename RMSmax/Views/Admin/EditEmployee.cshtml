@@ -75,7 +75,7 @@
                 }
                 else
                 {
-                    string picfile = "/pictures/picsEmployee/" + @Model.Employee.Photo;
+                    string picfile = "/pictures/picsEmployee/" + Model.Employee.Id + "/" + @Model.Employee.Photo;
                     <p>
                         Aktualne zdjęcie: 
                         <img src="@picfile" height="220" />
