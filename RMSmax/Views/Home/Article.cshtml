@@ -23,7 +23,7 @@
                     @Html.Raw(Model.Article.Content)
                 </div>
                 <div class="col-lg-6">
-                    @{string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoIn;}
+                    @{string picfile = "/pictures/picsArticle/" + @Model.Article.Id + "/" + @Model.Article.PhotoIn;}
                     <img src="@picfile" class="img-fluid" />
                 </div>
             }

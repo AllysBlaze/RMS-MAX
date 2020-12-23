@@ -57,15 +57,15 @@
                         {
                             <li class="list-group-item" style="word-break:break-word;">Stanowisko: @v.Position</li>
                         }@if (string.IsNullOrEmpty(v.Timetable) == false)
-                        {
+{
                             <li class="list-group-item" style="word-break:break-word;">Plan zajęć: @v.Timetable</li>
-                        }
+}
                     </ul>
 
                 </div>
                 <div class="col-lg-3 d-flex flex-wrap align-items-center">
-                    @{string picfile = "/pictures/picsEmployee/" + v.Photo;}
-                    <img class="mx-auto my-3 rounded" src="~/pictures/picsArticle/pic4.jpg" style="height:150px; max-width:300px" />
+                    @{string picfile = "/pictures/picsEmployee/" + v.Id + "/" + v.Photo;
+                    <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:300px" />}
                 </div>
             </div>
         }

@@ -55,7 +55,7 @@
                 
                 @foreach (var v in Model.Articles)
                 {
-                     string picfile = "pictures/picsArticle/"+v.PhotoCover;
+                     string picfile = "pictures/picsArticle/" + v.Id + "/" + v.PhotoCover;
                      <div class="col-lg-4">
                         <div class="card">
                             <div class="overlay-image" style="background-image: url('@picfile') "></div>

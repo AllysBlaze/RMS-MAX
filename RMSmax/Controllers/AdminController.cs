@@ -11,6 +11,7 @@ using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using System.Threading;
 
 namespace RMSmax.Controllers
 {
@@ -34,7 +35,7 @@ namespace RMSmax.Controllers
             Environment = env;
         }
 
-        #region Index(FacultyInfo, NewCourse)
+        #region Index(FacultyInfo)
         [HttpGet]
         public IActionResult Index()
         {
@@ -52,7 +53,10 @@ namespace RMSmax.Controllers
                     {
                         System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "logo", facultyInfo.Logo));
                         string path = Path.Combine(Environment.WebRootPath, "pictures", "logo", logoFile.FileName);
-                        logoFile.CopyTo(new FileStream(path, FileMode.Create));
+                        using (FileStream fs = new FileStream(path, FileMode.Create))
+                        {
+                            logoFile.CopyTo(fs);
+                        }
                     }
                     catch (Exception)
                     {
@@ -140,11 +144,11 @@ namespace RMSmax.Controllers
                 }
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name)))
                 {
-                    //try
-                    //{
+                    try
+                    {
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", course.Name), true);
-                    //}
-                    //catch (Exception) { }
+                    }
+                    catch (Exception) { }
                 }
                 //usun plany studiow
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name)))
@@ -316,7 +320,10 @@ namespace RMSmax.Controllers
                 string path = Path.Combine(Environment.WebRootPath, "files", "studyPlans", courseName, file.FileName);
                 if (!System.IO.File.Exists(path))
                 {
-                    file.CopyTo(new FileStream(path, FileMode.Create));
+                    using (FileStream fs = new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(fs);
+                    }
 
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
@@ -380,7 +387,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult AddArticle()
         {
-            return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = new Article() }) ;
+            return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = new Article() { Content = "Podaj treść artykułu" } }) ;
         }
 
         [HttpPost]
@@ -388,34 +395,58 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                string path = Path.Combine(Environment.WebRootPath, "pictures", "picsArticle");
+                if (!System.IO.Directory.Exists(Path.Combine(path, article.Id.ToString())))
+                    System.IO.Directory.CreateDirectory(Path.Combine(path, article.Id.ToString()));
+
                 if (photoIn != null)
                 {
-                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(path, article.Id.ToString(), article.PhotoIn)))
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
+                            System.IO.File.Delete(Path.Combine(path, article.Id.ToString(), article.PhotoIn));
                         }
-                        catch (Exception) { }
+                        catch (Exception) 
+                        {
 
-                    article.PhotoIn = photoIn.FileName;
-                    photoIn.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", photoIn.FileName), FileMode.Create));
+                            return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article, PhotoIn = photoIn, PhotoCover = photoCover });
+                        }
+                    using (FileStream fs = new FileStream(Path.Combine(path, article.Id.ToString(), photoIn.FileName), FileMode.Create))
+                    {
+                        photoIn.CopyTo(fs);
+                    }
+
+                    article.PhotoIn = photoIn.FileName;      
                 }
                 if (photoCover != null)
                 {
-                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
+                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(path, article.Id.ToString(), article.PhotoCover)))
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
+                            System.IO.File.Delete(Path.Combine(path, article.Id.ToString(), article.PhotoCover));
+
                         }
-                        catch (Exception) { }
+                        catch (Exception)
+                        {
+
+                            return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article, PhotoIn = photoIn, PhotoCover = photoCover });
+                        }
+                    using (FileStream fs = new FileStream(Path.Combine(path, article.Id.ToString(), photoCover.FileName), FileMode.Create))
+                    {
+                        photoCover.CopyTo(fs);
+                    }
 
                     article.PhotoCover = photoCover.FileName;
-                    photoCover.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", photoCover.FileName), FileMode.Create));
                 }
 
                 if (article.Id == 0)
                 {
                     articlesRepo.AddArticle(article);
+                    int? id = articlesRepo.Articles.Where(x => x.Title == article.Title && x.DateTime == article.DateTime).Select(x => x.Id).FirstOrDefault();
+                    if (id != null)
+                    {
+                        System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
+                    }
                 }
                 else
                 {
@@ -426,7 +457,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article }); ;
+                return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article, PhotoIn = photoIn, PhotoCover = photoCover });
             }
         }
 
@@ -436,21 +467,17 @@ namespace RMSmax.Controllers
             Article article = articlesRepo.Articles.Where(x => x.Id == id).FirstOrDefault();
             if (article != null)
             {
-                if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn)))
+                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", id.ToString())))
+                {
                     try
                     {
-                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoIn));
+                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", id.ToString()), true);
                     }
                     catch (Exception) { }
-
-                if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover)))
-                    try
-                    {
-                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", article.PhotoCover));
-                    }
-                    catch (Exception) { }
+                }
             }
             articlesRepo.DeleteArticle(id);
+
             return RedirectToAction("ArticleList");
         }
         #endregion
@@ -508,22 +535,37 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                string path = Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee");
+                if (!System.IO.Directory.Exists(Path.Combine(path, employee.Id.ToString())))
+                    System.IO.Directory.CreateDirectory(Path.Combine(path, employee.Id.ToString()));
+
                 if (photo != null)
                 {
-                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
+                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(path, employee.Id.ToString(), employee.Photo)))
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
+                            System.IO.File.Delete(Path.Combine(path, employee.Id.ToString(), employee.Photo));
                         }
-                        catch (Exception) { }
+                        catch (Exception) 
+                        {
+                            return View("EditEmployee", new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employee });
+                        }
+                    using (FileStream fs = new FileStream(Path.Combine(path, employee.Id.ToString(), photo.FileName), FileMode.Create))
+                    {
+                        photo.CopyTo(fs);
+                    }
 
                     employee.Photo = photo.FileName;
-                    photo.CopyTo(new FileStream(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", photo.FileName), FileMode.Create));
                 }
 
                 if (employee.Id == 0)
                 {
                     employeesRepo.AddEmployee(employee);
+                    int? id = employeesRepo.Employees.Where(x => x.Name == employee.Name && x.LastName == employee.LastName && x.Mail == employee.Mail).Select(x => x.Id).FirstOrDefault();
+                    if (id != null)
+                    {
+                        System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
+                    }
                 }
                 else
                 {
@@ -542,15 +584,19 @@ namespace RMSmax.Controllers
         public IActionResult DeleteEmployee(int id)
         {
             Employee employee = employeesRepo.Employees.Where(x => x.Id == id).FirstOrDefault();
-            if(employee != null)
-                if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo)))
-                    //try
-                    //{
-                        System.IO.File.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", employee.Photo));
-                    //}
-                    //catch (Exception) { }
-
+            if (employee != null)
+            {
+                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", id.ToString())))
+                {
+                    try
+                    {
+                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", id.ToString()), true);
+                    }
+                    catch (Exception) { }
+                }
+            }
             employeesRepo.DeleteEmployee(id);
+
             return RedirectToAction("EmployeeList");
         }
         #endregion
@@ -582,12 +628,23 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid && subject != null && doc != null)
             {
+                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course);
+                if (!System.IO.Directory.Exists(Path.Combine(path, subject.Id.ToString())))
+                    System.IO.Directory.CreateDirectory(Path.Combine(path, subject.Id.ToString()));
+
                 subject.File = doc.FileName;
-                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, doc.FileName);
-                doc.CopyTo(new FileStream(path, FileMode.Create));
+                using (FileStream fs = new FileStream(Path.Combine(path, subject.Id.ToString(), doc.FileName), FileMode.Create))
+                {
+                    doc.CopyTo(fs);
+                }
                 if (subject.Id == 0)
                 {
                     subjectRepo.AddSubject(subject);
+                    int? id = subjectRepo.Subjects.Where(x => x.Name == subject.Name && x.Course == subject.Course && x.Degree == subject.Degree && x.Semester == subject.Semester).Select(x => x.Id).FirstOrDefault();
+                    if (id != null)
+                    {
+                        System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
+                    }
                 }
                 else
                 {
@@ -612,10 +669,13 @@ namespace RMSmax.Controllers
             Subject subject = subjectRepo.Subjects.Where(x => x.Id == subjectId).FirstOrDefault();
             if (subject != null)
             {
-                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subject.File);
-                if (System.IO.File.Exists(path))
+                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subjectId.ToString())))
                 {
-                    System.IO.File.Delete(path);
+                    try
+                    {
+                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subjectId.ToString()), true);
+                    }
+                    catch (Exception) { }
                 }
                 subjectRepo.DeleteSubject(subjectId);
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
@@ -633,7 +693,13 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View(new MainViewModel() { Faculty = facultyInfo, });
+            return View(new MainViewModel() { Faculty = facultyInfo});
+        }
+
+        [HttpGet]
+        public IActionResult AccountsList()
+        {
+            return View(new MainViewModel() { Faculty = facultyInfo});
         }
     }
 }
