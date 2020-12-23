@@ -33,17 +33,38 @@
             <div class="row mb-5">
                 <div class="col-lg-9">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Sala: @v.Room</li>
-                        <li style="word-break:break-word;" class="list-group-item">Telefon: @v.Phone</li>
-                        <li class="list-group-item">Mail: @v.Mail</li>
-                        <li class="list-group-item">Katedra: @v.Department</li>
-                        <li class="list-group-item">Funkcja: @v.Function</li>
-                        <li class="list-group-item">Stanowisko: @v.Position</li>
-                        <li class="list-group-item">Plan zajęć: @v.Timetable</li>
+                        @if (string.IsNullOrEmpty(v.Room) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Sala: @v.Room</li>
+                        }
+                        @if (string.IsNullOrEmpty(v.Phone) == false)
+                        {
+                            <li style="word-break:break-word;" class="list-group-item">Telefon: @v.Phone</li>
+                        }
+                        @if (string.IsNullOrEmpty(v.Mail) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Mail: @v.Mail</li>
+                        }
+                        @if (string.IsNullOrEmpty(v.Department) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Katedra: @v.Department</li>
+                        }
+                        @if (string.IsNullOrEmpty(v.Function) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Funkcja: @v.Function</li>
+                        }
+                        @if (string.IsNullOrEmpty(v.Position) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Stanowisko: @v.Position</li>
+                        }@if (string.IsNullOrEmpty(v.Timetable) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Plan zajęć: @v.Timetable</li>
+                        }
                     </ul>
 
                 </div>
                 <div class="col-lg-3 d-flex flex-wrap align-items-center">
+                    @{string picfile = "/pictures/picsEmployee/" + v.Photo;}
                     <img class="mx-auto my-3 rounded" src="~/pictures/picsArticle/pic4.jpg" style="height:150px; max-width:300px" />
                 </div>
             </div>

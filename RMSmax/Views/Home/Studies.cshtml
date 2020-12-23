@@ -1,7 +1,68 @@
 ﻿@model StudiesViewModel
 
 <div>
-    <h1>@Model.Course.Name</h1>
+    <div class="container">
+
+        <h2 class="m-3">@Model.Course.Name</h2>
+        <h3 class="m-4">Specjalności</h3>
+        <h4 class="m-5">Stopień I</h4>
+        <div class="col-lg-6">
+            <ul class="list-group list-group-flush">
+                @foreach (var v in Model.Course.FirstDegreeSpecialties)
+                {
+                    <li class="list-group-item">@v</li>
+                }
+
+            </ul>
+        </div>
+
+       
+        <h4 class="m-5">Stopień II</h4>
+       
+        <div class="col-lg-6">
+            <ul class="list-group list-group-flush">
+                @foreach (var v in Model.Course.SecondDegreeSpecialties)
+                {
+                    <li class="list-group-item">@v</li>
+                }
+
+            </ul>
+        </div>
+        <h3 class="m-4">Plany zajęć</h3>
+        <h4 class="m-5">Stopień I</h4>
+        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1))
+        {
+            <button class="btn btn-info">@v.Timetable</button>
+        }
+
+        <h4 class="m-5">Stopień II</h4>
+        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2))
+        {
+            <button class="btn btn-info">@v.Timetable</button>
+        }
+
+        <h3 class="m-5">Programy studiów</h3>
+        @foreach (var v in Model.StudyPlans)
+        {
+            <a href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a>
+        }
+
+        
+        <h4 class="m-5">Karty przedmiotów</h4>
+       
+        <div class="col-lg-6">
+            <ul class="list-group list-group-flush">
+                @foreach (var v in Model.Subjects)
+                {
+                    <li>@v.Name</li>
+                }
+
+            </ul>
+        </div>
+
+    </div>
+
+@*
     <h3>Specjalności</h3>
     <h5>St I</h5>
     @foreach (var v in Model.Course.FirstDegreeSpecialties)
@@ -34,4 +95,5 @@
     {
         <p>@v.Name</p>
     }
+    *@
 </div>
