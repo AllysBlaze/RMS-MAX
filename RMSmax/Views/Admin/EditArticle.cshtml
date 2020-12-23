@@ -26,13 +26,56 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group">
-            <label asp-for="Article.Content" style="font-weight: bold;">Treść artykułu</label>
+        <div class="form-group col-md-6">
+
+
+            @{ if (string.IsNullOrEmpty(Model.Article.PhotoIn))
+                {
+                    <p>Aktualne zdjęcie wewnętrzne: Brak</p>
+                }
+                else
+                {
+                    string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoIn;
+        <div class="row">
+            <p class="ml-3">
+                Aktualne zdjęcie wewnętrzne:
+                
+            </p>
         </div>
-    </div>
+        <div class="row">
+            <img class="ml-3" src="@picfile" height="220" width="270" />
+        </div>
+                    
+                }
+            }
+        </div>
+        <div class="form-group col-md-6">
+
+            @{ if (string.IsNullOrEmpty(@Model.Article.PhotoCover))
+                {
+                    <p>Aktualne zdjęcie aktualnościowe: Brak</p>
+                }
+                else
+                {
+                    string picfile = "/pictures/picsArticle/" + @Model.Article.PhotoCover;
+        <div class="row">
+            <p class="ml-3">
+                Aktualne zdjęcie aktualnościowe:
+                
+            </p>
+        </div>
+        <div class="row">
+            <img class="ml-3" src="@picfile" height="220" width="270" />
+        </div>
+                    
+                }
+            }
+        </div>
+                </div>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <textarea asp-for="Article.Content" id="editor" required style="width:100%; height:150px;" placeholder="Podaj treść artykułu" autocomplete="off"></textarea>
+            <label asp-for="Article.Content" style="font-weight: bold;">Treść artykułu</label>
+            <textarea asp-for="Article.Content" id="editor" required placeholder="Podaj treść artykułu" autocomplete="off"></textarea>
         </div>
     </div>
 
@@ -40,19 +83,25 @@
 
 
     <div class="form-group text-center">
-        <a role="button" class="btn btn-danger" asp-controller="Admin" asp-action="ArticleList">Anuluj</a>
+        <a role="button" type="button" class="btn btn-danger" asp-controller="Admin" asp-action="ArticleList">Anuluj</a>
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </div>
 </form>
 <script>
     ClassicEditor
         .create(document.querySelector('#editor'), {
-            toolbar: ['heading', '|', 'Alignment', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote']
+            toolbar: {
+                items: ['heading', '|',
+                    'undo', 'redo', '|',
+                    'bold', 'italic', 'underline', 'fontFamily', 'fontBackgroundColor', 'fontColor', 'removeFormat', '|',
+                    'bulletedList', 'numberedList', 'indent', 'outdent', '|',
+                    'alignment', 'link', '|',
+                    'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
+                shouldNotGroupWhenFull: true
+            }
         })
         .catch(error => {
             console.log(error);
         });
 
-    var a = Array.from(editor.ui.componentFactory.names());
-    console.log(a);
 </script>
