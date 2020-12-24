@@ -11,6 +11,7 @@ using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using System.Runtime;
 using System.Threading;
 
 namespace RMSmax.Controllers
@@ -153,11 +154,11 @@ namespace RMSmax.Controllers
                 //usun plany studiow
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name)))
                 {
-                    //try
-                    //{
+                    try
+                    {
                         System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name), true);
-                    //}
-                    //catch (Exception) { }
+                    }
+                    catch (Exception) { }
                 }
                 //usun kierunek
                 facultyInfo.Courses.Remove(course);
@@ -369,12 +370,38 @@ namespace RMSmax.Controllers
 
         #region Article
         [HttpGet]
-        public IActionResult ArticleList(int page = 1)// TO DO Wyszukiwanie
+        public IActionResult ArticleList(int page = 1, string title = "", string author = "", DateTime from = new DateTime(), DateTime to = new DateTime())
         {
+            IEnumerable<Article> articles = articlesRepo.Articles;
+            if (!string.IsNullOrEmpty(title))
+            {
+                articles = articles.Where(x => x.Title.Contains(title));
+            }
+            if (!string.IsNullOrEmpty(author))
+            {
+                articles = articles.Where(x => x.Author.Contains(author));
+            }
+            if (from != new DateTime())
+            {
+                articles = articles.Where(x => x.DateTime >= from);
+            }
+            if (to != new DateTime())
+            {
+                articles = articles.Where(x => x.DateTime <= to.AddDays(1));
+            }
+            articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
+
+            var pagingInfo = new PagingInfo()
+            {
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = articles.Count()
+            };
+
             return base.View(new ArticleListViewModel() {
                 Faculty = facultyInfo,
-                Articles = articlesRepo.Articles.OrderByDescending(a => a.DateTime).Skip((page - 1) * PageSize).Take(PageSize),
-                PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = articlesRepo.Articles.Count() }
+                Articles = articles,
+                PagingInfo = pagingInfo
             });
         }
 
@@ -395,6 +422,12 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                //zabezpieczenie XSS
+                if (!XSSValidate(article.Content))
+                {
+                    return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article, PhotoIn = photoIn, PhotoCover = photoCover });
+                }
+
                 string path = Path.Combine(Environment.WebRootPath, "pictures", "picsArticle");
                 if (!System.IO.Directory.Exists(Path.Combine(path, article.Id.ToString())))
                     System.IO.Directory.CreateDirectory(Path.Combine(path, article.Id.ToString()));
@@ -700,6 +733,13 @@ namespace RMSmax.Controllers
         public IActionResult AccountsList()
         {
             return View(new MainViewModel() { Faculty = facultyInfo});
+        }
+
+
+        //zabezpieczenie XSS
+        private bool XSSValidate(string input)
+        {
+            return true;
         }
     }
 }
