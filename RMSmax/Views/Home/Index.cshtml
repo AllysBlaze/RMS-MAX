@@ -1,5 +1,61 @@
 ﻿@model ArticlesListViewModel
+<style>
+    .carousel-item {
+        height: 32rem;
+        background-color: rgb(8, 8, 8);
+        position: relative;
+        background-position: center;
+        background-size: cover;
+        color: white;
+    }
 
+        .carousel-item .container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding-bottom: 50px;
+            margin-bottom: 50px;
+        }
+
+
+
+    .overlay-image {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-position: center;
+        background-size: cover;
+        opacity: 0.5;
+    }
+
+    .card {
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+
+    .containerCard {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 10px;
+        padding: 10px;
+    }
+
+
+    .card {
+        height: 18rem;
+        background-color: white;
+        position: relative;
+        background-position: center;
+        background-size: cover;
+        color: black;
+    }
+
+</style>
 
 
     <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
