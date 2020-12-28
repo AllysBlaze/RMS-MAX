@@ -767,6 +767,30 @@ namespace RMSmax.Controllers
         //zabezpieczenie XSS
         private bool XSSValidate(string input)
         {
+            input = System.Web.HttpUtility.HtmlDecode(input);
+            string[] legalMarkups = new string[] {"p", "strong", "i", "u", "span", "ul", "li", "ol", "a", "figure", "table", "tbody", "tr", "td"};
+
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                if (input[i] == '<')
+                {
+                    if (input[i + 1] == '/')
+                        continue;
+
+                    bool result = false; 
+                    foreach (var v in legalMarkups)
+                    {
+                        if (input.Substring(i + 1, v.Length) == v)
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                    if (!result)
+                        return result;
+                }
+            }
+
             return true;
         }
 
