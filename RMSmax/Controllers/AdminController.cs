@@ -11,12 +11,12 @@ using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
-using System.Runtime;
-using System.Threading;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Identity.Core;
 
 namespace RMSmax.Controllers
 {
-    //[Authorize]
+   // [Authorize]
     public class AdminController : Controller
     {
         private IArticleRepository articlesRepo;
@@ -25,6 +25,7 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
+        private UserManager<AppUser> userManager;
         public int PageSize => 15;
         public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
         {
@@ -721,6 +722,33 @@ namespace RMSmax.Controllers
         }
         #endregion
 
+        #region Identity
+        public ViewResult Create() => View();
+        [HttpPost]
+        public async Task <IActionResult> Create(User user)
+        {
+            if(ModelState.IsValid)
+            {
+                AppUser appUser = new AppUser { UserName = user.Name };
+                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    foreach(IdentityError e in result.Errors)
+                    {
+                        ModelState.AddModelError("", e.Description);
+                    }
+
+                }
+                
+            }
+            return View(user);
+        }
+        #endregion
+
         //!
 
         [HttpGet]
@@ -741,5 +769,7 @@ namespace RMSmax.Controllers
         {
             return true;
         }
+
+
     }
 }

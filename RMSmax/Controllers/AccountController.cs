@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace RMSmax.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> userManager;
@@ -26,12 +26,13 @@ namespace RMSmax.Controllers
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
-            return View(new LoginModel { ReturnUrl = returnUrl, Faculty = facultyInfo});
+            ViewBag.returnUrl = returnUrl;
+            return View();
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginModel loginModel,string returnUrl)
         {
             if(ModelState.IsValid)
             {
@@ -39,9 +40,10 @@ namespace RMSmax.Controllers
                 if(user!=null)
                 {
                     await signInManager.SignOutAsync();
-                    if((await signInManager.PasswordSignInAsync(user,loginModel.Password,false,false)).Succeeded)
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false);
+                    if (result.Succeeded)
                     {
-                        return Redirect(loginModel?.ReturnUrl ?? "/Admin/Index");
+                        return Redirect(returnUrl ?? "/");
                     }
                 }
             }
