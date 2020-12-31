@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
+using RMSmax.Models.EventLog;
 using RMSmax.Models.ViewModels;
 using RMSmax.Models.ViewModels.Admin;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
@@ -25,16 +27,19 @@ namespace RMSmax.Controllers
         private ISubjectRepository subjectRepo;
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
+        private ILogger logger;
         private UserManager<AppUser> userManager;
         public int PageSize => 15;
-        public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env)
+        public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
             employeesRepo = empRepo;
             studentsTimetableRepo = timetableRepo;
             this.subjectRepo = subjectRepo;
             facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
             Environment = env;
+            logger = loggerFactory.CreateLogger("AdminController");
         }
 
         #region Index(FacultyInfo)
