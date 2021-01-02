@@ -1,7 +1,12 @@
 ﻿@model StudiesViewModel
+<style>
+    #link{
+        margin:30px;
+    }
+</style>
 
 <div>
-    <div class="container">
+    <div class="container-fluid">
 
         <h2 class="m-3">@Model.Course.Name</h2>
         <h3 class="m-4">Specjalności</h3>
@@ -10,7 +15,7 @@
             <ul class="list-group list-group-flush">
                 @foreach (var v in Model.Course.FirstDegreeSpecialties)
                 {
-                    <li class="list-group-item">@v</li>
+                    <li class="list-group-item" style="word-break:break-word;">@v</li>
                 }
 
             </ul>
@@ -23,7 +28,7 @@
             <ul class="list-group list-group-flush">
                 @foreach (var v in Model.Course.SecondDegreeSpecialties)
                 {
-                    <li class="list-group-item">@v</li>
+                    <li class="list-group-item" style="word-break:break-word;">@v</li>
                 }
 
             </ul>
@@ -32,38 +37,59 @@
         <h4 class="m-4 text-secondary">Stopień I</h4>
         @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1))
         {
-            <button class="btn btn-info mx-4">@v.Timetable</button>
+            <button class="btn btn-info m-4">@v.Timetable</button>
         }
 
         <h4 class="m-4 text-secondary">Stopień II</h4>
         @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2))
         {
-            <button class="btn btn-info mx-4">@v.Timetable</button>
+            <button class="btn btn-info m-4">@v.Timetable</button>
         }
 
-        <h3 class="m-4">Programy studiów</h3>
-        @foreach (var v in Model.StudyPlans)
-        {
-            <a class="m-4" href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a>
-        }
+        <h4 class="m-4">Programy studiów</h4>
+       
+         <div class="col-lg-4">
+             <ul class="list-group list-group-flush">
+                @foreach (var v in Model.StudyPlans)
+                {
+                    <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a></li>
+                }
+             </ul>   
+         </div>
+        
 
         
         <h4 class="m-4">Karty przedmiotów</h4>
        
         <div class="row">
-            <div class="dropdown">
+            <div class="dropdown m-4" style="width:50px;">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
+                    Rok
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="#">1</a>
+                    <a class="dropdown-item" href="#">2</a>
+                    <a class="dropdown-item" href="#">3</a>
+                    <a class="dropdown-item" href="#">4</a>
+                </div>
+            </div>
+            <div class="dropdown m-4" style="width:50px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Semestr
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">1</a>
+                    <a class="dropdown-item" href="#">2</a>
+                    <a class="dropdown-item" href="#">3</a>
+                    <a class="dropdown-item" href="#">4</a>
+                    <a class="dropdown-item" href="#">5</a>
+                    <a class="dropdown-item" href="#">6</a>
+                    <a class="dropdown-item" href="#">7</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-6">
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush m-4">
                 @foreach (var v in Model.Subjects)
                 {
                     <li>@v.Name</li>
