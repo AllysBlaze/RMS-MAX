@@ -378,14 +378,16 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult ArticleList(int page = 1, string title = "", string author = "", DateTime from = new DateTime(), DateTime to = new DateTime())
         {
+            to = to.Date;
+            from = from.Date;
             IEnumerable<Article> articles = articlesRepo.Articles;
             if (!string.IsNullOrEmpty(title))
             {
-                articles = articles.Where(x => x.Title.Contains(title));
+                articles = articles.Where(x => x.Title.ToLower().Contains(title.ToLower()));
             }
             if (!string.IsNullOrEmpty(author))
             {
-                articles = articles.Where(x => x.Author.Contains(author));
+                articles = articles.Where(x => x.Author.ToLower().Contains(author.ToLower()));
             }
             if (from != new DateTime())
             {
@@ -395,8 +397,7 @@ namespace RMSmax.Controllers
             {
                 articles = articles.Where(x => x.DateTime <= to.AddDays(1));
             }
-            articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
-
+        
             var pagingInfo = new PagingInfo()
             {
                 CurrentPage = page,
@@ -404,10 +405,16 @@ namespace RMSmax.Controllers
                 TotalItems = articles.Count()
             };
 
-            return base.View(new ArticleListViewModel() {
+            articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
+
+            return View(new ArticleListViewModel() {
                 Faculty = facultyInfo,
                 Articles = articles,
-                PagingInfo = pagingInfo
+                PagingInfo = pagingInfo,
+                CurrentSearchingTitle = title,
+                CurrentSearchingAuthor = author,
+                CurrentSearchingFrom = from,
+                CurrentSearchingTo = to
             });
         }
 
@@ -525,35 +532,32 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EmployeeList(int page = 1, string name = "", string surname = "")
         {
-            IEnumerable<Employee> employees;
-            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname))
+            IEnumerable<Employee> employees = employeesRepo.Employees.OrderBy(x => x.LastName);
+            if (!string.IsNullOrEmpty(name))
             {
-                employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+                employees = employees.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
             }
-            else
+            if (!string.IsNullOrEmpty(surname))
             {
-                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
-                if (string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(surname))
-                {
-                    employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
-                }
-                if (string.IsNullOrEmpty(surname) && !string.IsNullOrEmpty(name)) 
-                {
-                    employees = employeesRepo.Employees.Where(x => x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
-                }
+                employees = employees.Where(x => x.LastName.ToUpper().Contains(surname.ToUpper()));
             }
+
             var pagingInfo = new PagingInfo
             {
                 CurrentPage = page,
                 ItemsPerPage = PageSize,
-                TotalItems = string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).Count()
+                TotalItems = employees.Count()
             };
+
+            employees = employees.OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new EmployeesListViewModel()
             {
                 Faculty = facultyInfo,
                 Employees = employees,
-                PagingInfo = pagingInfo
+                PagingInfo = pagingInfo,
+                CurrentSearchingName = name,
+                CurrentSearchingSurname = surname
             });
         }
 

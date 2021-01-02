@@ -69,22 +69,24 @@ namespace RMSmax.Controllers
 
         public IActionResult EmployeeList(int page = 1, string name = "", string surname="")
         {
-            IEnumerable<Employee> employees;
-            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname))
+            IEnumerable<Employee> employees = employeesRepo.Employees.OrderBy(x => x.LastName);
+            if (!string.IsNullOrEmpty(name))
             {
-                employees = employeesRepo.Employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
+                employees = employees.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
             }
-            else
+            if (!string.IsNullOrEmpty(surname))
             {
-                employees = employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
+                employees = employees.Where(x => x.LastName.ToUpper().Contains(surname.ToUpper()));
             }
 
             var pagingInfo = new PagingInfo
             {
                 CurrentPage = page,
                 ItemsPerPage = EmployeesPageSize,
-                TotalItems = string.IsNullOrEmpty(name) && string.IsNullOrEmpty(surname) ? employeesRepo.Employees.Count() : employeesRepo.Employees.Where(x => x.LastName.Contains(surname) && x.Name.Contains(name)).Count()
+                TotalItems = employees.Count()
             };
+
+            employees = employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
 
             return View(new EmployeeListViewModel
             {
