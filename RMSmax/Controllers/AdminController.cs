@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
@@ -756,6 +755,37 @@ namespace RMSmax.Controllers
             }
             return View(user);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    AddErrorsFromResult(result);
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nie znaleziono użytkownika");
+            }
+            return View("Index", userManager.Users);
+        }
+        private void AddErrorsFromResult(IdentityResult result)
+        {
+            foreach(IdentityError error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
+        
         #endregion
 
         //!

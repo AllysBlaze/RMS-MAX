@@ -46,8 +46,9 @@ namespace RMSmax.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
+                ModelState.AddModelError("", "Nieprawidłowa nazwa lub hasło");
+
             }
-            ModelState.AddModelError("", "Nieprawidłowa nazwa lub hasło");
             loginModel.Faculty = facultyInfo;
             return View(loginModel);
         }
