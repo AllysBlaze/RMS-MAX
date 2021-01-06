@@ -29,7 +29,7 @@ namespace RMSmax.Controllers
         private ILogger logger;
         private UserManager<AppUser> userManager;
         public int PageSize => 15;
-        public AdminController(IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public AdminController(UserManager<AppUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -39,6 +39,7 @@ namespace RMSmax.Controllers
             facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
             Environment = env;
             logger = loggerFactory.CreateLogger("AdminController");
+            userManager = user;
         }
 
         #region Index(FacultyInfo)
@@ -778,6 +779,46 @@ namespace RMSmax.Controllers
             }
             return View("Index", userManager.Users);
         }
+
+        public async Task <IActionResult>Edit(string id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if(user!=null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id,string password) //prawdopodobnie będę musiała dopisać walidator hasła
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if(user!=null)
+            {
+                if(password!=string.Empty)
+                {
+                    IdentityResult result = await userManager.UpdateAsync(user);
+                    if(result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        AddErrorsFromResult(result);
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Nie znaleziono użytkownika");
+            }
+            return View(user);
+        }
+
         private void AddErrorsFromResult(IdentityResult result)
         {
             foreach(IdentityError error in result.Errors)
