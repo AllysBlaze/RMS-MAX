@@ -27,9 +27,9 @@ namespace RMSmax.Controllers
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
         private ILogger logger;
-        private UserManager<AppUser> userManager;
+        private UserManager<IdentityUser> userManager;
         public int PageSize => 15;
-        public AdminController(UserManager<AppUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -738,7 +738,7 @@ namespace RMSmax.Controllers
         {
             if(ModelState.IsValid)
             {
-                AppUser appUser = new AppUser { UserName = user.Name };
+                IdentityUser appUser = new IdentityUser { UserName = user.Name };
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
                 if(result.Succeeded)
                 {
@@ -760,7 +760,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
+            IdentityUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
@@ -780,10 +780,10 @@ namespace RMSmax.Controllers
             return View("Index", userManager.Users);
         }
 
-        public async Task <IActionResult>Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id);
-            if(user!=null)
+            IdentityUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
             {
                 return View(user);
             }
@@ -792,17 +792,17 @@ namespace RMSmax.Controllers
                 return RedirectToAction("Index");
             }
         }
-        
+
         [HttpPost]
-        public async Task<IActionResult> Edit(string id,string password) //prawdopodobnie będę musiała dopisać walidator hasła
+        public async Task<IActionResult> Edit(string id, string password) //prawdopodobnie będę musiała dopisać walidator hasła
         {
-            AppUser user = await userManager.FindByIdAsync(id);
-            if(user!=null)
+            IdentityUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
             {
-                if(password!=string.Empty)
+                if (password != string.Empty)
                 {
                     IdentityResult result = await userManager.UpdateAsync(user);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         return RedirectToAction("Index");
                     }
