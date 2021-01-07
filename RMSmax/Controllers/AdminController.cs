@@ -17,7 +17,7 @@ using Microsoft.Extensions.Identity.Core;
 
 namespace RMSmax.Controllers
 {
-   // [Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private IArticleRepository articlesRepo;

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace RMSmax.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<IdentityUser> userManager;
@@ -43,7 +43,7 @@ namespace RMSmax.Controllers
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return Redirect(returnUrl ?? "/");
+                        return RedirectToAction("index","Admin");
                     }
                 }
                 ModelState.AddModelError("", "Nieprawidłowa nazwa lub hasło");
