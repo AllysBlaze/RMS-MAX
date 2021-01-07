@@ -23,9 +23,9 @@
             </ul>
         </div>
 
-       
+
         <h4 class="m-4 text-secondary">Stopień II</h4>
-       
+
         <div class="col-lg-9">
             <ul class="list-group list-group-flush">
                 @foreach (var v in Model.Course.SecondDegreeSpecialties)
@@ -37,56 +37,60 @@
         </div>
         <h3 class="m-4">Plany zajęć</h3>
         <h4 class="m-4 text-secondary">Stopień I</h4>
-        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1))
+        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1).OrderBy(x => x.Semester))
         {
-            <button class="btn btn-info m-4">@v.Timetable</button>
+            <a id="link" class="btn btn-info" style="width:100px;" href="~/files/subjectsDocs/@Model.Course.Name/inf_I_2019_stacj.pdf"><p>@v.Semester</p></a>
         }
 
         <h4 class="m-4 text-secondary">Stopień II</h4>
-        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2))
+        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2).OrderBy(x => x.Semester))
         {
-            <button class="btn btn-info m-4">@v.Timetable</button>
+            <a id="link" class="btn btn-info" style="width:100px;" href="~/files/subjectsDocs/@Model.Course.Name/inf_I_2019_stacj.pdf"><p>@v.Semester</p></a>
         }
 
         <h4 class="m-4">Programy studiów</h4>
-       
-         <div class="col-lg-4">
-             <ul class="list-group list-group-flush">
+
+        <div class="col-lg-4">
+            <ul class="list-group list-group-flush">
                 @foreach (var v in Model.StudyPlans)
                 {
                     <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a></li>
                 }
-             </ul>   
-         </div>
-        
+            </ul>
+        </div>
 
-        
+
+
         <h4 class="m-4">Karty przedmiotów</h4>
-       
+
         <div class="row mx-4">
-            <div class="dropdown m-3 mr-4" style="width:50px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Rok
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">1</a>
-                    <a class="dropdown-item" href="#">2</a>
-                    <a class="dropdown-item" href="#">3</a>
-                    <a class="dropdown-item" href="#">4</a>
+            <div class="navbar">
+                <div class="dropdown m-3 mr-4" style="width:50px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Rok
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">1</a>
+                        <a class="dropdown-item" href="#">2</a>
+                        <a class="dropdown-item" href="#">3</a>
+                        <a class="dropdown-item" href="#">4</a>
+                    </div>
                 </div>
             </div>
-            <div class="dropdown m-3 mr-4" style="width:50px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Semestr
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">1</a>
-                    <a class="dropdown-item" href="#">2</a>
-                    <a class="dropdown-item" href="#">3</a>
-                    <a class="dropdown-item" href="#">4</a>
-                    <a class="dropdown-item" href="#">5</a>
-                    <a class="dropdown-item" href="#">6</a>
-                    <a class="dropdown-item" href="#">7</a>
+            <div class="navbar">
+                <div class="dropdown m-3 mr-4" style="width:50px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Semestr
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">1</a>
+                        <a class="dropdown-item" href="#">2</a>
+                        <a class="dropdown-item" href="#">3</a>
+                        <a class="dropdown-item" href="#">4</a>
+                        <a class="dropdown-item" href="#">5</a>
+                        <a class="dropdown-item" href="#">6</a>
+                        <a class="dropdown-item" href="#">7</a>
+                    </div>
                 </div>
             </div>
         </div>
