@@ -43,7 +43,7 @@ namespace RMSmax.Controllers
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, loginModel.Password, false, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("index","Admin");
+                        return Redirect(returnUrl ?? "/Admin");
                     }
                 }
                 ModelState.AddModelError("", "Nieprawidłowa nazwa lub hasło");
