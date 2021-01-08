@@ -23,115 +23,115 @@ namespace RMSmax.Models
                         Title = "Testowy obrazek",
                         Content = "content1",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title2",
                         Content = "content2",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
+                        PhotoIn = "pic2.jpg",
                     },
                     new Article
                     {
                         Title = "title3",
                         Content = "content3",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg"
+                        PhotoIn = "pic6.jpg"
                     },
                     new Article
                     {
                         Title = "title3",
                         Content = "content3",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
+                        PhotoIn = "pic1.jpg",
                     },
                     new Article
                     {
                         Title = "title3",
                         Content = "content3",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
+                        PhotoIn = "pic2.jpg",
                     },
                     new Article
                     {
                         Title = "title4",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic3.jpg",
+                        PhotoCover = "pic3.jpg",
                     },
                     new Article
                     {
                         Title = "title5",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title6",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic3.jpg",
+                        PhotoCover = "pic3.jpg",
                     },
                     new Article
                     {
                         Title = "title7",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title8",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic6.jpg",
+                        PhotoCover = "pic6.jpg",
                     },
                     new Article
                     {
                         Title = "title9",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic7.jpg",
+                        PhotoCover = "pic7.jpg",
                     },
                     new Article
                     {
                         Title = "title10",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title11",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic3.jpg",
+                        PhotoCover = "pic3.jpg",
                     },
                     new Article
                     {
                         Title = "title12",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
                     },
                     new Article
                     {
                         Title = "title13",
                         Content = "content4",
                         Author = "Author",
-                        PhotoIn = "pic5.jpg",
-                        PhotoCover = "pic5.jpg",
+                        PhotoIn = "pic2.jpg",
+                        PhotoCover = "pic2.jpg",
                     },
                     new Article
                     {
@@ -172,7 +172,7 @@ namespace RMSmax.Models
                         Degree = "Inżynier",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
 
                     },
                     new Employee
@@ -182,7 +182,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
 
                     },
                     new Employee
@@ -192,7 +192,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Matematyki",
 
                     },
@@ -203,7 +203,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
 
                     },
                     new Employee
@@ -213,7 +213,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -227,7 +227,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -241,7 +241,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -255,7 +255,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -283,7 +283,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -297,7 +297,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -311,7 +311,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -325,7 +325,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -340,7 +340,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -354,7 +354,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
@@ -368,7 +368,7 @@ namespace RMSmax.Models
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic5.jpg",
+                        Photo = "pic1.jpg",
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Position = "Asystent",
