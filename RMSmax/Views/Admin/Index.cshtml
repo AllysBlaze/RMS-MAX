@@ -65,8 +65,22 @@
         </div>
         <div class="form-group col-md-5">
             <label asp-for="LogoFile">Logo</label>
-            <input asp-for="LogoFile" type="file" class="form-control-file" accept="image/*"/>
+            <input asp-for="LogoFile" type="file" class="form-control-file" accept="image/*" />
         </div>
+    </div>
+    <div class="form-row">
+         <div class="form-group col-md-4">
+             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 1</label>
+             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+         </div>
+         <div class="form-group col-md-4">
+             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 2</label>
+             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+         </div>
+         <div class="form-group col-md-4">
+             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 3</label>
+             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+         </div>
     </div>
     <div class="form-group">
         <input asp-for="Faculty.Courses" type="hidden" />

@@ -9,6 +9,7 @@ namespace RMSmax.Models.ViewModels.Admin
     public class IndexViewModel : MainViewModel
     {
         public IFormFile LogoFile { set; get; }
+        public IFormFile SliderPhoto{ set; get; }
         public string NewCourseName { get; set; }
     }
 }

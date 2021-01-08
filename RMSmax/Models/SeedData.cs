@@ -34,15 +34,15 @@ namespace RMSmax.Models
                     },
                     new Article
                     {
-                        Title = "title3",
-                        Content = "content3",
+                        Title = "title4",
+                        Content = "content4",
                         Author = "Author",
                         PhotoIn = "pic6.jpg"
                     },
                     new Article
                     {
-                        Title = "title3",
-                        Content = "content3",
+                        Title = "title5",
+                        Content = "content5",
                         Author = "Author",
                         PhotoIn = "pic1.jpg",
                     },
@@ -55,24 +55,8 @@ namespace RMSmax.Models
                     },
                     new Article
                     {
-                        Title = "title4",
-                        Content = "content4",
-                        Author = "Author",
-                        PhotoIn = "pic3.jpg",
-                        PhotoCover = "pic3.jpg",
-                    },
-                    new Article
-                    {
-                        Title = "title5",
-                        Content = "content4",
-                        Author = "Author",
-                        PhotoIn = "pic4.jpg",
-                        PhotoCover = "pic4.jpg",
-                    },
-                    new Article
-                    {
                         Title = "title6",
-                        Content = "content4",
+                        Content = "content6",
                         Author = "Author",
                         PhotoIn = "pic3.jpg",
                         PhotoCover = "pic3.jpg",
@@ -80,7 +64,23 @@ namespace RMSmax.Models
                     new Article
                     {
                         Title = "title7",
-                        Content = "content4",
+                        Content = "content7",
+                        Author = "Author",
+                        PhotoIn = "pic4.jpg",
+                        PhotoCover = "pic4.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title17",
+                        Content = "content17",
+                        Author = "Author",
+                        PhotoIn = "pic3.jpg",
+                        PhotoCover = "pic3.jpg",
+                    },
+                    new Article
+                    {
+                        Title = "title18",
+                        Content = "content18",
                         Author = "Author",
                         PhotoIn = "pic4.jpg",
                         PhotoCover = "pic4.jpg",
@@ -177,7 +177,7 @@ namespace RMSmax.Models
                     },
                     new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię2",
                         LastName = "Nazwisko2",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -187,7 +187,7 @@ namespace RMSmax.Models
                     },
                     new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię3",
                         LastName = "Nazwisko3",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -198,7 +198,7 @@ namespace RMSmax.Models
                     },
                     new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię4",
                         LastName = "Nazwisko4",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -208,7 +208,7 @@ namespace RMSmax.Models
                     },
                     new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię5",
                         LastName = "Nazwisko5",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -222,7 +222,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię6",
                         LastName = "Nazwisko6",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -236,7 +236,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię7",
                         LastName = "Nazwisko7",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -250,7 +250,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię8",
                         LastName = "Nazwisko8",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -264,7 +264,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię9",
                         LastName = "Nazwisko9",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -278,7 +278,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię10",
                         LastName = "Nazwisko10",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -292,7 +292,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię11",
                         LastName = "Nazwisko11",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
@@ -306,7 +306,7 @@ namespace RMSmax.Models
 
                     }, new Employee
                     {
-                        Name = "Imię1",
+                        Name = "Imię12",
                         LastName = "Nazwisko12",
                         Degree = "Doktor",
                         Mail = "imie.nazwisko@polsl.pl",
