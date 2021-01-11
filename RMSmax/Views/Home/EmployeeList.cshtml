@@ -68,11 +68,11 @@
                     @{string picfile = "/pictures/picsEmployee/" + v.Id + "/" + v.Photo;
                         if (string.IsNullOrEmpty(v.Photo))
                         {
-                            <img class="mx-auto my-3 rounded" src="~/pictures/picsEmployee/default.png" style="height:150px; max-width:300px" />
+                            <img class="mx-auto my-3 rounded" src="~/pictures/picsEmployee/default.jpg" style="height:150px; max-width:200px" />
                         }
                         else
                         {
-                            <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:300px" />}
+                            <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:200px" />}
                         }
                 </div>
             </div>

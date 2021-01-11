@@ -14,10 +14,10 @@ namespace RMSmax.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private UserManager<AppUser> userManager;
-        private SignInManager<AppUser> signInManager;
+        private UserManager<IdentityUser> userManager;
+        private SignInManager<IdentityUser> signInManager;
         private Faculty facultyInfo;
-        public AccountController(UserManager<AppUser> user, SignInManager<AppUser> signIn, IWebHostEnvironment env)
+        public AccountController(UserManager<IdentityUser> user, SignInManager<IdentityUser> signIn, IWebHostEnvironment env)
         {
             facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
             userManager = user;
@@ -36,7 +36,7 @@ namespace RMSmax.Controllers
         {
             if(ModelState.IsValid)
             {
-                AppUser user = await userManager.FindByNameAsync(loginModel.Name);
+                IdentityUser user = await userManager.FindByNameAsync(loginModel.Name);
                 if(user!=null)
                 {
                     await signInManager.SignOutAsync();

@@ -25,7 +25,7 @@ namespace RMSmax
         {
             services.AddDbContext<RMSContext>(opts => opts.UseSqlServer("name=RMSDataB"));
             services.AddDbContext<AppIdentityDbContext>(opts => opts.UseSqlServer("name=RMSIdentity"));
-            services.AddIdentity<AppUser, IdentityRole>(opts =>
+            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 8;
                 opts.Password.RequireNonAlphanumeric = false;

@@ -39,13 +39,13 @@
         <h4 class="m-4 text-secondary">Stopień I</h4>
         @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1).OrderBy(x => x.Semester))
         {
-            <a id="link" class="btn btn-info" style="width:100px;" href="~/files/subjectsDocs/@Model.Course.Name/inf_I_2019_stacj.pdf"><p>@v.Semester</p></a>
+            <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p>@v.Semester</p></a>
         }
 
         <h4 class="m-4 text-secondary">Stopień II</h4>
         @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2).OrderBy(x => x.Semester))
         {
-            <a id="link" class="btn btn-info" style="width:100px;" href="~/files/subjectsDocs/@Model.Course.Name/inf_I_2019_stacj.pdf"><p>@v.Semester</p></a>
+            <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p>@v.Semester</p></a>
         }
 
         <h4 class="m-4">Programy studiów</h4>

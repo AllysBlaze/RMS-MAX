@@ -27,9 +27,9 @@ namespace RMSmax.Controllers
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
         private ILogger logger;
-        private UserManager<AppUser> userManager;
+        private UserManager<IdentityUser> userManager;
         public int PageSize => 15;
-        public AdminController(UserManager<AppUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -723,8 +723,6 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task <IActionResult> CreateUser(User user, string confirmPassword)
         {
-            
-
             if (ModelState.IsValid)
             {
                 if (user.Password != confirmPassword)
@@ -733,7 +731,7 @@ namespace RMSmax.Controllers
                 }
                 else
                 {
-                    AppUser appUser = new AppUser { UserName = user.Name };
+                    IdentityUser appUser = new IdentityUser { UserName = user.Name };
                     IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
                     if (result.Succeeded)
                     {
@@ -755,7 +753,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            AppUser user = await userManager.FindByIdAsync(id); //do poprawy
+            IdentityUser user = await userManager.FindByIdAsync(id); //do poprawy
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
@@ -784,7 +782,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                AppUser user = await userManager.FindByIdAsync(id); // user jest nullem -> do naprawy
+                IdentityUser user = await userManager.FindByIdAsync(id); // user jest nullem -> do naprawy
                 if (user != null)
                 {
                     if (newPassword != string.Empty)
@@ -831,7 +829,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult AccountsList()
         {
-            return View(new AccountListViewModel() { Faculty = facultyInfo, UserList = userManager.Users});
+            return View(new AccountListViewModel() { Faculty = facultyInfo});
         }
 
 
