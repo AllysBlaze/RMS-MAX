@@ -12,13 +12,13 @@
 </head>
 <body>
     <nav class="navbar" style="background-color: @Model.Faculty.Color;">
-        <h1>@Model.Faculty.Name</h1>
-        <a class="nav-link pl-0" asp-controller="Admin" asp-action="Index"> <span class="">ADMIN</span></a>
-        <a class="nav-link pl-0" asp-controller="Account" asp-action="Login"> <span class="">ADMIN Login</span></a>
-        <a class="navbar-brand" href="#">
-            <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
-        </a>
-    </nav>
+        <a asp-controller="Home" asp-action="Index"><h1>@Model.Faculty.Name</h1></a>
+            <a class="nav-link pl-0" asp-controller="Admin" asp-action="Index"> <span class="">ADMIN</span></a>
+            <a class="nav-link pl-0" asp-controller="Account" asp-action="Login"> <span class="">ADMIN Login</span></a>
+            <a class="navbar-brand" href="#">
+                <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
+            </a>
+</nav>
     <div class="container-fluid flex-fill">
         <div class="row wrapper flex-column flex-sm-row min-vh-100">
             <aside class=" col-xl-2 col-lg-2 col-md-3 col-sm-4  bg-dark flex-shrink-1">
