@@ -46,7 +46,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new IndexViewModel() { Faculty = facultyInfo });
+            return View(new IndexViewModel(Environment) { Faculty = facultyInfo}) ;
         }
 
         [HttpPost]
@@ -88,6 +88,41 @@ namespace RMSmax.Controllers
             else
             {
                 return View("Index", new IndexViewModel() { Faculty = facultyInfo, LogoFile = logoFile });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UploadSliderPhoto(int id, IFormFile photo)
+        {
+            if (ModelState.IsValid)
+            {
+                if (photo != null)
+                {
+                    try
+                    {
+                        string dir = Path.Combine(Environment.WebRootPath, "pictures", "sliderPics", id.ToString());
+                        string[] files = Directory.GetFiles(Path.Combine(Environment.WebRootPath, "pictures", "picsSlider", id.ToString()));
+                        foreach (var v in files)
+                        {
+                            System.IO.File.Delete(v);
+                        }
+                        string path = Path.Combine(dir, photo.FileName);
+                        using (FileStream fs = new FileStream(path, FileMode.Create))
+                        {
+                            photo.CopyTo(fs);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                    }
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
             }
         }
         #endregion

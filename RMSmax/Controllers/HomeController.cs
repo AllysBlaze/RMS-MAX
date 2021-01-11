@@ -31,7 +31,7 @@ namespace RMSmax.Controllers
         }
         public IActionResult Index(int page = 1)
         {
-            return View(new ArticlesListViewModel
+            return View(new ArticlesListViewModel(Environment)
             {
                 Faculty = facultyInfo,
                 Articles = articlesRepo.Articles.OrderByDescending(a => a.DateTime).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
