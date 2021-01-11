@@ -2,7 +2,6 @@
 @{
     Layout = "_LayoutAdmin";
 }
-<script src="~/js/DateRangePick.js"></script>
 
 <form asp-controller="Admin" asp-action="ArticleList" method="get">
     <div class="row" style="margin-bottom: 25px;">
@@ -11,17 +10,6 @@
         </div>
         <div class="col-lg-6">
             <input type="text" name="author" value="@Model.CurrentSearchingAuthor" class="form-control" placeholder="Autor" aria-label="Autor" style="margin-bottom: 18px;" autocomplete="off">
-        </div>
-        <div class="col-lg-2">
-            <p>Zakres dat: </p>
-        </div>
-        <div class="col-lg-3 pt-1">
-            <label>Od</label>
-            <input type="date" name="from" id="date1" onchange="checkCondition()" value="@Model.CurrentSearchingFrom" />
-        </div>
-        <div class="col-lg-3 pt-1" style="margin-bottom:5px;">
-            <label>Do</label>
-            <input type="date" name="to" id="date2" onchange="checkCondition()" value="@Model.CurrentSearchingTo" />
         </div>
         <div class="col-lg-12 text-center">
             <button role="button" id="submitBtn" class="btn btn-primary">Wyszukaj</button>
