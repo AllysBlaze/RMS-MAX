@@ -66,7 +66,14 @@
                 </div>
                 <div class="col-lg-3 d-flex flex-wrap align-items-center">
                     @{string picfile = "/pictures/picsEmployee/" + v.Id + "/" + v.Photo;
-                    <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:300px" />}
+                        if (string.IsNullOrEmpty(v.Photo))
+                        {
+                            <img class="mx-auto my-3 rounded" src="~/pictures/picsEmployee/default.png" style="height:150px; max-width:300px" />
+                        }
+                        else
+                        {
+                            <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:300px" />}
+                        }
                 </div>
             </div>
         }
