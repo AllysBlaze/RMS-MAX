@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Identity.Core;
+using RMSmax.Models.EventLog;
 
 namespace RMSmax.Controllers
 {
@@ -82,6 +83,8 @@ namespace RMSmax.Controllers
                 facultyInfo.MapSource = faculty.MapSource;
                 facultyInfo.Color = faculty.Color;
                 facultyInfo.Serialize();
+
+                EventLogs.LogInformation("Zmieniono informacje o wydziale.");
 
                 return RedirectToAction("Index");
             }
