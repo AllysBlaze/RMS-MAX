@@ -855,8 +855,13 @@ namespace RMSmax.Controllers
                 ModelState.AddModelError("", error.Description);
             }
         }
-        
+
         #endregion
+
+        public IActionResult EventLog()
+        {
+            return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = Models.EventLog.EventLogs.Logs });
+        }
 
         //!
 
