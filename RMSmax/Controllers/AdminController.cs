@@ -376,10 +376,8 @@ namespace RMSmax.Controllers
 
         #region Article
         [HttpGet]
-        public IActionResult ArticleList(int page = 1, string title = "", string author = "", DateTime from = new DateTime(), DateTime to = new DateTime())
+        public IActionResult ArticleList(int page = 1, string title = "", string author = "")
         {
-            to = to.Date;
-            from = from.Date;
             IEnumerable<Article> articles = articlesRepo.Articles;
             if (!string.IsNullOrEmpty(title))
             {
@@ -388,14 +386,6 @@ namespace RMSmax.Controllers
             if (!string.IsNullOrEmpty(author))
             {
                 articles = articles.Where(x => x.Author.ToLower().Contains(author.ToLower()));
-            }
-            if (from != new DateTime())
-            {
-                articles = articles.Where(x => x.DateTime >= from);
-            }
-            if (to != new DateTime())
-            {
-                articles = articles.Where(x => x.DateTime <= to.AddDays(1));
             }
         
             var pagingInfo = new PagingInfo()
@@ -412,9 +402,7 @@ namespace RMSmax.Controllers
                 Articles = articles,
                 PagingInfo = pagingInfo,
                 CurrentSearchingTitle = title,
-                CurrentSearchingAuthor = author,
-                CurrentSearchingFrom = from,
-                CurrentSearchingTo = to
+                CurrentSearchingAuthor = author
             });
         }
 
@@ -848,7 +836,7 @@ namespace RMSmax.Controllers
         private bool XSSValidate(string input)
         {
             input = System.Web.HttpUtility.HtmlDecode(input);
-            string[] legalMarkups = new string[] {"p", "strong", "i", "u", "span", "ul", "li", "ol", "a", "figure", "table", "tbody", "tr", "td"};
+            string[] legalMarkups = new string[] {"p", "h2", "h3", "h4", "strong", "i", "u", "span", "ul", "li", "ol", "a", "figure", "table", "tbody", "tr", "td"};
 
             for (int i = 0; i < input.Length - 1; i++)
             {
