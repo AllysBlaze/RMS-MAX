@@ -172,7 +172,7 @@ namespace RMSmax.Models
                         Degree = "Inżynier",
                         Mail = "imie.nazwisko@polsl.pl",
                         Phone = "000000000",
-                        Photo = "pic1.jpg",
+                        Photo = "",
 
                     },
                     new Employee
