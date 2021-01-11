@@ -68,20 +68,7 @@
             <input asp-for="LogoFile" type="file" class="form-control-file" accept="image/*" />
         </div>
     </div>
-    <div class="form-row">
-         <div class="form-group col-md-4">
-             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 1</label>
-             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
-         </div>
-         <div class="form-group col-md-4">
-             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 2</label>
-             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
-         </div>
-         <div class="form-group col-md-4">
-             <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 3</label>
-             <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
-         </div>
-    </div>
+    
     <div class="form-group">
         <input asp-for="Faculty.Courses" type="hidden" />
     </div>
@@ -91,6 +78,95 @@
     </div>
 </form>
 
+<div class="row" style=" border-top: solid 2px grey;">
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
+            <div class="form-row my-3 py-3" >
+                <div class="form-group col-md-4">
+                    <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 1</label>
+                    <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+                </div>
+            </div>
+            <div class="form-row">
+                @{ if (string.IsNullOrEmpty("ModelSlidera"))
+                    {
+                        <p>Aktualne zdjęcie: Brak</p>
+                    }
+                    else
+                    {
+                        string picfile = "/pictures/picsSlider/pic1.jpg";
+                        <p>
+                            Aktualne zdjęcie:
+                            <img src="@picfile" height="220" width="200" />
+                        </p>
+                    }
+                }
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Wyślij</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
+
+            <div class="form-row my-3 py-3" >
+                <div class="form-group col-md-4">
+                    <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 2</label>
+                    <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+                </div>
+            </div>
+            <div class="form-row">
+                @{ if (string.IsNullOrEmpty("ModelSlidera"))
+                    {
+                        <p>Aktualne zdjęcie: Brak</p>
+                    }
+                    else
+                    {
+                        string picfile = "/pictures/picsSlider/pic1.jpg";
+                        <p>
+                            Aktualne zdjęcie:
+                            <img src="@picfile" height="220" width="200" />
+                        </p>
+                    }
+                }
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Wyślij</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
+
+            <div class="form-row my-3 py-3" >
+                <div class="form-group col-md-4">
+                    <label asp-for="SliderPhoto">Zdjęcie slidera strony głównej nr 3</label>
+                    <input asp-for="SliderPhoto" type="file" class="form-control-file" accept="image/*" />
+                </div>
+            </div>
+            <div class="form-row">
+                @{ if (string.IsNullOrEmpty("ModelSlidera"))
+                    {
+                        <p>Aktualne zdjęcie: Brak</p>
+                    }
+                    else
+                    {
+                        string picfile = "/pictures/picsSlider/pic1.jpg";
+                        <p>
+                            Aktualne zdjęcie:
+                            <img src="@picfile" height="220" width="200" />
+                        </p>
+                    }
+                }
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Wyślij</button>
+            </div>
+        </form>
+    </div>
+
+</div>
 
 <div class="row align-content-center justify-content-center" style="border-bottom: solid 2px grey; border-top: solid 2px grey;">
     <div class="col-6" style="padding-top: 10px;">
