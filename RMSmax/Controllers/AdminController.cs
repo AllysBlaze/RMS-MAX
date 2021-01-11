@@ -94,25 +94,30 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult UploadSliderPhoto(int id, IFormFile photo)
         {
-            if (ModelState.IsValid)
+            if (id == 1 || id == 2 || id == 3)
             {
                 if (photo != null)
                 {
                     try
                     {
-                        string dir = Path.Combine(Environment.WebRootPath, "pictures", "sliderPics", id.ToString());
+                        string dir = Path.Combine(Environment.WebRootPath, "pictures", "picsSlider", id.ToString());
                         string[] files = Directory.GetFiles(Path.Combine(Environment.WebRootPath, "pictures", "picsSlider", id.ToString()));
                         foreach (var v in files)
                         {
                             System.IO.File.Delete(v);
+                        }
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
                         }
                         string path = Path.Combine(dir, photo.FileName);
                         using (FileStream fs = new FileStream(path, FileMode.Create))
                         {
                             photo.CopyTo(fs);
                         }
+
                     }
-                    catch (Exception)
+                   catch (Exception)
                     {
                         return View("Index", new IndexViewModel() { Faculty = facultyInfo });
                     }

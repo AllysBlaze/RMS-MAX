@@ -11,7 +11,7 @@
 </head>
 <body>
     <nav class="navbar" style="background-color: @Model.Faculty.Color;">
-        <a asp-controller="Home" asp-action="Index"><h1>@Model.Faculty.Name</h1></a>
+        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset"><h1>@Model.Faculty.Name</h1></a>
         <p>Tryb administratora</p>
         <a class="navbar-brand" href="#">
             <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">

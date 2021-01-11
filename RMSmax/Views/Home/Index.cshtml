@@ -66,25 +66,28 @@
         </ol>
 
         <div class="carousel-inner">
+            @{ bool active = true; }
+            @foreach (var v in Model.SliderPhotos)
+            {
+                if (active)
+                {
+                    <div class="carousel-item active">
+                        <div class="overlay-image" style="background-image: url(pictures/picsSlider/@v) "></div>
+                        <div class="container">
+                        </div>
+                    </div>
+                    active = false;
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <div class="overlay-image" style="background-image: url(pictures/picsSlider/@v) "></div>
+                        <div class="container">
+                        </div>
+                    </div>
+                }
 
-            <div class="carousel-item active">
-                <div class="overlay-image" style="background-image: url(pictures/picsSlider/pic1.jpg) "></div>
-                <div class="container">
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <div class="overlay-image" style="background-image: url(pictures/picsSlider/pic2.jpg); "></div>
-                <div class="container">
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <div class="overlay-image" style="background-image: url(pictures/picsSlider/pic3.jpg); "></div>
-                <div class="container">
-                </div>
-            </div>
-
+            }
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

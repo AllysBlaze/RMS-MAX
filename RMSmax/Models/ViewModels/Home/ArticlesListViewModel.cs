@@ -23,9 +23,8 @@ namespace RMSmax.Models.ViewModels
                     string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", i.ToString()));
                     foreach (var v in files)
                     {
-                        pics.Add(Path.GetFileName(v));
+                        pics.Add(i.ToString() + "/" + Path.GetFileName(v));
                     }
-                    pics.AddRange(files);
                 }
 
                 return pics;

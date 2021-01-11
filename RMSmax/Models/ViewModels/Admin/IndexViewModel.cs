@@ -13,23 +13,25 @@ namespace RMSmax.Models.ViewModels.Admin
         private string rootPath;
         public IFormFile LogoFile { set; get; }
         public IFormFile SliderPhoto{ set; get; }
-        public IFormFile SliderPhoto1 { set; get; }
-        public IFormFile SliderPhoto2 { set; get; }
-        public IList<string> SliderPhotos { 
+        public string SliderPic1 { 
             get 
             {
-                List<string> pics = new List<string>();
-                for (int i = 1; i <= 3; i++)
-                {
-                    string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", i.ToString()));
-                    foreach (var v in files)
-                    {
-                        pics.Add(Path.GetFileName(v));
-                    }
-                    pics.AddRange(files);
-                }
-
-                return pics;
+                string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", "1"));
+                return files.Length > 0 ? Path.GetFileName(files[0]) : null;
+            } 
+        }
+        public string SliderPic2 { 
+            get 
+            {
+                string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", "2"));
+                return files.Length > 0 ? Path.GetFileName(files[0]) : null;
+            } 
+        }
+        public string SliderPic3 { 
+            get 
+            {
+                string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", "3"));
+                return files.Length > 0 ? Path.GetFileName(files[0]) : null;
             } 
         }
         public string NewCourseName { get; set; }
