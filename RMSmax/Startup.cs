@@ -25,7 +25,7 @@ namespace RMSmax
         {
             services.AddDbContext<RMSContext>(opts => opts.UseSqlServer("name=RMSDataB"));
             services.AddDbContext<AppIdentityDbContext>(opts => opts.UseSqlServer("name=RMSIdentity"));
-            services.AddIdentity<IdentityUser, IdentityRole>(opts =>
+            services.AddIdentity<AppUser, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 8;
                 opts.Password.RequireNonAlphanumeric = false;
@@ -62,7 +62,7 @@ namespace RMSmax
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
             SeedData.EnsurePopulated(app);
-            IdentitySeedData.EnsurePopulated(app);
+            //IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

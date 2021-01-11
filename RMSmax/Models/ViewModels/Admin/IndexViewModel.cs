@@ -11,6 +11,7 @@ namespace RMSmax.Models.ViewModels.Admin
         public IFormFile LogoFile { set; get; }
         public IFormFile SliderPhoto{ set; get; }
         public string NewCourseName { get; set; }
+        public string Id { get; set; }
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
         public string NewPassword2 { get; set; }

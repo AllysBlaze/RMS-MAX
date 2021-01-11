@@ -94,25 +94,25 @@
 
 <div class="row align-content-center justify-content-center" style="border-bottom: solid 2px grey; border-top: solid 2px grey;">
     <div class="col-6" style="padding-top: 10px;">
-        <form method="post">
+        <form asp-controller="Admin" asp-action="EditUserPassword" method="post">
             <div class="form-group">
-                <label>Login</label>
-                <input type="text" class="form-control" placeholder="Login" autocomplete="off">
+                <label asp-for="Id">Login</label>
+                <input asp-for="Id" type="text" class="form-control" placeholder="Login" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Stare hasło</label>
-                <input type="password" class="form-control" placeholder="Stare hasło" autocomplete="off">
+                <label asp-for="OldPassword">Stare hasło</label>
+                <input asp-for="OldPassword" type="password" class="form-control" placeholder="Stare hasło" autocomplete="off">
             </div>
             <div class="form-group">
-                <label>Nowe hasło</label>
-                <input type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip" autocomplete="off">
+                <label asp-for="NewPassword">Nowe hasło</label>
+                <input asp-for="NewPassword" type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip" autocomplete="off">
                 <small id="passwordTip" class="form-text text-muted">
                     Hasło powinno mieć co najmniej 8 znaków, zawierać jedną dużą literę i jeden znak specjalny.
                 </small>
             </div>
             <div class="form-group">
-                <label>Powtórz nowe hasło</label>
-                <input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2" autocomplete="off">
+                <label asp-for="NewPassword2">Powtórz nowe hasło</label>
+                <input asp-for="NewPassword2" type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2" autocomplete="off">
                 <small id="passwordTip2" class="form-text text-muted">
                     Hasła muszą być takie same.
                 </small>
