@@ -1,0 +1,66 @@
+﻿@model EventLogViewModel
+@{
+    Layout = "_LayoutAdmin";
+}
+<style>
+    table {
+        width: 500px;
+        table-layout: fixed;
+    }
+    td {
+        word-wrap: break-word;
+    }
+</style>
+<div class="row align-content-center justify-content-center" style="border-top: solid 2px grey;">
+    <div class="col-12">
+        <label style="
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom: solid 2px grey;
+        border-left: solid 2px grey;
+        border-right: solid 2px grey;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 3px;
+        ">
+            <strong>Dziennik zdarzeń</strong>
+        </label>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Czas wystąpienia</th>
+            <th scope="col">Rodzaj</th>
+            <th scope="col">Wiadomość</th>
+            <th scope="col">Komentarz</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model.Logs)
+        {
+        <tr>
+            <td>@v.Time</td>
+            @if (v.LogLevel.ToString().Equals("Error"))
+            {
+                <td class="text-danger">Błąd</td>
+            }
+            else if (v.LogLevel.ToString().Equals("Warning"))
+            {
+                <td class="text-warning">Ostrzeżenie</td>
+            }
+            else if (v.LogLevel.ToString().Equals("Information"))
+            {
+                <td class="text-primary">Informacja</td>
+            }
+            else
+            {
+                <td>@v.LogLevel</td>
+            }
+            <td>@v.Message</td>
+            <td>@v.Comment</td>
+        </tr>
+        }
+        
+    </tbody>
+</table>
