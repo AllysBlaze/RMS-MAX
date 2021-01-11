@@ -27,9 +27,9 @@ namespace RMSmax.Controllers
         private Faculty facultyInfo;
         private IWebHostEnvironment Environment;
         private ILogger logger;
-        private UserManager<IdentityUser> userManager;
+        private UserManager<AppUser> userManager;
         public int PageSize => 15;
-        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public AdminController(UserManager<AppUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -721,25 +721,33 @@ namespace RMSmax.Controllers
 
         #region Identity
         [HttpPost]
-        public async Task <IActionResult> CreateUser(User user)
+        public async Task <IActionResult> CreateUser(User user, string confirmPassword)
         {
-            if(ModelState.IsValid)
+            
+
+            if (ModelState.IsValid)
             {
-                IdentityUser appUser = new IdentityUser { UserName = user.Name };
-                IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
-                if(result.Succeeded)
+                if (user.Password != confirmPassword)
                 {
-                    return RedirectToAction("Index");
+                    return View("Index", new IndexViewModel() { Faculty = facultyInfo });
                 }
                 else
                 {
-                    foreach(IdentityError e in result.Errors)
+                    AppUser appUser = new AppUser { UserName = user.Name };
+                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
+                        return RedirectToAction("Index");
                     }
+                    else
+                    {
+                        foreach (IdentityError e in result.Errors)
+                        {
+                            ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
+                        }
 
+                    }
                 }
-                
             }
             return RedirectToAction("AccountsList");
         }
@@ -747,7 +755,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            IdentityUser user = await userManager.FindByIdAsync(id);
+            AppUser user = await userManager.FindByIdAsync(id); //do poprawy
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
@@ -776,7 +784,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                IdentityUser user = await userManager.FindByIdAsync(id);
+                AppUser user = await userManager.FindByIdAsync(id); // user jest nullem -> do naprawy
                 if (user != null)
                 {
                     if (newPassword != string.Empty)
@@ -796,6 +804,7 @@ namespace RMSmax.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Nie znaleziono użytkownika");
+                    return View("Index", new IndexViewModel() { Faculty = facultyInfo });
                 }
             }
             return RedirectToAction("AccountsList");
@@ -822,7 +831,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult AccountsList()
         {
-            return View(new MainViewModel() { Faculty = facultyInfo});
+            return View(new AccountListViewModel() { Faculty = facultyInfo, UserList = userManager.Users});
         }
 
 
