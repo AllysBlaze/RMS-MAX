@@ -720,9 +720,8 @@ namespace RMSmax.Controllers
         #endregion
 
         #region Identity
-        public ViewResult Create() => View();
         [HttpPost]
-        public async Task <IActionResult> Create(User user)
+        public async Task <IActionResult> CreateUser(User user)
         {
             if(ModelState.IsValid)
             {
@@ -736,17 +735,17 @@ namespace RMSmax.Controllers
                 {
                     foreach(IdentityError e in result.Errors)
                     {
-                        ModelState.AddModelError("", e.Description);
+                        ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
                     }
 
                 }
                 
             }
-            return View(user);
+            return RedirectToAction("AccountsList");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
             IdentityUser user = await userManager.FindByIdAsync(id);
             if (user != null)
@@ -765,46 +764,41 @@ namespace RMSmax.Controllers
             {
                 ModelState.AddModelError("", "Nie znaleziono użytkownika");
             }
-            return View("Index", userManager.Users);
-        }
-
-        public async Task<IActionResult> Edit(string id)
-        {
-            IdentityUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
-            {
-                return View(user);
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            return RedirectToAction("AccountsList");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, string password) //prawdopodobnie będę musiała dopisać walidator hasła
+        public async Task<IActionResult> EditUserPassword(string id, string newPassword, string newPassword2) //prawdopodobnie będę musiała dopisać walidator hasła
         {
-            IdentityUser user = await userManager.FindByIdAsync(id);
-            if (user != null)
+            if(newPassword != newPassword2)
             {
-                if (password != string.Empty)
-                {
-                    IdentityResult result = await userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        AddErrorsFromResult(result);
-                    }
-                }
+                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
             }
             else
             {
-                ModelState.AddModelError("", "Nie znaleziono użytkownika");
+                IdentityUser user = await userManager.FindByIdAsync(id);
+                if (user != null)
+                {
+                    if (newPassword != string.Empty)
+                    {
+                        IdentityResult result = await userManager.UpdateAsync(user);
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            AddErrorsFromResult(result);
+                            return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nie znaleziono użytkownika");
+                }
             }
-            return View(user);
+            return RedirectToAction("AccountsList");
         }
 
         private void AddErrorsFromResult(IdentityResult result)
