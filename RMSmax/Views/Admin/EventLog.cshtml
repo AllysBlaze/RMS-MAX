@@ -33,6 +33,7 @@
         <tr>
             <th scope="col">Czas wystąpienia</th>
             <th scope="col">Rodzaj</th>
+            <th scope="col">Użytkownik</th>
             <th scope="col">Wiadomość</th>
             <th scope="col">Komentarz</th>
         </tr>
@@ -40,27 +41,28 @@
     <tbody>
         @foreach (var v in Model.Logs)
         {
-            <tr>
-                <td>@v.Time</td>
-                @if (v.LogLevel.ToString().Equals("Error"))
-                {
-                    <td class="text-danger">Błąd</td>
-                }
-                else if (v.LogLevel.ToString().Equals("Warning"))
-                {
-                    <td class="text-warning">Ostrzeżenie</td>
-                }
-                else if (v.LogLevel.ToString().Equals("Information"))
-                {
-                    <td class="text-primary">Informacja</td>
-                }
-                else
-                {
-                    <td>@v.LogLevel</td>
-                }
-                <td>@v.Message</td>
-                <td>@v.Comment</td>
-            </tr>
+        <tr>
+            <td>@v.Time</td>
+            @if (v.LogLevel.ToString().Equals("Error"))
+            {
+                <td class="text-danger">Błąd</td>
+            }
+            else if (v.LogLevel.ToString().Equals("Warning"))
+            {
+                <td class="text-warning">Ostrzeżenie</td>
+            }
+            else if (v.LogLevel.ToString().Equals("Information"))
+            {
+                <td class="text-primary">Informacja</td>
+            }
+            else
+            {
+                <td>@v.LogLevel</td>
+            }
+            @*<td>@v.Admin</td>*@
+            <td>@v.Message</td>
+            <td>@v.Comment</td>
+        </tr>
         }
 
     </tbody>

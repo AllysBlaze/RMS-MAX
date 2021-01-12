@@ -13,11 +13,10 @@
 <body>
     <nav class="navbar" style="background-color: @Model.Faculty.Color;">
         <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset"><h1>@Model.Faculty.Name</h1></a>
-            <a class="nav-link pl-0" asp-controller="Account" asp-action="Login"> <span class="">ADMIN</span></a>
-            <a class="navbar-brand" href="#">
-                <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
-            </a>
-</nav>
+        <a class="navbar-brand" href="#">
+            <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
+        </a>
+    </nav>
     <div class="container-fluid flex-fill">
         <div class="row wrapper flex-column flex-sm-row min-vh-100">
             <aside class=" col-xl-2 col-lg-2 col-md-3 col-sm-4  bg-dark flex-shrink-1">
@@ -58,10 +57,10 @@
         </div>
 
     </div>
-    <div class="row mt-auto col-12 bg-dark my-auto justify-content-between align-content-center mx-0" style="height:50px">
-        <p class="text-white bg-dark pl-3 ml-3" id="Creators">Strona stworzona przez IOTeam</p>
-        <a class="nav-link pl-0" asp-controller="Admin" asp-action="Index"> <span class="">ADMIN</span></a>
-        <button type="button" onclick="topFunction()" id="upBtn" class="btn btn-primary float-right" style="height: 40px">Do góry</button>
+    <div class="row mt-auto col-12 bg-dark my-auto justify-content-between align-content-center mx-0" style="height:50px; width:100%;">
+            <p class="text-white bg-dark pl-3 ml-3" id="Creators">Strona stworzona przez IOTeam</p>
+            <a class="nav-link pl-0 text-decoration-none text-reset" asp-controller="Admin" asp-action="Index"><span style="font-size:13px">Logowanie</span></a>
+            <button type="button" onclick="topFunction()" id="upBtn" class="btn btn-primary" style="height: 40px">Do góry</button>
     </div>
 
 
@@ -76,6 +75,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
     <script src="https://skrypt-cookies.pl/id/bf827fcb5a643e4f.js"></script>
-   
+
 </body>
 </html>
