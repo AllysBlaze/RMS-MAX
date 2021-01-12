@@ -909,7 +909,7 @@ namespace RMSmax.Controllers
                     IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("AccountsList");
                     }
                     else
                     {
@@ -925,15 +925,14 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(IdentityUser user) //Przekazujemy Id czy obiekt user?
         {
-            IdentityUser user = await GetCurrentUserAsync(); //do poprawy
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("AccountsList");
                 }
                 else
                 {
