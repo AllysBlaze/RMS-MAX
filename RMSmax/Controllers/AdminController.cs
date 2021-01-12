@@ -71,7 +71,7 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się zmienić informacji o wydziale.", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
@@ -88,7 +88,7 @@ namespace RMSmax.Controllers
                 facultyInfo.Color = faculty.Color;
                 facultyInfo.Serialize();
 
-                EventLogs.LogInformation("Zmieniono informacje o wydziale.");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Zmieniono informacje o wydziale.");
 
                 return RedirectToAction("Index");
             }
@@ -126,18 +126,18 @@ namespace RMSmax.Controllers
                     }
                    catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się dodać zdjęcia do banera strony głównej.", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia do banera strony głównej.", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
                 }
 
-                EventLogs.LogInformation("Zmieniono " + id + " zdjęcie banera strony głównej.");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Zmieniono " + id + " zdjęcie banera strony głównej.");
 
                 return RedirectToAction("Index");
             }
             else
             {
-                EventLogs.LogError("Nie udało się dodać zdjęcia do banera strony głównej.", "Błąd serwera.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia do banera strony głównej.", "Błąd serwera.");
                 return RedirectToAction("EventLog");
             }
         }
@@ -165,7 +165,7 @@ namespace RMSmax.Controllers
         {
             if (string.IsNullOrEmpty(NewCourseName) || facultyInfo.Courses.Where(x => x.Name == NewCourseName).FirstOrDefault() != null)
             {
-                EventLogs.LogError("Nie udało się dodać kierunku studiów.", "Kierunek o tej nazwie już istnieje.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać kierunku studiów.", "Kierunek o tej nazwie już istnieje.");
                 return RedirectToAction("EventLog");
             }
             else
@@ -181,7 +181,7 @@ namespace RMSmax.Controllers
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", NewCourseName);
 
-                EventLogs.LogInformation("Dodano nowy kierunek studiów.", NewCourseName);
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowy kierunek studiów.", NewCourseName);
 
                 return RedirectToAction("EditCourse", "Admin", routeValues);
             }
@@ -199,7 +199,7 @@ namespace RMSmax.Controllers
                 {
                     studentsTimetableRepo.DeleteStudentsTimetable(v);
                 }
-                EventLogs.LogInformation("Usunięto plany zajęć kieruneku: " + courseName + ".");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto plany zajęć kieruneku: " + courseName + ".");
                 //usun przedmioty
                 int[] subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
                 foreach (var v in subjects)
@@ -214,11 +214,11 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception) 
                     {
-                        EventLogs.LogError("Nie udało się usunąć kart przedmiotów kieruneku: " + courseName + ".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć kart przedmiotów kieruneku: " + courseName + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
-                EventLogs.LogInformation("Usunięto karty przedmiotów kieruneku: " + courseName + ".");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto karty przedmiotów kieruneku: " + courseName + ".");
                 //usun plany studiow
                 if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name)))
                 {
@@ -228,16 +228,16 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception) 
                     {
-                        EventLogs.LogError("Nie udało się usunąć planów studiów kieruneku: " + courseName + ".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć planów studiów kieruneku: " + courseName + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
-                EventLogs.LogInformation("Usunięto plany studiów kieruneku: " + courseName + ".");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto plany studiów kieruneku: " + courseName + ".");
                 //usun kierunek
                 facultyInfo.Courses.Remove(course);
                 facultyInfo.Serialize();
 
-                EventLogs.LogInformation("Usunięto kierunek studiów:" + courseName + ".");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto kierunek studiów:" + courseName + ".");
             }
 
             return RedirectToAction("Index", "Admin", scroll);
@@ -250,7 +250,7 @@ namespace RMSmax.Controllers
             Course c = facultyInfo.Courses.Where(x => x.Name == newName).FirstOrDefault();
             if (c != null)
             {
-                EventLogs.LogError("Nie udało się zmienić nazwy kierunku " + previousName + " na " + newName + ".", "Kierunek o tej nazwie już istnieje.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić nazwy kierunku " + previousName + " na " + newName + ".", "Kierunek o tej nazwie już istnieje.");
                 return RedirectToAction("EventLog");
             }
             if (course != null)
@@ -260,13 +260,13 @@ namespace RMSmax.Controllers
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", course.Name);
 
-                EventLogs.LogInformation("Zmieniono nazwę kierunku z " + previousName + " na " + newName + ".");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Zmieniono nazwę kierunku z " + previousName + " na " + newName + ".");
 
                 return RedirectToAction("EditCourse", "Admin", routeValues);
             }
             else
             {
-                EventLogs.LogError("Nie udało się zmienić nazwy kierunku " + previousName + " na " + newName + ".", "Błąd serwera.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić nazwy kierunku " + previousName + " na " + newName + ".", "Błąd serwera.");
                 return RedirectToAction("EventLog");
             }
         }
@@ -286,7 +286,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        EventLogs.LogInformation("Dodano specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
 
                         return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
@@ -297,7 +297,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        EventLogs.LogInformation("Dodano specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
 
                         return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
@@ -327,7 +327,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        EventLogs.LogInformation("Usunięto specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
 
                         return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
@@ -338,7 +338,7 @@ namespace RMSmax.Controllers
                         Dictionary<string, string> routeValues = new Dictionary<string, string>();
                         routeValues.Add("course", courseName);
 
-                        EventLogs.LogInformation("Usunięto specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto specjalizację: " + spec + ".", "Kierunek: " + courseName + " Stopień: " + degree);
 
                         return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                     }
@@ -365,7 +365,7 @@ namespace RMSmax.Controllers
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", studentsTimetable.Course);
 
-                    EventLogs.LogInformation("Dodano plan zajęć. Stopień: " + studentsTimetable.Degree + ", Semestr: " + studentsTimetable.Semester + ".", "Kierunek: " + studentsTimetable.Course);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano plan zajęć. Stopień: " + studentsTimetable.Degree + ", Semestr: " + studentsTimetable.Semester + ".", "Kierunek: " + studentsTimetable.Course);
 
                     return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
@@ -389,7 +389,7 @@ namespace RMSmax.Controllers
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", courseName);
 
-                EventLogs.LogInformation("Usunięto plan zajęć.", "Kierunek: " + courseName);
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto plan zajęć.", "Kierunek: " + courseName);
 
 
                 return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
@@ -420,14 +420,14 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
 
-                    EventLogs.LogInformation("Dodano plan studiów ("+ file.Name +").", "Kierunek: " + courseName);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano plan studiów (" + file.Name +").", "Kierunek: " + courseName);
 
                     return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
@@ -455,14 +455,14 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się usunąć planu studiów (" + file + ") na kieruneku: " + courseName + ".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć planu studiów (" + file + ") na kieruneku: " + courseName + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
 
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
 
-                    EventLogs.LogInformation("Usunięto plan studiów (" + file + ").", "Kierunek: " + courseName);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto plan studiów (" + file + ").", "Kierunek: " + courseName);
 
                     return RedirectToAction("EditCourse", "Admin", routeValues, scroll);
                 }
@@ -530,7 +530,7 @@ namespace RMSmax.Controllers
                 //zabezpieczenie XSS
                 if (!XSSValidate(article.Content))
                 {
-                    EventLogs.LogError("Nie udało się dodać aktualności.", "Ochrona przed atakiem XSS.");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Ochrona przed atakiem XSS.");
                     return RedirectToAction("EventLog");
                 }
 
@@ -547,7 +547,7 @@ namespace RMSmax.Controllers
                         }
                         catch (Exception) 
                         {
-                            EventLogs.LogError("Nie udało się dodać aktualności.", "Problem z plikiem.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
                             return RedirectToAction("EventLog");
                         }
                     try
@@ -559,7 +559,7 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się dodać aktualności.", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
@@ -575,7 +575,7 @@ namespace RMSmax.Controllers
                         }
                         catch (Exception)
                         {
-                            EventLogs.LogError("Nie udało się dodać aktualności.", "Problem z plikiem.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
                             return RedirectToAction("EventLog");
                         }
                     try
@@ -587,7 +587,7 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się dodać aktualności.", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
@@ -602,12 +602,12 @@ namespace RMSmax.Controllers
                     {
                         System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
                     }
-                    EventLogs.LogInformation("Dodano nową aktualność.", article.Title);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nową aktualność.", article.Title);
                 }
                 else
                 {
                     articlesRepo.EditArticle(article);
-                    EventLogs.LogInformation("Edycja aktualności", article.Title);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano aktualność", article.Title);
                 }
 
                 return RedirectToAction("ArticleList");
@@ -632,14 +632,14 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception) 
                     {
-                        EventLogs.LogError("Nie udało się usunąć aktualności "+article.Title+".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć aktualności " + article.Title+".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
             }
             articlesRepo.DeleteArticle(id);
 
-            EventLogs.LogInformation("Usunięto aktualność.", article.Title);
+            EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto aktualność.", article.Title);
 
             return RedirectToAction("ArticleList");
         }
@@ -708,7 +708,7 @@ namespace RMSmax.Controllers
                         }
                         catch (Exception) 
                         {
-                            EventLogs.LogError("Nie udało się dodać/edytować pracownika ("+employee.Name +" " + employee.LastName+").", "Problem z plikiem.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować pracownika (" + employee.Name +" " + employee.LastName+").", "Problem z plikiem.");
                             return RedirectToAction("EventLog");
                         }
                     try
@@ -720,7 +720,7 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError("Nie udało się dodać/edytować pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
@@ -741,16 +741,16 @@ namespace RMSmax.Controllers
                 {
                     employeesRepo.EditEmployee(employee);
                     if(string.IsNullOrEmpty(employee.Photo))
-                        EventLogs.LogWarning("Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").", "Brak zdjęcia.");
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").", "Brak zdjęcia.");
                     else
-                        EventLogs.LogInformation("Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
                 }
 
                 return RedirectToAction("EmployeeList");
             }
             else
             {
-                EventLogs.LogInformation("Edycja pracownika (" + employee.Name + " " + employee.LastName + ").");
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edycja pracownika (" + employee.Name + " " + employee.LastName + ").");
                 return View("EditEmployee", new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employee });
             }
         }
@@ -769,14 +769,14 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception) 
                     {
-                        EventLogs.LogError("Nie udało się usunąć pracownika (" + employee.Name + " " + employee.LastName + ").", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć pracownika (" + employee.Name + " " + employee.LastName + ").", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
             }
             employeesRepo.DeleteEmployee(id);
 
-            EventLogs.LogInformation("Usunięto pracownika pracownika (" + employee.Name + " " + employee.LastName + ").");
+            EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto pracownika pracownika (" + employee.Name + " " + employee.LastName + ").");
 
             return RedirectToAction("EmployeeList");
         }
@@ -823,7 +823,7 @@ namespace RMSmax.Controllers
                 }
                 catch (Exception)
                 {
-                    EventLogs.LogError("Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Problem z plikiem.");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Problem z plikiem.");
                     return RedirectToAction("EventLog");
                 }
                 if (subject.Id == 0)
@@ -834,12 +834,12 @@ namespace RMSmax.Controllers
                     {
                         System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
                     }
-                    EventLogs.LogInformation("Dodano nowy przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowy przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
                 }
                 else
                 {
                     subjectRepo.EditSubject(subject);
-                    EventLogs.LogInformation("Edytowano przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
                 }
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", subject.Course);
@@ -852,7 +852,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                EventLogs.LogError("Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
                 return RedirectToAction("EventLog");
             }
         }
@@ -871,7 +871,7 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception) 
                     {
-                        EventLogs.LogError("Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
@@ -879,13 +879,13 @@ namespace RMSmax.Controllers
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", subject.Course);
 
-                EventLogs.LogInformation("usunięto przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
 
                 return RedirectToAction("SubjectsList", "Admin", routeValues);
             }
             else
             {
-                EventLogs.LogError("Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
                 return RedirectToAction("EventLog");
             }
         }
