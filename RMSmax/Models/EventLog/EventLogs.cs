@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace RMSmax.Models.EventLog
 {
@@ -72,19 +73,19 @@ namespace RMSmax.Models.EventLog
             string data = JsonSerializer.Serialize(list);
             File.WriteAllText(path, data);
         }
-        public static void LogInformation(string message, string comment = "")
+        public static void LogInformation(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Information, message, comment));
+            Log(new Log(LogLevel.Information, userr, message, comment));
         }
 
-        public static void LogWarning(string message, string comment = "")
+        public static void LogWarning(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Warning, message, comment));
+            Log(new Log(LogLevel.Warning, userr, message, comment));
         }
 
-        public static void LogError(string message, string comment = "")
+        public static void LogError(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Error, message, comment));
+            Log(new Log(LogLevel.Error, userr, message, comment));
         }
     }
 }
