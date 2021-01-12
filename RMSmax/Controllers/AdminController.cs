@@ -898,7 +898,7 @@ namespace RMSmax.Controllers
             {
                 if (user.Password != confirmPassword)
                 {
-                    return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                    return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
                 }
                 else
                 {
