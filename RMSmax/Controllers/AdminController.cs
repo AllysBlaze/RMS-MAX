@@ -93,7 +93,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                return View("Index", new IndexViewModel() { Faculty = facultyInfo, LogoFile = logoFile });
+                return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo, LogoFile = logoFile });
             }
         }
 
@@ -947,17 +947,17 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUserPassword(string id,string oldPassword, string newPassword, string newPassword2) //prawdopodobnie będę musiała dopisać walidator hasła
         {
-            if(newPassword != newPassword2)
+            if(oldPassword == null|| newPassword != newPassword2)
             {
-                return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
             }
             else
             {
                 
-                IdentityUser user = await GetCurrentUserAsync(); ; // user jest nullem -> do naprawy
+                IdentityUser user = await GetCurrentUserAsync(); 
                 if (user != null)
                 {
-                    if (newPassword != string.Empty)
+                    if (newPassword != null)
                     {
                         IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
                         if (result.Succeeded)
@@ -967,7 +967,7 @@ namespace RMSmax.Controllers
                         else
                         {
                             AddErrorsFromResult(result);
-                            return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                            return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
                         }
 
                     }
@@ -975,11 +975,11 @@ namespace RMSmax.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Nie znaleziono użytkownika");
-                    return View("Index", new IndexViewModel() { Faculty = facultyInfo });
+                    return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
                 }
                 
             }
-            return RedirectToAction("AccountsList");
+            return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
         }
 
         private void AddErrorsFromResult(IdentityResult result)
