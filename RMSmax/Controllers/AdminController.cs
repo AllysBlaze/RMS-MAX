@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Identity.Core;
 using RMSmax.Models.EventLog;
+using RMSmax.Data;
 
 namespace RMSmax.Controllers
 {
@@ -29,8 +30,9 @@ namespace RMSmax.Controllers
         private IWebHostEnvironment Environment;
         private ILogger logger;
         private UserManager<IdentityUser> userManager;
+        private AppIdentityDbContext context;
         public int PageSize => 15;
-        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory, AppIdentityDbContext _context)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -41,6 +43,7 @@ namespace RMSmax.Controllers
             Environment = env;
             logger = loggerFactory.CreateLogger("AdminController");
             userManager = user;
+            context = _context;
         }
 
         #region Index(FacultyInfo)
@@ -1010,7 +1013,11 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult AccountsList()
         {
-            return View(new AccountListViewModel() { Faculty = facultyInfo});
+            var users = context.Users.AsQueryable();
+            return View(new AccountListViewModel() {
+                Faculty = facultyInfo,
+                UserList=users
+        });
         }
 
 

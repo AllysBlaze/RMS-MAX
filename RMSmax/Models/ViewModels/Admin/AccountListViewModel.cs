@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections;
 using System.Linq;
 
 namespace RMSmax.Models.ViewModels.Admin
@@ -7,6 +8,6 @@ namespace RMSmax.Models.ViewModels.Admin
     {
         public User User { get; set; }
         public string ConfirmPassword { get; set; }
-        public IQueryable<AppUser> UserList { get; set; }
+        public IQueryable<IdentityUser> UserList { get; set; }
     }
 }
