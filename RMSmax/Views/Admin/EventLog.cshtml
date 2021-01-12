@@ -7,6 +7,7 @@
         width: 500px;
         table-layout: fixed;
     }
+
     td {
         word-wrap: break-word;
     }
@@ -39,28 +40,30 @@
     <tbody>
         @foreach (var v in Model.Logs)
         {
-        <tr>
-            <td>@v.Time</td>
-            @if (v.LogLevel.ToString().Equals("Error"))
-            {
-                <td class="text-danger">Błąd</td>
-            }
-            else if (v.LogLevel.ToString().Equals("Warning"))
-            {
-                <td class="text-warning">Ostrzeżenie</td>
-            }
-            else if (v.LogLevel.ToString().Equals("Information"))
-            {
-                <td class="text-primary">Informacja</td>
-            }
-            else
-            {
-                <td>@v.LogLevel</td>
-            }
-            <td>@v.Message</td>
-            <td>@v.Comment</td>
-        </tr>
+            <tr>
+                <td>@v.Time</td>
+                @if (v.LogLevel.ToString().Equals("Error"))
+                {
+                    <td class="text-danger">Błąd</td>
+                }
+                else if (v.LogLevel.ToString().Equals("Warning"))
+                {
+                    <td class="text-warning">Ostrzeżenie</td>
+                }
+                else if (v.LogLevel.ToString().Equals("Information"))
+                {
+                    <td class="text-primary">Informacja</td>
+                }
+                else
+                {
+                    <td>@v.LogLevel</td>
+                }
+                <td>@v.Message</td>
+                <td>@v.Comment</td>
+            </tr>
         }
-        
+
     </tbody>
 </table>
+
+<div page-model="@Model.PagingInfo" page-action="EventLog" class="btn-group pull-right m-1"></div>

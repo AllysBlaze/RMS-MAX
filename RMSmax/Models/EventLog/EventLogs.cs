@@ -15,7 +15,7 @@ namespace RMSmax.Models.EventLog
         private static IWebHostEnvironment hostingEnvironment;
         private static ILogger consoleLogger;
         public static bool IsInitialized { get; private set; }
-        public static IList<Log> Logs { get => Deserialize();}
+        public static IEnumerable<Log> Logs { get => Deserialize();}
 
         public static void Initialize(IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
@@ -44,7 +44,7 @@ namespace RMSmax.Models.EventLog
             if(!IsInitialized)
                 throw new InvalidOperationException("Object is not initialized");
         }
-        private static IList<Log> Deserialize()
+        private static IEnumerable<Log> Deserialize()
         {
             string data = File.ReadAllText(path);
             IEnumerable<Log> logs;
@@ -53,7 +53,7 @@ namespace RMSmax.Models.EventLog
             else
                 logs = JsonSerializer.Deserialize<IList<Log>>(data);
 
-            return logs.OrderByDescending(x => x.Time).ToArray();
+            return logs.OrderByDescending(x => x.Time);
         }
 
         public static void Log(Log log)

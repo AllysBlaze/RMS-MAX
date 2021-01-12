@@ -994,9 +994,18 @@ namespace RMSmax.Controllers
 
         #endregion
 
-        public IActionResult EventLog()
+        public IActionResult EventLog(int page = 1)
         {
-            return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = Models.EventLog.EventLogs.Logs });
+            IEnumerable<Models.EventLog.Log> logs = Models.EventLog.EventLogs.Logs;
+            var pagingInfo = new PagingInfo
+            {
+                CurrentPage = page,
+                ItemsPerPage = PageSize,
+                TotalItems = logs.Count()
+            };
+            logs = logs.Skip((page - 1) * PageSize).Take(PageSize);
+
+            return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = logs, PagingInfo = pagingInfo });
         }
 
         //!
