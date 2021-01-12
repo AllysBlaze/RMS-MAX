@@ -55,12 +55,24 @@ namespace RMSmax.Controllers
         public IActionResult Studies(string course, int? degree = null, int? semester = null)
         {
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
+            IEnumerable<Subject> subjects = subjectRepo.Subjects; ;
+            if(degree is null && semester is null)
+                subjects = new List<Subject>();
+            if (degree != null)
+            {
+                subjects = subjects.Where(x => x.Degree == degree);
+            }
+            if (semester != null)
+            {
+                subjects = subjects.Where(x => x.Semester == semester);
+            }
+
             if (c != null)
                 return View(new StudiesViewModel(Environment) {
                     Faculty = facultyInfo,
                     Course = c,
                     StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
-                    Subjects = subjectRepo.Subjects.Where(x => x.Course == course && (degree == null || semester == null ? true : x.Degree == degree && x.Semester == semester))//!!!
+                    Subjects = subjects
                 });
             else
                 return RedirectToAction("Index");

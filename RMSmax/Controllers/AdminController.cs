@@ -925,7 +925,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id) //Przekazujemy Id czy obiekt user?
+        public async Task<IActionResult> DeleteUser(string id) 
         {
             IdentityUser user = null;
             if (!string.IsNullOrEmpty(id))
@@ -955,7 +955,6 @@ namespace RMSmax.Controllers
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", "Nie znaleziono użytkownika: " + user.UserName);
                 return RedirectToAction("EventLog");
             }
-            //return RedirectToAction("AccountsList");
         }
 
         [HttpPost]
@@ -976,12 +975,16 @@ namespace RMSmax.Controllers
                         IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
                         if (result.Succeeded)
                         {
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
+
                             return RedirectToAction("Index");
                         }
                         else
                         {
                             AddErrorsFromResult(result);
-                            return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
+
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", user.UserName);
+                            return RedirectToAction("EventLog");
                         }
 
                     }
@@ -989,7 +992,9 @@ namespace RMSmax.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Nie znaleziono użytkownika");
-                    return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
+
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie znaleziono użytkownika: " + user.UserName);
+                    return RedirectToAction("EventLog");
                 }
                 
             }
