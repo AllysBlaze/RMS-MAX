@@ -907,6 +907,7 @@ namespace RMSmax.Controllers
                     IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
                     if (result.Succeeded)
                     {
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Utworzono nowego użytkownika.", user.Name);
                         return RedirectToAction("AccountsList");
                     }
                     else
@@ -915,10 +916,12 @@ namespace RMSmax.Controllers
                         {
                             ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
                         }
-
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", user.Name);
+                        return RedirectToAction("EventLog");
                     }
                 }
             }
+
             return RedirectToAction("AccountsList");
         }
 
@@ -930,18 +933,25 @@ namespace RMSmax.Controllers
                 IdentityResult result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
+                    EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika.", user.UserName);
                     return RedirectToAction("AccountsList");
                 }
                 else
                 {
                     AddErrorsFromResult(result);
+
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", user.UserName);
+                    return RedirectToAction("EventLog");
                 }
             }
             else
             {
                 ModelState.AddModelError("", "Nie znaleziono użytkownika");
+
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", "Nie znaleziono użytkownika: " + user.UserName);
+                return RedirectToAction("EventLog");
             }
-            return RedirectToAction("AccountsList");
+            //return RedirectToAction("AccountsList");
         }
 
         [HttpPost]
