@@ -23,11 +23,12 @@ namespace RMSmax.Controllers
             userManager = user;
             signInManager = signIn;
         }
+        [HttpGet]
         [AllowAnonymous]
         public ViewResult Login(string returnUrl)
         {
             ViewBag.returnUrl = returnUrl;
-            return View();
+            return View(new LoginModel() { Faculty = facultyInfo });
         }
         [HttpPost]
         [AllowAnonymous]
