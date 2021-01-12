@@ -15,11 +15,11 @@ namespace RMSmax.Models
         private const string adminPass = "Secret123$"; //wielka litara, mała litera, cyfra, znak specjalny
         public static async void EnsurePopulated(IApplicationBuilder app)
         {
-            UserManager<AppUser> userManager = app.ApplicationServices.GetRequiredService<UserManager<AppUser>>();
-            AppUser user = await userManager.FindByIdAsync(adminUser);
+            UserManager<IdentityUser> userManager = app.ApplicationServices.GetRequiredService<UserManager<IdentityUser>>();
+            IdentityUser user = await userManager.FindByIdAsync(adminUser);
             if(user==null)
             {
-                user = new AppUser("Admin");
+                user = new IdentityUser("Admin");
                 await userManager.CreateAsync(user, adminPass);
             }
         }

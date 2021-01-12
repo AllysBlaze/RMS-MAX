@@ -924,7 +924,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            IdentityUser user = await userManager.FindByIdAsync(id); //do poprawy
+            IdentityUser user = await GetCurrentUserAsync(); //do poprawy
             if (user != null)
             {
                 IdentityResult result = await userManager.DeleteAsync(user);
@@ -945,7 +945,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserPassword(string id, string newPassword, string newPassword2) //prawdopodobnie będę musiała dopisać walidator hasła
+        public async Task<IActionResult> EditUserPassword(string id,string oldPassword, string newPassword, string newPassword2) //prawdopodobnie będę musiała dopisać walidator hasła
         {
             if(newPassword != newPassword2)
             {
@@ -953,12 +953,13 @@ namespace RMSmax.Controllers
             }
             else
             {
-                IdentityUser user = await userManager.FindByIdAsync(id); // user jest nullem -> do naprawy
+                
+                IdentityUser user = await GetCurrentUserAsync(); ; // user jest nullem -> do naprawy
                 if (user != null)
                 {
                     if (newPassword != string.Empty)
                     {
-                        IdentityResult result = await userManager.UpdateAsync(user);
+                        IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
                         if (result.Succeeded)
                         {
                             return RedirectToAction("Index");
@@ -968,6 +969,7 @@ namespace RMSmax.Controllers
                             AddErrorsFromResult(result);
                             return View("Index", new IndexViewModel() { Faculty = facultyInfo });
                         }
+
                     }
                 }
                 else
@@ -975,6 +977,7 @@ namespace RMSmax.Controllers
                     ModelState.AddModelError("", "Nie znaleziono użytkownika");
                     return View("Index", new IndexViewModel() { Faculty = facultyInfo });
                 }
+                
             }
             return RedirectToAction("AccountsList");
         }
@@ -986,6 +989,8 @@ namespace RMSmax.Controllers
                 ModelState.AddModelError("", error.Description);
             }
         }
+
+        private Task<IdentityUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
 
         #endregion
 

@@ -35,7 +35,6 @@ namespace RMSmax
             })
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();
-
             //services.AddScoped<IDataRepository<Article>, ArticleManager>();
             services.AddTransient<IArticleRepository, ArticleRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
@@ -62,7 +61,7 @@ namespace RMSmax
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
             SeedData.EnsurePopulated(app);
-            //IdentitySeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }
