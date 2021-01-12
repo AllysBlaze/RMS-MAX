@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Identity.Core;
-using RMSmax.Models.EventLog;
 using RMSmax.Data;
 
 namespace RMSmax.Controllers
@@ -926,11 +925,16 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(IdentityUser user) //Przekazujemy Id czy obiekt user?
+        public async Task<IActionResult> DeleteUser(string id) //Przekazujemy Id czy obiekt user?
         {
-            if (user != null)
+            IdentityUser user = null;
+            if (!string.IsNullOrEmpty(id))
             {
-                IdentityResult result = await userManager.DeleteAsync(user);
+                user = userManager.FindByIdAsync(id).Result;
+            } 
+            if (user != null)
+            {               
+                IdentityResult result = await userManager.DeleteAsync(user); 
                 if (result.Succeeded)
                 {
                     EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika.", user.UserName);
