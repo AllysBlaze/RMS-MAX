@@ -47,13 +47,13 @@ namespace RMSmax.Models.EventLog
         private static IList<Log> Deserialize()
         {
             string data = File.ReadAllText(path);
-            IList<Log> logs;
+            IEnumerable<Log> logs;
             if (string.IsNullOrEmpty(data))
                 logs = new List<Log>();
             else
                 logs = JsonSerializer.Deserialize<IList<Log>>(data);
 
-            return logs;
+            return logs.OrderByDescending(x => x.Time).ToArray();
         }
 
         public static void Log(Log log)

@@ -89,8 +89,6 @@ namespace RMSmax.Controllers
                 facultyInfo.Serialize();
 
                 EventLogs.LogInformation("Zmieniono informacje o wydziale.");
-                EventLogs.LogWarning("warn.");
-                EventLogs.LogError("Blad. a");
 
                 return RedirectToAction("Index");
             }
