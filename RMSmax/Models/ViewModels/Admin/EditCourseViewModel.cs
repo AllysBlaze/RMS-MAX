@@ -19,6 +19,7 @@ namespace RMSmax.Models.ViewModels.Admin
                 {
                     files.Add(file.Name);
                 }
+
                 return files;
             }
         }

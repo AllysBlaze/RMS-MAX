@@ -79,5 +79,13 @@ namespace RMSmax.Models
         public string Name { get; set; }
         public IList<string> FirstDegreeSpecialties { get; set; }
         public IList<string> SecondDegreeSpecialties { get; set; }
+
+        public Course() { }
+        public Course(string name)
+        {
+            Name = name;
+            FirstDegreeSpecialties = new List<string>();
+            SecondDegreeSpecialties = new List<string>();
+        }
     }
 }

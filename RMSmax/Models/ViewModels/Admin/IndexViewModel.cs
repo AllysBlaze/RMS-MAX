@@ -36,8 +36,6 @@ namespace RMSmax.Models.ViewModels.Admin
         public string NewPassword { get; set; }
         public string NewPassword2 { get; set; }
 
-
-        public IndexViewModel() { }
         public IndexViewModel(IWebHostEnvironment env)
         {
             rootPath = env.WebRootPath;
