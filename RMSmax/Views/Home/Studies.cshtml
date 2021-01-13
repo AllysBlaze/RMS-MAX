@@ -19,30 +19,34 @@
             <div class="row">
                 <h1 class=" mx-auto">@Model.Course.Name</h1>
             </div>
-            <h3>Specjalności</h3>
-            <h4 class="text-secondary">Stopień I</h4>
-            <div class="">
-                <ul class="list-group list-group-flush">
-                    @foreach (var v in Model.Course.FirstDegreeSpecialties)
-                    {
-                        <li class="list-group-item" style="word-break:break-word;">@v</li>
-                    }
+            @if (Model.Course.FirstDegreeSpecialties.Count != 0)
+            {
+                <h3>Specjalności</h3>
+                <h4 class="text-secondary">Stopień I</h4>
 
-                </ul>
-            </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var v in Model.Course.FirstDegreeSpecialties)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">@v</li>
+                        }
+
+                    </ul>
+            }
 
 
-            <h4 class="text-secondary">Stopień II</h4>
+            @if (Model.Course.SecondDegreeSpecialties.Count != 0)
+            {
+                <h4 class="text-secondary">Stopień II</h4>
+            
+                    <ul class="list-group list-group-flush">
+                        @foreach (var v in Model.Course.SecondDegreeSpecialties)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">@v</li>
+                        }
 
-            <div>
-                <ul class="list-group list-group-flush">
-                    @foreach (var v in Model.Course.SecondDegreeSpecialties)
-                    {
-                        <li class="list-group-item" style="word-break:break-word;">@v</li>
-                    }
-
-                </ul>
-            </div>
+                    </ul>
+            
+            }
             <h3>Plany zajęć</h3>
             <h4 class="text-secondary">Stopień I</h4>
             @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1).OrderBy(x => x.Semester))
