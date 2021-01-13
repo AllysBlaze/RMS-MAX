@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using RMSmax.Models;
@@ -29,6 +27,8 @@ namespace RMSmax.Controllers
             facultyInfo = Faculty.FacultyInstance is null ? new Faculty(env.WebRootPath) : Faculty.FacultyInstance;
             Environment = env;
         }
+
+        [HttpGet]
         public IActionResult Index(int page = 1)
         {
             return View(new ArticlesListViewModel(Environment)
@@ -39,6 +39,7 @@ namespace RMSmax.Controllers
             });
         }
 
+        [HttpGet]
         public IActionResult Article(int articleId)
         {
             Article art = articlesRepo.Articles.Where(x => x.Id == articleId).FirstOrDefault();
@@ -49,36 +50,42 @@ namespace RMSmax.Controllers
                     Article = art
                 });
             else
-                return RedirectToAction("Index");
+                return NotFound();
         }
 
+        [HttpGet]
         public IActionResult Studies(string course, int? degree = null, int? semester = null)
         {
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
-            IEnumerable<Subject> subjects = subjectRepo.Subjects; ;
-            if(degree is null && semester is null)
-                subjects = new List<Subject>();
-            if (degree != null)
-            {
-                subjects = subjects.Where(x => x.Degree == degree);
-            }
-            if (semester != null)
-            {
-                subjects = subjects.Where(x => x.Semester == semester);
-            }
-
             if (c != null)
-                return View(new StudiesViewModel(Environment) {
+            {
+                IEnumerable<Subject> subjects = subjectRepo.Subjects; ;
+                if (degree is null && semester is null)
+                    subjects = new List<Subject>();
+
+                if (degree != null)
+                {
+                    subjects = subjects.Where(x => x.Degree == degree);
+                }
+                if (semester != null)
+                {
+                    subjects = subjects.Where(x => x.Semester == semester);
+                }
+
+                return View(new StudiesViewModel(Environment)
+                {
                     Faculty = facultyInfo,
                     Course = c,
                     StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
-                    Subjects = subjects
+                    Subjects = subjects.OrderBy(x => x.Name)
                 });
+            }
             else
-                return RedirectToAction("Index");
+                return NotFound();
 
         }
 
+        [HttpGet]
         public IActionResult EmployeeList(int page = 1, string name = "", string surname="")
         {
             IEnumerable<Employee> employees = employeesRepo.Employees.OrderBy(x => x.LastName);
@@ -110,9 +117,10 @@ namespace RMSmax.Controllers
             }); 
         }
 
+        [HttpGet]
         public IActionResult Contact()
         {
-            return View(new ContactViewModel
+            return View(new MainViewModel
             {
                 Faculty = facultyInfo
             });
