@@ -76,7 +76,7 @@ namespace RMSmax.Controllers
                 {
                     Faculty = facultyInfo,
                     Course = c,
-                    StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course),
+                    StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == course).OrderBy(x => x.Degree).ThenBy(x => x.Semester),
                     Subjects = subjects.OrderBy(x => x.Name)
                 });
             }

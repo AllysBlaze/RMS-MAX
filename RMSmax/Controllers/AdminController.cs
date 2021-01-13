@@ -555,7 +555,15 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EditArticle(int id)
         {
-            return View(new EditArticleViewModel() { Faculty = facultyInfo, Article  = articlesRepo.Articles.FirstOrDefault(x => x.Id == id)});
+            Article article = articlesRepo.Articles.FirstOrDefault(x => x.Id == id);
+            if (article is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(new EditArticleViewModel() { Faculty = facultyInfo, Article = article });
+            }
         }
 
         [HttpGet]
@@ -572,68 +580,63 @@ namespace RMSmax.Controllers
                 //zabezpieczenie XSS
                 if (!XSSValidate(article.Content))
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Ochrona przed atakiem XSS.");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować aktualności.", "Ochrona przed atakiem XSS.");
                     return RedirectToAction("EventLog");
                 }
 
                 string path = Path.Combine(Environment.WebRootPath, "pictures", "picsArticle");
-                if (!System.IO.Directory.Exists(Path.Combine(path, article.Id.ToString())))
-                    System.IO.Directory.CreateDirectory(Path.Combine(path, article.Id.ToString()));
+                string dir = Path.Combine(path, article.Id.ToString());
+                if (!System.IO.Directory.Exists(dir))
+                    System.IO.Directory.CreateDirectory(dir);
 
                 if (photoIn != null)
                 {
-                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(path, article.Id.ToString(), article.PhotoIn)))
+                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(dir, article.PhotoIn)))
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(path, article.Id.ToString(), article.PhotoIn));
-                        }
-                        catch (Exception) 
-                        {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
-                            return RedirectToAction("EventLog");
-                        }
-                    try
-                    {
-                        using (FileStream fs = new FileStream(Path.Combine(path, article.Id.ToString(), photoIn.FileName), FileMode.Create))
-                        {
-                            photoIn.CopyTo(fs);
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
-                        return RedirectToAction("EventLog");
-                    }
-
-                    article.PhotoIn = photoIn.FileName;      
-                }
-                if (photoCover != null)
-                {
-                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(path, article.Id.ToString(), article.PhotoCover)))
-                        try
-                        {
-                            System.IO.File.Delete(Path.Combine(path, article.Id.ToString(), article.PhotoCover));
-
+                            System.IO.File.Delete(Path.Combine(dir, article.PhotoIn));
                         }
                         catch (Exception)
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
-                            return RedirectToAction("EventLog");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
                         }
                     try
                     {
-                        using (FileStream fs = new FileStream(Path.Combine(path, article.Id.ToString(), photoCover.FileName), FileMode.Create))
+                        using (FileStream fs = new FileStream(Path.Combine(dir, photoIn.FileName), FileMode.Create))
                         {
-                            photoCover.CopyTo(fs);
+                            photoIn.CopyTo(fs);
                         }
+                        article.PhotoIn = photoIn.FileName;
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać aktualności.", "Problem z plikiem.");
-                        return RedirectToAction("EventLog");
-                    }
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoIn.FileName);
+                    }    
+                }
 
-                    article.PhotoCover = photoCover.FileName;
+                if (photoCover != null)
+                {
+                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(dir, article.PhotoCover)))
+                        try
+                        {
+                            System.IO.File.Delete(Path.Combine(dir, article.PhotoCover));
+                        }
+                        catch (Exception)
+                        {
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
+                        }
+                    try
+                    {
+                        using (FileStream fs = new FileStream(Path.Combine(dir, photoCover.FileName), FileMode.Create))
+                        {
+                            photoCover.CopyTo(fs);
+                        }
+                        article.PhotoCover = photoCover.FileName;
+                    }
+                    catch (Exception)
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoCover.FileName);
+                    }
                 }
 
                 if (article.Id == 0)
@@ -649,14 +652,15 @@ namespace RMSmax.Controllers
                 else
                 {
                     articlesRepo.EditArticle(article);
-                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano aktualność", article.Title);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano aktualność.", article.Title);
                 }
 
                 return RedirectToAction("ArticleList");
             }
             else
             {
-                return View("EditArticle", new EditArticleViewModel() { Faculty = facultyInfo, Article = article, PhotoIn = photoIn, PhotoCover = photoCover });
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować aktualności.", "Niepoprawne dane.");
+                return RedirectToAction("EventLog");
             }
         }
 
@@ -666,24 +670,31 @@ namespace RMSmax.Controllers
             Article article = articlesRepo.Articles.Where(x => x.Id == id).FirstOrDefault();
             if (article != null)
             {
-                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", id.ToString())))
+                string path = Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", id.ToString());
+                if (System.IO.Directory.Exists(path))
                 {
                     try
                     {
-                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsArticle", id.ToString()), true);
+                        System.IO.Directory.Delete(path, true);
                     }
-                    catch (Exception) 
+                    catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć aktualności " + article.Title+".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć aktualności: " + article.Title + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
+
+                articlesRepo.DeleteArticle(id);
+
+                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto aktualność.", article.Title);
+
+                return RedirectToAction("ArticleList");
             }
-            articlesRepo.DeleteArticle(id);
-
-            EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto aktualność.", article.Title);
-
-            return RedirectToAction("ArticleList");
+            else
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć aktualności: " + article.Title + ".", "Niepoprawne dane.");
+                return RedirectToAction("EventLog");
+            }
         }
         #endregion
 
@@ -691,7 +702,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EmployeeList(int page = 1, string name = "", string surname = "")
         {
-            IEnumerable<Employee> employees = employeesRepo.Employees.OrderBy(x => x.LastName);
+            IEnumerable<Employee> employees = employeesRepo.Employees;
             if (!string.IsNullOrEmpty(name))
             {
                 employees = employees.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
@@ -708,7 +719,7 @@ namespace RMSmax.Controllers
                 TotalItems = employees.Count()
             };
 
-            employees = employees.OrderBy(x => x.LastName).Skip((page - 1) * PageSize).Take(PageSize);
+            employees = employees.OrderBy(x => x.LastName).ThenBy(x => x.Name).Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new EmployeesListViewModel()
             {
@@ -723,7 +734,15 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult EditEmployee(int id)
         {
-            return View(new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employeesRepo.Employees.FirstOrDefault(x => x.Id == id) });
+            Employee employee = employeesRepo.Employees.FirstOrDefault(x => x.Id == id);
+            if (employee is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return View(new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employee});
+            }
         }
 
         [HttpGet]
@@ -738,36 +757,33 @@ namespace RMSmax.Controllers
             if (ModelState.IsValid)
             {
                 string path = Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee");
-                if (!System.IO.Directory.Exists(Path.Combine(path, employee.Id.ToString())))
-                    System.IO.Directory.CreateDirectory(Path.Combine(path, employee.Id.ToString()));
+                string dir = Path.Combine(path, employee.Id.ToString());
+                if (!System.IO.Directory.Exists(dir))
+                    System.IO.Directory.CreateDirectory(dir);
 
                 if (photo != null)
                 {
-                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(path, employee.Id.ToString(), employee.Photo)))
+                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(dir, employee.Photo)))
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(path, employee.Id.ToString(), employee.Photo));
+                            System.IO.File.Delete(Path.Combine(dir, employee.Photo));
                         }
                         catch (Exception) 
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować pracownika (" + employee.Name +" " + employee.LastName+").", "Problem z plikiem.");
-                            return RedirectToAction("EventLog");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name +" " + employee.LastName+").", "Błąd serwera.");
                         }
                     try
                     {
-                        using (FileStream fs = new FileStream(Path.Combine(path, employee.Id.ToString(), photo.FileName), FileMode.Create))
+                        using (FileStream fs = new FileStream(Path.Combine(dir, photo.FileName), FileMode.Create))
                         {
                             photo.CopyTo(fs);
                         }
+                        employee.Photo = photo.FileName;
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem.");
-                        return RedirectToAction("EventLog");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem " + photo.FileName);
                     }
-
-
-                    employee.Photo = photo.FileName;
                 }
 
                 if (employee.Id == 0)
@@ -778,22 +794,24 @@ namespace RMSmax.Controllers
                     {
                         System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
                     }
+
+                    if (string.IsNullOrEmpty(employee.Photo))
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").", "Brak zdjęcia.");
+                    else
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
                 }
                 else
                 {
                     employeesRepo.EditEmployee(employee);
-                    if(string.IsNullOrEmpty(employee.Photo))
-                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").", "Brak zdjęcia.");
-                    else
-                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano pracownika (" + employee.Name + " " + employee.LastName + ").");
                 }
 
                 return RedirectToAction("EmployeeList");
             }
             else
             {
-                EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edycja pracownika (" + employee.Name + " " + employee.LastName + ").");
-                return View("EditEmployee", new EditEmployeeViewModel() { Faculty = facultyInfo, Employee = employee });
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać/edytować pracownika (" + employee.Name + " " + employee.LastName + ").", "Niepoprawne dane.");
+                return RedirectToAction("EventLog");
             }
         }
 
@@ -803,11 +821,12 @@ namespace RMSmax.Controllers
             Employee employee = employeesRepo.Employees.Where(x => x.Id == id).FirstOrDefault();
             if (employee != null)
             {
-                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", id.ToString())))
+                string path = Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", id.ToString());
+                if (System.IO.Directory.Exists(path))
                 {
                     try
                     {
-                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee", id.ToString()), true);
+                        System.IO.Directory.Delete(path, true);
                     }
                     catch (Exception) 
                     {
