@@ -1,108 +1,117 @@
 ﻿@model StudiesViewModel
 <style>
     #link{
-        margin:30px;
+        margin-right:20px;
+    }
+    h3{
+        margin-bottom:30px;
+        margin-top:30px;
+    }
+    h4 {
+        margin-bottom: 30px;
+        margin-top: 30px;
     }
 </style>
 
 <div>
     <div class="container-fluid">
+        <div class="col-md-9 mx-auto mb-5">
+            <div class="row">
+                <h1 class=" mx-auto">@Model.Course.Name</h1>
+            </div>
+            <h3>Specjalności</h3>
+            <h4 class="text-secondary">Stopień I</h4>
+            <div class="">
+                <ul class="list-group list-group-flush">
+                    @foreach (var v in Model.Course.FirstDegreeSpecialties)
+                    {
+                        <li class="list-group-item" style="word-break:break-word;">@v</li>
+                    }
 
-        <div class="row">
-            <h1 class="m-3 mx-auto">@Model.Course.Name</h1>
-        </div>
-        <h3 class="m-4">Specjalności</h3>
-        <h4 class="m-4 text-secondary">Stopień I</h4>
-        <div class="col-lg-9">
-            <ul class="list-group list-group-flush">
-                @foreach (var v in Model.Course.FirstDegreeSpecialties)
-                {
-                    <li class="list-group-item" style="word-break:break-word;">@v</li>
-                }
-
-            </ul>
-        </div>
-
-
-        <h4 class="m-4 text-secondary">Stopień II</h4>
-
-        <div class="col-lg-9">
-            <ul class="list-group list-group-flush">
-                @foreach (var v in Model.Course.SecondDegreeSpecialties)
-                {
-                    <li class="list-group-item" style="word-break:break-word;">@v</li>
-                }
-
-            </ul>
-        </div>
-        <h3 class="m-4">Plany zajęć</h3>
-        <h4 class="m-4 text-secondary">Stopień I</h4>
-        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1).OrderBy(x => x.Semester))
-        {
-            <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p>@v.Semester</p></a>
-        }
-
-        <h4 class="m-4 text-secondary">Stopień II</h4>
-        @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2).OrderBy(x => x.Semester))
-        {
-            <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p>@v.Semester</p></a>
-        }
-
-        <h4 class="m-4">Programy studiów</h4>
-
-        <div class="col-lg-4">
-            <ul class="list-group list-group-flush">
-                @foreach (var v in Model.StudyPlans)
-                {
-                    <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a></li>
-                }
-            </ul>
-        </div>
+                </ul>
+            </div>
 
 
+            <h4 class="text-secondary">Stopień II</h4>
 
-        <h4 class="m-4">Karty przedmiotów</h4>
-            <form asp-controller="Home" asp-action="Studies" method="get">
-                <input type="hidden" name="course" value="@Model.Course.Name" />
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="inputState">Stopień</label>
-                        <select id="inputState" class="form-control" name="degree">
-                            <option selected disabled>Wybierz...</option>
-                            <option>1</option>
-                            <option>2</option>
-                        </select>
+            <div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var v in Model.Course.SecondDegreeSpecialties)
+                    {
+                        <li class="list-group-item" style="word-break:break-word;">@v</li>
+                    }
+
+                </ul>
+            </div>
+            <h3>Plany zajęć</h3>
+            <h4 class="text-secondary">Stopień I</h4>
+            @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 1).OrderBy(x => x.Semester))
+            {
+                <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p class="my-auto">Semestr @v.Semester</p></a>
+            }
+
+            <h4 class=" text-secondary">Stopień II</h4>
+            @foreach (var v in Model.StudentsTimetables.Where(x => x.Degree == 2).OrderBy(x => x.Semester))
+            {
+                <a id="link" class="btn btn-info" style="width:100px;" href="@v.Timetable"><p class="my-auto">Semestr @v.Semester</p></a>
+            }
+
+            <h4 class="">Programy studiów</h4>
+
+            <div class="">
+                <ul class="list-group list-group-flush">
+                    @foreach (var v in Model.StudyPlans)
+                    {
+                        <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="~/files/studyPlans/@Model.Course.Name/@v"><p>@v</p></a></li>
+                    }
+                </ul>
+            </div>
+
+
+
+            <h4>Karty przedmiotów</h4>
+                <form asp-controller="Home" asp-action="Studies" method="get">
+                    <input type="hidden" name="course" value="@Model.Course.Name" />
+                    <div class="form-row">
+                        <div class="form-group mb-0 col">
+                            <label for="inputState">Stopień</label>
+                            <select id="inputState" class="form-control" name="degree">
+                                <option selected disabled>Wybierz...</option>
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                        <div class="form-group col mb-0">
+                            <label for="inputState">Semestr</label>
+                            <select id="inputState" class="form-control" name="semester">
+                                <option selected disabled>Wybierz...</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-auto mt-auto mb-0">
+                            <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                        </div>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputState">Semestr</label>
-                        <select id="inputState" class="form-control" name="semester">
-                            <option selected disabled>Wybierz...</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                        </select>
-                    </div>
-                    <div class="col-auto my-auto">
-                        <button type="submit" class="btn btn-primary mb-0">Zatwierdź</button>
-                    </div>
-                </div>
-            </form>
+                </form>
         
-        <div class="col-lg-6">
-            <ul class="list-group list-group-flush">
-                @foreach (var v in Model.Subjects)
-                {
-                    <li class="list-group-item">@v.Name</li>
-                }
+            <div>
+                <ul class="list-group list-group-flush">
+                    @foreach (var v in Model.Subjects)
+                    {
+                        <li class="list-group-item">@v.Name</li>
+                    }
 
-            </ul>
+                </ul>
+            </div>
         </div>
 
     </div>
