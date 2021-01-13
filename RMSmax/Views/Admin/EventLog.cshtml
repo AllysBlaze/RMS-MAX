@@ -7,6 +7,7 @@
         width: 500px;
         table-layout: fixed;
     }
+
     td {
         word-wrap: break-word;
     }
@@ -32,6 +33,7 @@
         <tr>
             <th scope="col">Czas wystąpienia</th>
             <th scope="col">Rodzaj</th>
+            <th scope="col">Użytkownik</th>
             <th scope="col">Wiadomość</th>
             <th scope="col">Komentarz</th>
         </tr>
@@ -57,10 +59,13 @@
             {
                 <td>@v.LogLevel</td>
             }
+            <td>@v.Admin.UserName</td>
             <td>@v.Message</td>
             <td>@v.Comment</td>
         </tr>
         }
-        
+
     </tbody>
 </table>
+
+<div page-model="@Model.PagingInfo" page-action="EventLog" class="btn-group pull-right m-1"></div>

@@ -173,34 +173,66 @@
 </div>
 
 <div class="row align-content-center justify-content-center" style="border-bottom: solid 2px grey; border-top: solid 2px grey;">
-    <div class="col-6" style="padding-top: 10px;">
+    <div class="col-10" style="padding-top: 10px;">
         <form asp-controller="Admin" asp-action="EditUserPassword" method="post">
             <div class="form-group">
                 <label asp-for="Id">Login</label>
-                <input asp-for="Id" type="text" class="form-control" placeholder="Login" autocomplete="off">
+                <div class="form-row col-12">
+                    <input asp-for="Id" type="text" class="form-control col-11" placeholder="Login" autocomplete="off">
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="OldPassword">Stare hasło</label>
-                <input asp-for="OldPassword" type="password" class="form-control" placeholder="Stare hasło" autocomplete="off">
+                <div class="form-row col-12">
+                    <input asp-for="OldPassword" type="password" id="old" class="form-control col-11" placeholder="Stare hasło" autocomplete="off">
+                    <div class="col-1 justify-content-start align-content-center text-left">
+                        <a class="btn btn-xs col-12 text-left justify-content-start" id="show1" data-toggle="tooltip" data-placement="top" title="Pokaż hasło" style="background-color: Transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; max-width: 40px; min-width: 40px; padding-left: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 30 30">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="NewPassword">Nowe hasło</label>
-                <input asp-for="NewPassword" type="password" class="form-control" placeholder="Nowe hasło" aria-describedby="passwordTip" autocomplete="off">
+                <div class="form-row col-12">
+                    <input asp-for="NewPassword" type="password" id="new" class="form-control col-11" placeholder="Nowe hasło" aria-describedby="passwordTip" autocomplete="off">
+                    <div class="col-1 justify-content-start align-content-center text-left">
+                        <a class="btn btn-xs col-12 text-left justify-content-start" id="show2" data-toggle="tooltip" data-placement="top" title="Pokaż hasło" style="background-color: Transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; max-width: 40px; min-width: 40px; padding-left: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 30 30">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
                 <small id="passwordTip" class="form-text text-muted">
                     Hasło powinno mieć co najmniej 8 znaków, zawierać jedną dużą literę i jeden znak specjalny.
                 </small>
             </div>
             <div class="form-group">
                 <label asp-for="NewPassword2">Powtórz nowe hasło</label>
-                <input asp-for="NewPassword2" type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2" autocomplete="off">
+                <div class="form-row col-12">
+                    <input asp-for="NewPassword2" type="password" id="new2" class="form-control col-11" placeholder="Powtórz nowe hasło" aria-describedby="passwordTip2" autocomplete="off">
+                    <div class="col-1 justify-content-start align-content-center text-left">
+                        <a class="btn btn-xs col-12 text-left justify-content-start" id="show3" data-toggle="tooltip" data-placement="top" title="Pokaż hasło" style="background-color: Transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; max-width: 40px; min-width: 40px; padding-left: 5px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 30 30">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
                 <small id="passwordTip2" class="form-text text-muted">
                     Hasła muszą być takie same.
                 </small>
             </div>
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">Zmień hasło</button>
-            </div>
-        </form>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Zmień hasło</button>
+                </div>
+</form>
     </div>
 </div>
 
@@ -273,14 +305,7 @@
 </div>
 
 
-
-
-
-
-
-
-
-
+<script src="~/js/showPass.js"></script>
 
 
 

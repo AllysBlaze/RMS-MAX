@@ -117,6 +117,14 @@
                             <div class="containerCard">
                                 <h3>@v.Title</h3>
                                 @{
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<strong.*?>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<u.*?>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<span.*?>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<i.*?>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</strong>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</u>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</span>", "");
+                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</i>", "");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<table.*?table>", " ");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "&nbsp;", "  ");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<.*?>", " ");

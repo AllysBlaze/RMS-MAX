@@ -28,10 +28,10 @@ namespace RMSmax
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 8;
-                opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = false;
+                opts.Password.RequireNonAlphanumeric = true;
+                opts.Password.RequireLowercase = true;
                 opts.Password.RequireDigit = false;
-                opts.Password.RequireUppercase = false;
+                opts.Password.RequireUppercase = true;
             })
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();

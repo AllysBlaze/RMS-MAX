@@ -62,21 +62,21 @@
 
 
         <h4 class="m-4">Karty przedmiotów</h4>
-            <form asp-controller="" asp-action="" method="get">
+            <form asp-controller="Home" asp-action="Studies" method="get">
+                <input type="hidden" name="course" value="@Model.Course.Name" />
                 <div class="form-row">
                     <div class="form-group col-md-2">
-                        <label for="inputState">Rok</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Wybierz...</option>
+                        <label for="inputState">Stopień</label>
+                        <select id="inputState" class="form-control" name="degree">
+                            <option selected disabled>Wybierz...</option>
                             <option>1</option>
                             <option>2</option>
-                            <option>3</option>
                         </select>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputState">Semestr</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Wybierz...</option>
+                        <select id="inputState" class="form-control" name="semester">
+                            <option selected disabled>Wybierz...</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -84,10 +84,13 @@
                             <option>5</option>
                             <option>6</option>
                             <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
                         </select>
                     </div>
                     <div class="col-auto my-auto">
-                        <button type="submit" class="btn btn-primary mb-2">Zatwierdź</button>
+                        <button type="submit" class="btn btn-primary mb-0">Zatwierdź</button>
                     </div>
                 </div>
             </form>

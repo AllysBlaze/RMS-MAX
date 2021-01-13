@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
 
 namespace RMSmax.Models.EventLog
 {
@@ -15,7 +16,7 @@ namespace RMSmax.Models.EventLog
         private static IWebHostEnvironment hostingEnvironment;
         private static ILogger consoleLogger;
         public static bool IsInitialized { get; private set; }
-        public static IList<Log> Logs { get => Deserialize();}
+        public static IEnumerable<Log> Logs { get => Deserialize();}
 
         public static void Initialize(IWebHostEnvironment environment, ILoggerFactory loggerFactory)
         {
@@ -44,16 +45,16 @@ namespace RMSmax.Models.EventLog
             if(!IsInitialized)
                 throw new InvalidOperationException("Object is not initialized");
         }
-        private static IList<Log> Deserialize()
+        private static IEnumerable<Log> Deserialize()
         {
             string data = File.ReadAllText(path);
-            IList<Log> logs;
+            IEnumerable<Log> logs;
             if (string.IsNullOrEmpty(data))
                 logs = new List<Log>();
             else
                 logs = JsonSerializer.Deserialize<IList<Log>>(data);
 
-            return logs;
+            return logs.OrderByDescending(x => x.Time);
         }
 
         public static void Log(Log log)
@@ -72,19 +73,19 @@ namespace RMSmax.Models.EventLog
             string data = JsonSerializer.Serialize(list);
             File.WriteAllText(path, data);
         }
-        public static void LogInformation(string message, string comment = "")
+        public static void LogInformation(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Information, message, comment));
+            Log(new Log(LogLevel.Information, userr, message, comment));
         }
 
-        public static void LogWarning(string message, string comment = "")
+        public static void LogWarning(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Warning, message, comment));
+            Log(new Log(LogLevel.Warning, userr, message, comment));
         }
 
-        public static void LogError(string message, string comment = "")
+        public static void LogError(IdentityUser userr, string message, string comment = "")
         {
-            Log(new Log(LogLevel.Error, message, comment));
+            Log(new Log(LogLevel.Error, userr, message, comment));
         }
     }
 }

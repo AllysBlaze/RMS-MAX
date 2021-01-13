@@ -7,6 +7,7 @@ namespace RMSmax.Models.ViewModels.Admin
 {
     public class EventLogViewModel : MainViewModel
     {
-        public IList<EventLog.Log> Logs { get; set; }
+        public IEnumerable<EventLog.Log> Logs { get; set; }
+        public PagingInfo PagingInfo { get; set; }
     }
 }
