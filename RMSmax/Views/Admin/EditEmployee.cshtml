@@ -73,18 +73,18 @@
     <div class="form-row">
         <div class="form-group col-md-12">
             
-            @{ if (string.IsNullOrEmpty(Model.Employee.Photo))
-                {
-                     <p>Aktualne zdjęcie: Brak</p>
-                }
-                else
-                {
-                    string picfile = "/pictures/picsEmployee/" + Model.Employee.Id + "/" + @Model.Employee.Photo;
-                    <p>
-                        Aktualne zdjęcie: 
-                        <img src="@picfile" height="220" width="200" />
-                    </p>
-                }
+            @{if(string.IsNullOrEmpty(Model.Employee.Photo))
+              {
+                   <p>Aktualne zdjęcie: Brak</p>
+              }
+              else
+              {
+                  string picfile = "/pictures/picsEmployee/" + Model.Employee.Id + "/" + @Model.Employee.Photo;
+                  <p>
+                      Aktualne zdjęcie: 
+                      <img src="@picfile" height="220" width="200" />
+                  </p>
+              }
             }
         </div>
     </div>

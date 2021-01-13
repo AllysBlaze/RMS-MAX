@@ -2,6 +2,7 @@
 @{
     Layout = "_LayoutAdmin";
 }
+
 <form asp-controller="Admin" asp-action="EmployeeList" method="get">
     <div class="row" style="margin-bottom: 25px;">
         <div class="col-lg-5 col-md-6">
@@ -12,7 +13,6 @@
         </div>
         <div class="col-lg-2 col-md-12 text-center">
             <button role="button" class="btn btn-primary">Wyszukaj</button>
-
         </div>
     </div>
 </form>
@@ -26,7 +26,7 @@
     </thead>
     <tbody>
         @foreach (var v in Model.Employees)
-        {
+         {
             <tr>
                 <td>@string.Concat(v.Degree, " ", v.Name, " ", v.LastName, " ") &#60;@v.Mail&#62;</td>
                 <td>
@@ -48,7 +48,7 @@
                     </form>
                 </td>
             </tr>
-        }
+         }
     </tbody>
 </table>
 

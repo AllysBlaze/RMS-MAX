@@ -7,11 +7,7 @@
         width: 500px;
         table-layout: fixed;
     }
-
-    td {
-        word-wrap: break-word;
-    }
-    th {
+    td, th{
         word-wrap: break-word;
     }
 </style>
@@ -25,8 +21,8 @@
         border-right: solid 2px grey;
         padding-left: 10px;
         padding-right: 10px;
-        padding-bottom: 3px;
-        ">
+        padding-bottom: 3px;"
+        >
             <strong>Dziennik zdarzeń</strong>
         </label>
     </div>
@@ -43,8 +39,9 @@
     <tbody>
         @foreach (var v in Model.Logs)
         {
-        <tr>
+         <tr>
             <td>@v.Time</td>
+
             @if (v.LogLevel.ToString().Equals("Error"))
             {
                 <td class="text-danger">Błąd</td>
@@ -61,7 +58,9 @@
             {
                 <td>@v.LogLevel</td>
             }
+
             <td>@v.Admin.UserName</td>
+
             @if (!string.IsNullOrEmpty(v.Comment))
             {
                 <td>@string.Concat(v.Message, " (Komentarz: ", @v.Comment, ")")</td>
@@ -70,9 +69,8 @@
             {
                 <td>@string.Concat(v.Message)</td>
             }
-        </tr>
+         </tr>
         }
-
     </tbody>
 </table>
 

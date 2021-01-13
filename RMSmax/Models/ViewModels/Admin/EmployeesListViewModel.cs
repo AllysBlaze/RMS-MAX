@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace RMSmax.Models.ViewModels.Admin
 {
@@ -11,5 +8,5 @@ namespace RMSmax.Models.ViewModels.Admin
         public PagingInfo PagingInfo { get; set; }
         public string CurrentSearchingName { get; set; }
         public string CurrentSearchingSurname { get; set; }
-}
+    }
 }

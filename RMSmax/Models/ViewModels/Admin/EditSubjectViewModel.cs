@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace RMSmax.Models.ViewModels.Admin
 {

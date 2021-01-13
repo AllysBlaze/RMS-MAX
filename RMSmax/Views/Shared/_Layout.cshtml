@@ -1,20 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet"
           asp-href-include="lib/twitter-bootstrap/css/*.min.css"
-          asp-href-exclude="**/*-reboot*,**/*-grid*"
-          href="css/Layout.css" />
+          asp-href-exclude="**/*-reboot*,**/*-grid*"/>
     <link rel="shortcut icon" href="~/pictures/logo/logowyd.jpg">
     <title>RMS Max!</title>
-
 </head>
+
 <body>
     <nav class="navbar" style="background-color: @Model.Faculty.Color;">
         <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset"><h1>@Model.Faculty.Name</h1></a>
         <a class="navbar-brand" href="#">
-            <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
+            <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="logo">
         </a>
     </nav>
     <div class="container-fluid flex-fill">
@@ -55,25 +55,17 @@
                 @RenderBody()
             </main>
         </div>
-
     </div>
+
     <div class="row mt-auto col-12 bg-dark my-auto justify-content-between align-content-center mx-0" style="height:50px; width:100%;">
-            <p class="text-white bg-dark pl-3 ml-3" id="Creators">Strona stworzona przez IOTeam</p>
-            <a class="nav-link pl-0 text-decoration-none text-reset" asp-controller="Admin" asp-action="Index"><span style="font-size:13px">Logowanie</span></a>
-            <button type="button" onclick="topFunction()" id="upBtn" class="btn btn-primary" style="height: 40px">Do góry</button>
+        <p class="text-white bg-dark pl-3 ml-3" id="Creators">Strona stworzona przez IOTeam</p>
+        <a class="nav-link pl-0 text-decoration-none text-reset" asp-controller="Admin" asp-action="Index"><span style="font-size:13px">Logowanie</span></a>
+        <button type="button" id="upBtn" class="btn btn-primary" style="height: 40px;">Do góry</button>
     </div>
-
-
-
-    <script>
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    </script>
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/js/goTop.js"></script>
     <script src="https://skrypt-cookies.pl/id/bf827fcb5a643e4f.js"></script>
 
 </body>
