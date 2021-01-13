@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Identity.Core;
 using RMSmax.Data;
 
 namespace RMSmax.Controllers

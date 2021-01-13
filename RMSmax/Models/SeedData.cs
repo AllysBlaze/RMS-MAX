@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using RMSmax.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 
 namespace RMSmax.Models
 {
@@ -14,7 +10,6 @@ namespace RMSmax.Models
         public static void EnsurePopulated(IApplicationBuilder app)
         {
             RMSContext context = app.ApplicationServices.GetRequiredService<RMSContext>();
-            //context.Database.Migrate();
             if (!context.Articles.Any())
             {
                 context.Articles.AddRange(
