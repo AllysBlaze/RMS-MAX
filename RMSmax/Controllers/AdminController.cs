@@ -49,7 +49,7 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new IndexViewModel(Environment) { Faculty = facultyInfo}) ;
+            return View(new IndexViewModel(Environment) { Faculty = facultyInfo, CurrentUserName = GetCurrentUserAsync().Result.UserName });
         }
 
         [HttpPost]
@@ -975,7 +975,7 @@ namespace RMSmax.Controllers
                         IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
                         if (result.Succeeded)
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
+                            EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
 
                             return RedirectToAction("Index");
                         }

@@ -176,9 +176,9 @@
     <div class="col-10" style="padding-top: 10px;">
         <form asp-controller="Admin" asp-action="EditUserPassword" method="post">
             <div class="form-group">
-                <label asp-for="Id">Login</label>
+                <label>Login</label>
                 <div class="form-row col-12">
-                    <input asp-for="Id" type="text" class="form-control col-11" placeholder="Login" autocomplete="off">
+                    <input value="@Model.CurrentUserName" type="text" class="form-control col-11" placeholder="Login" disabled autocomplete="off">
                 </div>
             </div>
             <div class="form-group">
@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 <small id="passwordTip" class="form-text text-muted">
-                    Hasło powinno mieć co najmniej 8 znaków, zawierać jedną dużą literę i jeden znak specjalny.
+                    Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną dużą literę, jedną małą literę i jeden znak specjalny.
                 </small>
             </div>
             <div class="form-group">

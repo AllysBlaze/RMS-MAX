@@ -11,6 +11,9 @@
     td {
         word-wrap: break-word;
     }
+    th {
+        word-wrap: break-word;
+    }
 </style>
 <div class="row align-content-center justify-content-center" style="border-top: solid 2px grey;">
     <div class="col-12">
@@ -31,11 +34,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th scope="col">Czas wystąpienia</th>
+            <th scope="col">Data</th>
             <th scope="col">Rodzaj</th>
             <th scope="col">Użytkownik</th>
             <th scope="col">Wiadomość</th>
-            <th scope="col">Komentarz</th>
         </tr>
     </thead>
     <tbody>
@@ -60,8 +62,7 @@
                 <td>@v.LogLevel</td>
             }
             <td>@v.Admin.UserName</td>
-            <td>@v.Message</td>
-            <td>@v.Comment</td>
+            <td>@string.Concat(v.Message, " ", @v.Comment)</td>
         </tr>
         }
 

@@ -35,10 +35,11 @@ namespace RMSmax.Models.ViewModels.Admin
             } 
         }
         public string NewCourseName { get; set; }
-        public string Id { get; set; }
+        public string CurrentUserName { get; set; }
         public string OldPassword { get; set; }
         public string NewPassword { get; set; }
         public string NewPassword2 { get; set; }
+
 
         public IndexViewModel() { }
         public IndexViewModel(IWebHostEnvironment env)
