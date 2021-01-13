@@ -29,49 +29,44 @@
         <div class="form-group col-md-6">
 
 
-            @{ if (string.IsNullOrEmpty(Model.Article.PhotoIn))
-                {
-                    <p>Aktualne zdjęcie wewnętrzne: Brak</p>
-                }
-                else
-                {
-                    string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoIn;
-        <div class="row">
-            <p class="ml-3">
-                Aktualne zdjęcie wewnętrzne:
-                
-            </p>
-        </div>
-        <div class="row">
-            <img class="ml-3" src="@picfile" height="220" width="270" />
-        </div>
-                    
-                }
+            @{if(string.IsNullOrEmpty(Model.Article.PhotoIn))
+              {
+                  <p>Aktualne zdjęcie wewnętrzne: Brak</p>
+              }
+              else
+              {
+                  string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoIn;
+                  <div class="row">
+                    <p class="ml-3">
+                        Aktualne zdjęcie wewnętrzne:
+                    </p>
+                  </div>
+                  <div class="row">
+                      <img class="ml-3" src="@picfile" height="220" width="270" />
+                  </div>
+              }
             }
         </div>
         <div class="form-group col-md-6">
-
-            @{ if (string.IsNullOrEmpty(@Model.Article.PhotoCover))
+            @{if(string.IsNullOrEmpty(@Model.Article.PhotoCover))
                 {
                     <p>Aktualne zdjęcie aktualnościowe: Brak</p>
                 }
                 else
                 {
                     string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoCover;
-        <div class="row">
-            <p class="ml-3">
-                Aktualne zdjęcie aktualnościowe:
-                
-            </p>
-        </div>
-        <div class="row">
-            <img class="ml-3" src="@picfile" height="220" width="270" />
-        </div>
-                    
+                    <div class="row">
+                        <p class="ml-3">
+                            Aktualne zdjęcie aktualnościowe:
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="ml-3" src="@picfile" height="220" width="270" />
+                    </div> 
                 }
             }
         </div>
-                </div>
+    </div>
     <div class="form-row">
         <div class="form-group col-md-12">
             <label asp-for="Article.Content" style="font-weight: bold;">Treść aktualności</label>
@@ -79,14 +74,12 @@
         </div>
     </div>
 
-
-
-
     <div class="form-group text-center">
         <a role="button" type="button" class="btn btn-danger" asp-controller="Admin" asp-action="ArticleList">Anuluj</a>
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </div>
 </form>
+
 <script>
     ClassicEditor
         .create(document.querySelector('#editor'), {
@@ -103,5 +96,4 @@
         .catch(error => {
             console.log(error);
         });
-
 </script>

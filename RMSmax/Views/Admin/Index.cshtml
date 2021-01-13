@@ -68,11 +68,9 @@
             <input asp-for="LogoFile" type="file" class="form-control-file" accept="image/*" />
         </div>
     </div>
-    
     <div class="form-group">
         <input asp-for="Faculty.Courses" type="hidden" />
     </div>
-
     <div class="form-group text-center">
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </div>
@@ -89,18 +87,18 @@
                 </div>
             </div>
             <div class="form-row">
-                @{ if (string.IsNullOrEmpty(Model.SliderPic1))
-                    {
-                        <p>Aktualne zdjęcie: Brak</p>
-                    }
-                    else
-                    {
-                        string picfile = "/pictures/picsSlider/1/"+ Model.SliderPic1;
-                        <p>
-                            Aktualne zdjęcie:
-                            <img src="@picfile" height="220" width="200" />
-                        </p>
-                    }
+                @{if(string.IsNullOrEmpty(Model.SliderPic1))
+                  {
+                      <p>Aktualne zdjęcie: Brak</p>
+                  }
+                  else
+                  {
+                      string picfile = "/pictures/picsSlider/1/"+ Model.SliderPic1;
+                      <p>
+                          Aktualne zdjęcie:
+                          <img src="@picfile" height="220" width="200" />
+                      </p>
+                  }
                 }
             </div>
             <div class="form-group text-center">
@@ -110,28 +108,26 @@
     </div>
     <div class="col-md-4">
         <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
-
             <div class="form-row my-3 py-3" >
                 <div class="form-group">
                     <label for="photo">Zdjęcie slidera strony głównej nr 2</label>
                     <input name="photo" value="@Model.SliderPhoto" type="file" class="form-control-file" accept="image/*" />
                     <input type="hidden" value="2" name="id" />
                 </div>
-
             </div>
             <div class="form-row">
-                @{ if (string.IsNullOrEmpty(Model.SliderPic2))
-                    {
-                        <p>Aktualne zdjęcie: Brak</p>
-                    }
-                    else
-                    {
-                        string picfile = "/pictures/picsSlider/2/" + Model.SliderPic2;
-                        <p>
-                            Aktualne zdjęcie:
-                            <img src="@picfile" height="220" width="200" />
-                        </p>
-                    }
+                @{if(string.IsNullOrEmpty(Model.SliderPic2))
+                  {
+                      <p>Aktualne zdjęcie: Brak</p>
+                  }
+                  else
+                  {
+                      string picfile = "/pictures/picsSlider/2/" + Model.SliderPic2;
+                      <p>
+                          Aktualne zdjęcie:
+                          <img src="@picfile" height="220" width="200" />
+                      </p>
+                  }
                 }
             </div>
             <div class="form-group text-center">
@@ -141,7 +137,6 @@
     </div>
     <div class="col-md-4">
         <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
-
             <div class="form-row my-3 py-3" >
                 <div class="form-group">
                     <label for="photo">Zdjęcie slidera strony głównej nr 3</label>
@@ -150,18 +145,18 @@
                 </div>
             </div>
             <div class="form-row">
-                @{ if (string.IsNullOrEmpty(Model.SliderPic3))
-                    {
-                        <p>Aktualne zdjęcie: Brak</p>
-                    }
-                    else
-                    {
-                        string picfile = "/pictures/picsSlider/3/" + Model.SliderPic3;
-                        <p>
-                            Aktualne zdjęcie:
-                            <img src="@picfile" height="220" width="200" />
-                        </p>
-                    }
+                @{if(string.IsNullOrEmpty(Model.SliderPic3))
+                  {
+                      <p>Aktualne zdjęcie: Brak</p>
+                  }
+                  else
+                  {
+                      string picfile = "/pictures/picsSlider/3/" + Model.SliderPic3;
+                      <p>
+                          Aktualne zdjęcie:
+                          <img src="@picfile" height="220" width="200" />
+                      </p>
+                  }
                 }
             </div>
             <div class="form-group text-center">
@@ -169,7 +164,6 @@
             </div>
         </form>
     </div>
-
 </div>
 
 <div class="row align-content-center justify-content-center" style="border-bottom: solid 2px grey; border-top: solid 2px grey;">
@@ -208,7 +202,7 @@
                         </a>
                     </div>
                 </div>
-                <small id="passwordTip" class="form-text text-muted">
+                <small id="passwordTip" class="form-text text-muted ml-2">
                     Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną dużą literę, jedną małą literę i jeden znak specjalny.
                 </small>
             </div>
@@ -225,18 +219,16 @@
                         </a>
                     </div>
                 </div>
-                <small id="passwordTip2" class="form-text text-muted">
+                <small id="passwordTip2" class="form-text text-muted ml-2">
                     Hasła muszą być takie same.
                 </small>
             </div>
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary">Zmień hasło</button>
                 </div>
-</form>
+        </form>
     </div>
 </div>
-
-
 
 <table id="courseTable" class="table table-striped">
     <thead>
@@ -247,7 +239,7 @@
     </thead>
     <tbody>
         @foreach (var v in Model.Faculty.Courses)
-            {
+         {
             <tr>
             <td>@v.Name</td>
             <td>
@@ -270,16 +262,13 @@
                                 <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
                             </svg>
                         </button>
-
                     </form>
                 </div>
             </td>
             </tr>
-            }
+         }
     </tbody>
 </table>
-
-
 
 <div class="row align-content-center justify-content-center">
     <div class="col-12">
@@ -304,9 +293,4 @@
     </div>
 </div>
 
-
 <script src="~/js/showPass.js"></script>
-
-
-
-

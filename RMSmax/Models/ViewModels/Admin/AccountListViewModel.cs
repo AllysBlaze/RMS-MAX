@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections;
 using System.Linq;
 
 namespace RMSmax.Models.ViewModels.Admin

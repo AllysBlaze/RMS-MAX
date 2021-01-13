@@ -3,9 +3,6 @@
     Layout = "_LayoutAdmin";
 }
 
-
-
-
 <form asp-controller="Admin" asp-action="EditCourseName" method="post">
     <input type="hidden" name="previousName" value="@Model.Course.Name" />
     <div class="form-row">
@@ -18,6 +15,7 @@
         <button type="submit" class="btn btn-primary">Zmień</button>
     </div>
 </form>
+
 <!--Specjalizacje 1 st. tabela-->
 <table id="specialities1Table" class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
     <thead>
@@ -53,7 +51,6 @@
     </tbody>
 </table>
 
-
 <!--Specjalizacje 1 st. formularz-->
 <form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
     <input type="hidden" name="scroll" value="specialities1Table" />
@@ -76,7 +73,6 @@
         </div>
     </div>
 </form>
-
 
 <!--Specjalizacje 2 st. tabela-->
 <table id="specialities2Table" class="table table-striped" style="border-top: 3px solid grey; margin-top:60px;">
@@ -112,7 +108,6 @@
     </tbody>
 </table>
 
-
 <!--Specjalizacje 2 st. formularz-->
 <form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddSpeciality" method="post">
     <input type="hidden" name="scroll" value="specialities2Table" />
@@ -136,7 +131,6 @@
     </div>
 </form>
 
-
 <div class="row mx-1" style="border-top: 3px solid grey; margin-top: 15px;">
     <div class="col-12 text-center">
         <a class="btn btn-primary btn-xs" role="button" data-toggle="tooltip" data-placement="top" title="Lista przedmiotów" asp-controller="Admin" asp-action="SubjectsList" asp-route-course="@Model.Course.Name" style="margin-top: 15px;">
@@ -147,8 +141,6 @@
         </a>
     </div>
 </div>
-
-
 
 <!--Plan zajęć tabela-->
 <table id="studentsTimetableTable" class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
@@ -183,7 +175,6 @@
     </tbody>
 </table>
 
-
 <!--Plan zajęć formularz-->
 <form style="margin-bottom:60px;" asp-controller="Admin" asp-action="AddTimetable" method="post">
     <input type="hidden" name="scroll" value="studentsTimetableTable" />
@@ -211,9 +202,6 @@
         </button>
     </div>
 </form>
-
-
-
 
 <!--Plany studiów tabela-->
 <table id="studentsStudyPlansTable" class="table table-striped" style="border-top: 3px solid grey; margin-top: 15px;">
