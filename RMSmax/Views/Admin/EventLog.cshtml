@@ -62,7 +62,14 @@
                 <td>@v.LogLevel</td>
             }
             <td>@v.Admin.UserName</td>
-            <td>@string.Concat(v.Message, " ", @v.Comment)</td>
+            @if (!string.IsNullOrEmpty(v.Comment))
+            {
+                <td>@string.Concat(v.Message, " (Komentarz: ", @v.Comment, ")")</td>
+            }
+            else
+            {
+                <td>@string.Concat(v.Message)</td>
+            }
         </tr>
         }
 
