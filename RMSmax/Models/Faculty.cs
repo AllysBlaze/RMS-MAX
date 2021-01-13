@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Linq;
 
 namespace RMSmax.Models
 {
@@ -17,7 +18,7 @@ namespace RMSmax.Models
         public string Phone { get;  set; }
         public string Email { get;  set; }
         public string MapSource { get;  set; }
-        public IList<Course> Courses { get;  set; }
+        public IEnumerable<Course> Courses { get;  set; }
         public string Color { get; set; }
         public string Logo { get; set; }
         
@@ -36,6 +37,12 @@ namespace RMSmax.Models
                 Courses = new List<Course>();
             }
             FacultyInstance = this;
+        }
+
+        public bool ExistsCourse(string name)
+        {
+            Course cs = Courses.FirstOrDefault(x => x.Name == name);
+            return cs is null ? false : true;
         }
 
         public void Serialize()

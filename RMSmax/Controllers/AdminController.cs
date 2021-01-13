@@ -172,7 +172,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                facultyInfo.Courses.Add(new Course(NewCourseName));
+                facultyInfo.Courses.Append(new Course(NewCourseName));
                 facultyInfo.Serialize();
 
                 string path = Path.Combine(Environment.WebRootPath, "files");
@@ -244,7 +244,7 @@ namespace RMSmax.Controllers
                 EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie plany studiów kieruneku: " + courseName + ".");
 
                 //usun kierunek
-                facultyInfo.Courses.Remove(course);
+                facultyInfo.Courses = facultyInfo.Courses.Where(x => x != course);
                 facultyInfo.Serialize();
 
                 EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto kierunek studiów: " + courseName + ".");
@@ -847,17 +847,22 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult SubjectsList(string course)
         {
-            Console.WriteLine();
-            return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subjectRepo.Subjects.Where(x => x.Course == course), CourseName = course});
+            IEnumerable<Subject> subs = subjectRepo.Subjects.Where(x => x.Course == course).OrderBy(x => x.Name);
+            if (facultyInfo.ExistsCourse(course))
+            {
+                return View(new SubjectsListViewModel() { Faculty = facultyInfo, Subjects = subs, CourseName = course });
+            }
+            else
+                return NotFound();
         }
         [HttpGet]
         public IActionResult EditSubject(int subjectId)
         {
             Subject subject = subjectRepo.Subjects.Where(x => x.Id == subjectId).FirstOrDefault();
-            if (subject != null)
-                return View(new EditSubjectViewModel() { Faculty = facultyInfo, Subject = subject});
+            if (subject is null)
+                return NotFound();
             else
-                return RedirectToAction("Index");
+                return View(new EditSubjectViewModel() { Faculty = facultyInfo, Subject = subject });
         }
 
         public IActionResult AddSubject(string course)
@@ -868,25 +873,33 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult EditSubject(Subject subject, IFormFile doc = null)
         {
-            if (ModelState.IsValid && subject != null && doc != null)
+            if (ModelState.IsValid && doc != null)
             {
-                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course);
-                if (!System.IO.Directory.Exists(Path.Combine(path, subject.Id.ToString())))
-                    System.IO.Directory.CreateDirectory(Path.Combine(path, subject.Id.ToString()));
+                if (subject is null)
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje.");
+                    return RedirectToAction("EventLog");
+                }
 
-                subject.File = doc.FileName;
+                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course);
+                string dir = Path.Combine(path, subject.Id.ToString());
+                if (!System.IO.Directory.Exists(dir))
+                    System.IO.Directory.CreateDirectory(dir);
+
                 try
                 {
-                    using (FileStream fs = new FileStream(Path.Combine(path, subject.Id.ToString(), doc.FileName), FileMode.Create))
+                    using (FileStream fs = new FileStream(Path.Combine(dir, doc.FileName), FileMode.Create))
                     {
                         doc.CopyTo(fs);
                     }
+                    subject.File = doc.FileName;
                 }
                 catch (Exception)
                 {
                     EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Problem z plikiem.");
                     return RedirectToAction("EventLog");
                 }
+
                 if (subject.Id == 0)
                 {
                     subjectRepo.AddSubject(subject);
@@ -902,18 +915,14 @@ namespace RMSmax.Controllers
                     subjectRepo.EditSubject(subject);
                     EventLogs.LogInformation(GetCurrentUserAsync().Result, "Edytowano przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
                 }
+
                 Dictionary<string, string> routeValues = new Dictionary<string, string>();
                 routeValues.Add("course", subject.Course);
-
                 return RedirectToAction("SubjectsList", "Admin", routeValues);
-            }
-            else if (subject != null)
-            {
-                return View("EditSubject", new EditSubjectViewModel() { Faculty = facultyInfo, Subject = subject });
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Nieprawidłowe dane.");
                 return RedirectToAction("EventLog");
             }
         }
@@ -924,11 +933,12 @@ namespace RMSmax.Controllers
             Subject subject = subjectRepo.Subjects.Where(x => x.Id == subjectId).FirstOrDefault();
             if (subject != null)
             {
-                if (System.IO.Directory.Exists(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subjectId.ToString())))
+                string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subjectId.ToString());
+                if (System.IO.Directory.Exists(path))
                 {
                     try
                     {
-                        System.IO.Directory.Delete(Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course, subjectId.ToString()), true);
+                        System.IO.Directory.Delete(path, true);
                     }
                     catch (Exception) 
                     {
@@ -937,11 +947,11 @@ namespace RMSmax.Controllers
                     }
                 }
                 subjectRepo.DeleteSubject(subjectId);
-                Dictionary<string, string> routeValues = new Dictionary<string, string>();
-                routeValues.Add("course", subject.Course);
 
                 EventLogs.LogInformation(GetCurrentUserAsync().Result, "Usunięto przedmiot (" + subject.Name + ").", "Kierunek: " + subject.Course);
 
+                Dictionary<string, string> routeValues = new Dictionary<string, string>();
+                routeValues.Add("course", subject.Course);
                 return RedirectToAction("SubjectsList", "Admin", routeValues);
             }
             else
@@ -1149,7 +1159,5 @@ namespace RMSmax.Controllers
 
             return true;
         }
-
-
     }
 }
