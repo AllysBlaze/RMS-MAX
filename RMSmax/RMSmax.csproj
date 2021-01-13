@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\files\studyPlans\Informatyka\" />
     <Folder Include="wwwroot\files\studyPlans\Matematyka\" />
+    <Folder Include="wwwroot\pictures\picsArticle\18\" />
     <Folder Include="wwwroot\pictures\picsSlider\Nowy folder\" />
   </ItemGroup>
 
