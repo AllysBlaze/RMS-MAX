@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using RMSmax.Data;
 
 namespace RMSmax.Models
 {
     public static class IdentitySeedData
     {
         private const string adminUser = "Admin";
-        private const string adminPass = "Secret123$"; //wielka litara, mała litera, cyfra, znak specjalny
+        private const string adminPass = "Secret123$"; 
         public static async void EnsurePopulated(IApplicationBuilder app)
         {
             UserManager<IdentityUser> userManager = app.ApplicationServices.GetRequiredService<UserManager<IdentityUser>>();

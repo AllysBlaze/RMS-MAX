@@ -941,7 +941,9 @@ namespace RMSmax.Controllers
             {
                 if (user.Password != confirmPassword)
                 {
-                    return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
+
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
+                    return RedirectToAction("EventLog");
                 }
                 else
                 {
@@ -1001,47 +1003,60 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserPassword(string id,string oldPassword, string newPassword, string newPassword2) //prawdopodobnie będę musiała dopisać walidator hasła
+        public async Task<IActionResult> EditUserPassword(string id,string oldPassword, string newPassword, string newPassword2) 
         {
-            if(oldPassword == null|| newPassword != newPassword2)
+            IdentityUser user = await GetCurrentUserAsync();
+            if (newPassword == newPassword2)
             {
-                return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
-            }
-            else
-            {
-                
-                IdentityUser user = await GetCurrentUserAsync(); 
-                if (user != null)
-                {
-                    if (newPassword != null)
-                    {
-                        IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-                        if (result.Succeeded)
-                        {
-                            EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
 
-                            return RedirectToAction("Index");
+                if (oldPassword != null)
+                {
+                    
+                    if (user != null)
+                    {
+                        if (newPassword != null)
+                        {
+                            IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                            if (result.Succeeded)
+                            {
+                                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
+
+                                return RedirectToAction("Index");
+                            }
+                            else
+                            {
+                                AddErrorsFromResult(result);
+
+                                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", user.UserName);
+                                return RedirectToAction("EventLog");
+                            }
+
                         }
                         else
                         {
-                            AddErrorsFromResult(result);
-
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", user.UserName);
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono nowego hasła.");
                             return RedirectToAction("EventLog");
                         }
-
+                    }
+                    else
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie znaleziono użytkownika: " + user.UserName);
+                        return RedirectToAction("EventLog");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Nie znaleziono użytkownika");
-
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie znaleziono użytkownika: " + user.UserName);
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono starego hasła." );
                     return RedirectToAction("EventLog");
                 }
-                
             }
-            return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
+            else
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.","Hasła nie są takie same");
+                return RedirectToAction("EventLog");
+            }
+            return RedirectToAction("EventLog");
+            //return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
         }
 
         private void AddErrorsFromResult(IdentityResult result)

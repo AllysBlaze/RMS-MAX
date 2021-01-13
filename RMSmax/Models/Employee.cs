@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RMSmax.Models
 {
@@ -16,9 +11,9 @@ namespace RMSmax.Models
         public string LastName { get; set; }
         [Required]
         public string Degree { get; set; }
-        public string Department { get; set; }//Katedra
+        public string Department { get; set; }
         public string Function { get; set; }
-        public string Position { get; set; } //stanowisko
+        public string Position { get; set; }
         public string Room { get; set; }
         [Required]
         public string Mail { get; set; }
