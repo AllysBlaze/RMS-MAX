@@ -970,27 +970,34 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteUser(string id) 
+        public async Task<IActionResult> DeleteUser(string id)
         {
+            IdentityUser currentUser = await GetCurrentUserAsync();
             IdentityUser user = null;
             if (!string.IsNullOrEmpty(id))
             {
                 user = userManager.FindByIdAsync(id).Result;
-            } 
+            }
             if (user != null)
-            {               
-                IdentityResult result = await userManager.DeleteAsync(user); 
-                if (result.Succeeded)
+            {
+                if (user == currentUser)
                 {
-                    EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika.", user.UserName);
-                    return RedirectToAction("AccountsList");
+                    EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie można usunąć użytkownika.", "Użytkownik jest obecnie zalogowany na tym koncie");
+                    return RedirectToAction("EventLog");
                 }
                 else
                 {
-                    AddErrorsFromResult(result);
-
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", user.UserName);
-                    return RedirectToAction("EventLog");
+                    IdentityResult result = await userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika.", user.UserName);
+                        return RedirectToAction("AccountsList");
+                    }
+                    else
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", user.UserName);
+                        return RedirectToAction("EventLog");
+                    }
                 }
             }
             else
@@ -1003,7 +1010,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUserPassword(string id,string oldPassword, string newPassword, string newPassword2) 
+        public async Task<IActionResult> EditUserPassword(string id, string oldPassword, string newPassword, string newPassword2)
         {
             IdentityUser user = await GetCurrentUserAsync();
             if (newPassword == newPassword2)
@@ -1011,7 +1018,7 @@ namespace RMSmax.Controllers
 
                 if (oldPassword != null)
                 {
-                    
+
                     if (user != null)
                     {
                         if (newPassword != null)
@@ -1025,8 +1032,6 @@ namespace RMSmax.Controllers
                             }
                             else
                             {
-                                AddErrorsFromResult(result);
-
                                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", user.UserName);
                                 return RedirectToAction("EventLog");
                             }
@@ -1046,26 +1051,18 @@ namespace RMSmax.Controllers
                 }
                 else
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono starego hasła." );
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono starego hasła.");
                     return RedirectToAction("EventLog");
                 }
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.","Hasła nie są takie same");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Hasła nie są takie same");
                 return RedirectToAction("EventLog");
             }
             return RedirectToAction("EventLog");
-            //return View("Index", new IndexViewModel(Environment) { Faculty = facultyInfo });
         }
 
-        private void AddErrorsFromResult(IdentityResult result)
-        {
-            foreach(IdentityError error in result.Errors)
-            {
-                ModelState.AddModelError("", error.Description);
-            }
-        }
 
         private Task<IdentityUser> GetCurrentUserAsync() => userManager.GetUserAsync(HttpContext.User);
 
