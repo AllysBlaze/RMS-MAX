@@ -54,11 +54,11 @@ namespace RMSmax.Controllers
             return View(loginModel);
         }
 
-        public async Task<RedirectResult> Logout(string returnUrl="/")
+        public async Task<IActionResult> Logout()
         {
 
             await signInManager.SignOutAsync();
-            return Redirect(returnUrl);
+            return RedirectToAction("Index", "Home");
         }
 
 
