@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
 namespace RMSmax.Models.ViewModels
 {
-    public class ArticlesListViewModel : MainViewModel
+    public class ArticlesListViewModel : MainViewModel // aka Home/Index ViewModel
     {
         private string rootPath;
         public IEnumerable<Article> Articles { get; set; }
@@ -18,7 +14,7 @@ namespace RMSmax.Models.ViewModels
             get
             {
                 List<string> pics = new List<string>();
-                for (int i = 1; i <= 3; i++)
+                for (int i = 1; i <= 3; i++)// folder 1, 2, 3.
                 {
                     string[] files = Directory.GetFiles(Path.Combine(rootPath, "pictures", "picsSlider", i.ToString()));
                     foreach (var v in files)
@@ -30,7 +26,6 @@ namespace RMSmax.Models.ViewModels
                 return pics;
             }
         }
-        public ArticlesListViewModel() { }
         public ArticlesListViewModel(IWebHostEnvironment env)
         {
             rootPath = env.WebRootPath;

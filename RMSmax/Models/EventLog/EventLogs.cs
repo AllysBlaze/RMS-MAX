@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +46,15 @@ namespace RMSmax.Models.EventLog
         }
         private static IEnumerable<Log> Deserialize()
         {
-            string data = File.ReadAllText(path);
+            string data;
+            try
+            {
+                data = File.ReadAllText(path);
+            }
+            catch (Exception)
+            {
+                data = "";
+            }
             IEnumerable<Log> logs;
             if (string.IsNullOrEmpty(data))
                 logs = new List<Log>();
@@ -71,7 +78,14 @@ namespace RMSmax.Models.EventLog
             list.Add(log);
 
             string data = JsonSerializer.Serialize(list);
-            File.WriteAllText(path, data);
+            try
+            {
+                File.WriteAllText(path, data);
+            }
+            catch (Exception)
+            {
+                consoleLogger.Log(LogLevel.Critical, "Can not save EventLogs");
+            }
         }
         public static void LogInformation(IdentityUser userr, string message, string comment = "")
         {
