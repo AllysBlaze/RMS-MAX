@@ -107,11 +107,11 @@
                     </div>
                 </form>
         
-            <div>
+            <div class="mt-3" style="min-height:300px">
                 <ul class="list-group list-group-flush">
                     @foreach (var v in Model.Subjects)
                     {
-                        <li class="list-group-item">@v.Name</li>
+                        <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="#"><p style="font-size:larger">@v.Name</p></a></li>
                     }
 
                 </ul>

@@ -57,10 +57,11 @@
                         @if (string.IsNullOrEmpty(v.Position) == false)
                         {
                             <li class="list-group-item" style="word-break:break-word;">Stanowisko: @v.Position</li>
-                        }@if (string.IsNullOrEmpty(v.Timetable) == false)
-{
-                            <li class="list-group-item" style="word-break:break-word;">Plan zajęć: @v.Timetable</li>
-}
+                        }
+                        @if (string.IsNullOrEmpty(v.Timetable) == false)
+                        {
+                            <li class="list-group-item" style="word-break:break-word;">Plan zajęć:<a href="https://plan.polsl.pl/"> @v.Timetable</a></li>
+                        }
                     </ul>
 
                 </div>
