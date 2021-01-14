@@ -161,6 +161,10 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult AddCourse(string NewCourseName)
         {
+            if (!string.IsNullOrEmpty(NewCourseName))
+            {
+                NewCourseName = NewCourseName.Trim();
+            }
             if (string.IsNullOrEmpty(NewCourseName))
             {
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać kierunku studiów.", "Nazwa kierunku nie może być pusta.");
@@ -268,6 +272,16 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult EditCourseName(string previousName, string newName)
         {
+            if (!string.IsNullOrEmpty(newName))
+            {
+                newName = newName.Trim();
+            }
+            if (string.IsNullOrEmpty(newName))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić nazwy kierunku " + previousName, "Nazwa kierunku nie może być pusta.");
+                return RedirectToAction("EventLog");
+            }
+
             Course courseP = facultyInfo.Courses.Where(x => x.Name == previousName).FirstOrDefault();
             Course courseN = facultyInfo.Courses.Where(x => x.Name == newName).FirstOrDefault();
             if (courseN != null)
@@ -453,7 +467,7 @@ namespace RMSmax.Controllers
             {
                 if (Path.GetExtension(file.FileName) != ".pdf")
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Nieprawidłowy plik.");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.FileName + ") na kieruneku: " + courseName + ".", "Nieprawidłowy plik.");
                     return RedirectToAction("EventLog");
                 }
 
@@ -469,11 +483,11 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu studiów (" + file.FileName + ") na kieruneku: " + courseName + ".", "Problem z plikiem.");
                         return RedirectToAction("EventLog");
                     }
 
-                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano plan studiów (" + file.Name + ").", "Kierunek: " + courseName);
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano plan studiów (" + file.FileName + ").", "Kierunek: " + courseName);
 
                     Dictionary<string, string> routeValues = new Dictionary<string, string>();
                     routeValues.Add("course", courseName);
@@ -481,13 +495,13 @@ namespace RMSmax.Controllers
                 }
                 else
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Plik już istnieje.");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.FileName + ") na kieruneku: " + courseName + ".", "Plik już istnieje.");
                     return RedirectToAction("EventLog");
                 }
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.Name + ") na kieruneku: " + courseName + ".", "Niepoprawne dane.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu studiów (" + file.FileName + ") na kieruneku: " + courseName + ".", "Niepoprawne dane.");
                 return RedirectToAction("EventLog");
             }
         }
