@@ -111,7 +111,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach (var v in Model.Subjects)
                     {
-                        <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="@v.File"><p style="font-size:larger">@v.Name</p></a></li>
+                        <li class="list-group-item" style="word-break:break-word;"><a id="link" class=" text-info" href="~/files/subjectsDocs/@Model.Course.Name/@v.Id/@v.File"><p style="font-size:larger">@v.Name</p></a></li>
                     }
 
                 </ul>
