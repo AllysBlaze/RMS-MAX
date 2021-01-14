@@ -170,7 +170,12 @@ namespace RMSmax.Controllers
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać kierunku studiów.", "Nazwa kierunku nie może być pusta.");
                 return RedirectToAction("EventLog");
             }
-            else if (facultyInfo.Courses.Where(x => x.Name.ToLower() == NewCourseName.ToLower()).FirstOrDefault() != null)
+            if (NewCourseName.Contains("<") || NewCourseName.Contains(">") || NewCourseName.Contains("|") || NewCourseName.Contains(":") || NewCourseName.Contains("?") || NewCourseName.Contains("*") || NewCourseName.Contains('"'))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać kierunku studiów " + NewCourseName + ".", "Nazwa kierunku zawiera zakazane znaki.");
+                return RedirectToAction("EventLog");
+            }
+            if (facultyInfo.Courses.Where(x => x.Name.ToLower() == NewCourseName.ToLower()).FirstOrDefault() != null)
             {
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać kierunku studiów.", "Kierunek o tej nazwie już istnieje.");
                 return RedirectToAction("EventLog");
@@ -279,6 +284,11 @@ namespace RMSmax.Controllers
             if (string.IsNullOrEmpty(newName))
             {
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić nazwy kierunku " + previousName, "Nazwa kierunku nie może być pusta.");
+                return RedirectToAction("EventLog");
+            }
+            if (newName.Contains("<") || newName.Contains(">") || newName.Contains("|") || newName.Contains(":") || newName.Contains("?") || newName.Contains("*") || newName.Contains('"'))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić nazwy kierunku " + previousName, "Nowa nazwa kierunku zawiera zakazane znaki.");
                 return RedirectToAction("EventLog");
             }
 
