@@ -211,7 +211,7 @@ namespace RMSmax.Controllers
                 {
                     studentsTimetableRepo.DeleteStudentsTimetable(v);
                 }
-                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie plany zajęć kieruneku: " + courseName + ".");
+                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie plany zajęć kierunku: " + courseName + ".");
 
                 //usun przedmioty
                 int[] subjects = subjectRepo.Subjects.Where(x => x.Course == course.Name).Select(x => x.Id).ToArray();
@@ -228,11 +228,11 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć kart przedmiotów kieruneku: " + courseName + ".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć kart przedmiotów kierunku: " + courseName + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
-                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie przedmioty kieruneku: " + courseName + ".");
+                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie przedmioty kierunku: " + courseName + ".");
 
                 //usun plany studiow
                 dir = Path.Combine(Environment.WebRootPath, "files", "studyPlans", course.Name);
@@ -244,11 +244,11 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć planów studiów kieruneku: " + courseName + ".", "Błąd serwera.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć planów studiów kierunku: " + courseName + ".", "Błąd serwera.");
                         return RedirectToAction("EventLog");
                     }
                 }
-                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie plany studiów kieruneku: " + courseName + ".");
+                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Usunięto wszystkie plany studiów kierunku: " + courseName + ".");
 
                 //usun kierunek
                 facultyInfo.Courses = facultyInfo.Courses.Where(x => x != course);
@@ -259,7 +259,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć kieruneku: " + courseName + ".", "Kierunek o tej nazwie nie istnieje.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć kierunku: " + courseName + ".", "Kierunek o tej nazwie nie istnieje.");
                 return RedirectToAction("EventLog");
             }
         }
