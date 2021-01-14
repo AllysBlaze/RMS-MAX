@@ -979,30 +979,38 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (user.Password != confirmPassword)
+                if (user.Password.Length <= 32)
                 {
-
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
-                    return RedirectToAction("EventLog");
-                }
-                else
-                {
-                    IdentityUser appUser = new IdentityUser { UserName = user.Name };
-                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
-                    if (result.Succeeded)
+                    if (user.Password != confirmPassword)
                     {
-                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Utworzono nowego użytkownika.", user.Name);
-                        return RedirectToAction("AccountsList");
+
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
+                        return RedirectToAction("EventLog");
                     }
                     else
                     {
-                        foreach (IdentityError e in result.Errors)
+                        IdentityUser appUser = new IdentityUser { UserName = user.Name };
+                        IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                        if (result.Succeeded)
                         {
-                            ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
+                            EventLogs.LogInformation(GetCurrentUserAsync().Result, "Utworzono nowego użytkownika.", user.Name);
+                            return RedirectToAction("AccountsList");
                         }
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", user.Name);
-                        return RedirectToAction("EventLog");
+                        else
+                        {
+                            foreach (IdentityError e in result.Errors)
+                            {
+                                ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
+                            }
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", user.Name);
+                            return RedirectToAction("EventLog");
+                        }
                     }
+                }
+                else
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Nowe hasło jest za długie. "+user.Name);
+                    return RedirectToAction("EventLog");
                 }
             }
 
@@ -1030,12 +1038,12 @@ namespace RMSmax.Controllers
                     IdentityResult result = await userManager.DeleteAsync(user);
                     if (result.Succeeded)
                     {
-                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika.", user.UserName);
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika. ", user.UserName);
                         return RedirectToAction("AccountsList");
                     }
                     else
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika.", user.UserName);
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć użytkownika. ", user.UserName);
                         return RedirectToAction("EventLog");
                     }
                 }
@@ -1053,54 +1061,57 @@ namespace RMSmax.Controllers
         public async Task<IActionResult> EditUserPassword(string id, string oldPassword, string newPassword, string newPassword2)
         {
             IdentityUser user = await GetCurrentUserAsync();
-            if (newPassword == newPassword2)
+            if (newPassword!=newPassword2)
             {
-
-                if (oldPassword != null)
-                {
-
-                    if (user != null)
-                    {
-                        if (newPassword != null)
-                        {
-                            IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
-                            if (result.Succeeded)
-                            {
-                                EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
-
-                                return RedirectToAction("Index");
-                            }
-                            else
-                            {
-                                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", user.UserName);
-                                return RedirectToAction("EventLog");
-                            }
-
-                        }
-                        else
-                        {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono nowego hasła.");
-                            return RedirectToAction("EventLog");
-                        }
-                    }
-                    else
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie znaleziono użytkownika: " + user.UserName);
-                        return RedirectToAction("EventLog");
-                    }
-                }
-                else
-                {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono starego hasła.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Hasła nie są takie same.");
+                return RedirectToAction("EventLog");
+            }
+            else if(oldPassword==null)
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono starego hasła.");
+                return RedirectToAction("EventLog");
+            }
+            else if(oldPassword==newPassword)
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nowe hasło nie może być takie same jak stare.");
+                return RedirectToAction("EventLog");
+            }
+            else if(newPassword==null)
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie wprowadzono nowego hasła.");
+                return RedirectToAction("EventLog");
+            }
+            else if(newPassword.Length>32)
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Wprowadzone nowe hasło jest za długie.");
+                return RedirectToAction("EventLog");
+            }
+            else if(user==null)
+            {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Nie znaleziono użytkownika: "+user.UserName);
                     return RedirectToAction("EventLog");
-                }
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Hasła nie są takie same");
-                return RedirectToAction("EventLog");
+                if (newPassword != null)
+                {
+                    IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+                    if (result.Succeeded)
+                    {
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", "");
+
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Stare hasło nie zostało wprowadzone poprawnie, lub nowe hasło nie spełnia wymagań.");
+                        return RedirectToAction("EventLog");
+                    }
+                }
             }
             return RedirectToAction("EventLog");
+
+
         }
 
 
