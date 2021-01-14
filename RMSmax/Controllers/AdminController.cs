@@ -173,7 +173,8 @@ namespace RMSmax.Controllers
             }
             else
             {
-                facultyInfo.Courses.Append(new Course(NewCourseName));
+                Course crs = new Course(NewCourseName);
+                facultyInfo.Courses = facultyInfo.Courses.Append(crs);
                 facultyInfo.Serialize();
 
                 string path = Path.Combine(Environment.WebRootPath, "files");
@@ -189,7 +190,12 @@ namespace RMSmax.Controllers
 
                 EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowy kierunek studiów: " + NewCourseName +  ".");
 
-                return RedirectToAction("EditCourse", "Admin", routeValues);
+                return View("EditCourse", new EditCourseViewModel(Environment)
+                {
+                    Faculty = facultyInfo,
+                    Course = crs,
+                    StudentsTimetables = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == NewCourseName)
+                });
             }
         }
 
@@ -273,6 +279,10 @@ namespace RMSmax.Controllers
             {
                 courseP.Name = newName;
                 facultyInfo.Serialize();
+
+                string path = Path.Combine(Environment.WebRootPath, "files");
+                System.IO.Directory.Move(Path.Combine(path, "studyPlans", previousName), Path.Combine(path, "studyPlans", newName));
+                System.IO.Directory.Move(Path.Combine(path, "subjectsDocs", previousName), Path.Combine(path, "subjectsDocs", newName));
 
                 EventLogs.LogInformation(GetCurrentUserAsync().Result, "Zmieniono nazwę kierunku z " + previousName + " na " + newName + ".");
 
