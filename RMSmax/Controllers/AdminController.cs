@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
 using Microsoft.AspNetCore.Identity;
+using System.Text.RegularExpressions;
 using RMSmax.Data;
 
 namespace RMSmax.Controllers
@@ -1111,8 +1112,6 @@ namespace RMSmax.Controllers
             return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = logs, PagingInfo = pagingInfo });
         }
 
-        //!
-
         [HttpGet]
         public IActionResult Login()
         {
@@ -1134,27 +1133,23 @@ namespace RMSmax.Controllers
         private bool XSSValidate(string input)
         {
             input = System.Web.HttpUtility.HtmlDecode(input);
-            string[] legalMarkups = new string[] {"p", "h2", "h3", "h4", "strong", "i", "u", "span", "ul", "li", "ol", "a", "figure", "table", "tbody", "tr", "td"};
+            string[] legalMarkups = new string[] {"p", "br", "h2", "h3", "h4", "strong", "i", "u", "span", "ul", "li", "ol", "a", "figure", "table", "tbody", "tr", "td"};
 
-            for (int i = 0; i < input.Length - 1; i++)
+            MatchCollection matches = Regex.Matches(input, "<.*?>");
+
+            foreach (var m in matches)
             {
-                if (input[i] == '<')
+                bool result = false; 
+                foreach (var v in legalMarkups)
                 {
-                    if (input[i + 1] == '/')
-                        continue;
-
-                    bool result = false; 
-                    foreach (var v in legalMarkups)
+                    if (Regex.IsMatch(m.ToString(), $"<{v}.*?>") || Regex.IsMatch(m.ToString(), $"</{v}>"))
                     {
-                        if (input.Substring(i + 1, v.Length) == v)
-                        {
-                            result = true;
-                            break;
-                        }
+                        result = true;
+                        break;
                     }
-                    if (!result)
-                        return result;
                 }
+                if (!result)
+                    return result;
             }
 
             return true;
