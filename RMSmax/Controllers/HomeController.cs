@@ -59,7 +59,7 @@ namespace RMSmax.Controllers
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
             if (c != null)
             {
-                IEnumerable<Subject> subjects = subjectRepo.Subjects; ;
+                IEnumerable<Subject> subjects = subjectRepo.Subjects;
                 if (degree is null && semester is null)
                     subjects = new List<Subject>();
 
