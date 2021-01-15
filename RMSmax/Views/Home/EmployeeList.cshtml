@@ -9,77 +9,84 @@
             </div>
         </div>
         <form asp-controller="Home" asp-action="EmployeeList" method="get">
-            <div class="row g-3 mb-5">
-                <div class="col-md-3 mb-1">
-                    <input type="text" class="form-control" name="name" value="@Model.CurrentSearchingName" placeholder="Imię" aria-label="Imię" autocomplete="off">
+                <div class="row" style="margin-bottom: 25px;">
+                    <div class="col-lg-5 col-md-6">
+                        <input type="text" name="name" value="@Model.CurrentSearchingName" class="form-control" placeholder="Imię" aria-label="Imię" style="margin-bottom: 18px;" autocomplete="off">
+                    </div>
+                    <div class="col-lg-5 col-md-6">
+                        <input type="text" name="surname" value="@Model.CurrentSearchingSurname" class="form-control" placeholder="Nazwisko" aria-label="Nazwisko" style="margin-bottom: 18px;" autocomplete="off">
+                    </div>
+                    <div class="col-lg-1 col-md-12 text-center">
+                        <button role="button" class="btn btn-primary">Wyszukaj</button>
+                    </div>
                 </div>
-                <div class="col-md-3 mb-1">
-                    <input type="text" class="form-control" name="surname" value="@Model.CurrentSearchingSurname" placeholder="Nazwisko" aria-label="Nazwisko" autocomplete="off">
-                </div>
-                <div class="col-md-1 mb-1">
-                    <button class="btn btn-outline-dark" type="submit">Wyszukaj</button>
-                </div>
-            </div>
         </form>
 
-        
-    <div class="container-fluid">
-        @foreach (var v in Model.Employees)
-        {
-            <div class="row my-4 border-bottom border-secondary" style="width:30%;">
-                <div class="col-lg-12">
-                     <h5>@v.Degree @v.Name @v.LastName</h5>
-                </div>
-            </div>
-            <div class="row mb-5">
+     @if (Model.Employees.Count() != 0)
+     {
+        <div class="container-fluid">
+            @foreach (var v in Model.Employees)
+            {
                 <div class="col-lg-9">
-                    <ul class="list-group list-group-flush">
-                        @if (string.IsNullOrEmpty(v.Room) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;">Sala: @v.Room</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Phone) == false)
-                        {
-                            <li style="word-break:break-word;" class="list-group-item">Telefon: @v.Phone</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Mail) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;">Mail: @v.Mail</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Department) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;">Katedra: @v.Department</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Function) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;">Funkcja: @v.Function</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Position) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;">Stanowisko: @v.Position</li>
-                        }
-                        @if (string.IsNullOrEmpty(v.Timetable) == false)
-                        {
-                            <li class="list-group-item" style="word-break:break-word;"><a href="@v.Timetable">Link do planu zajęć</a></li>
-                        }
-                    </ul>
-
+                    <div class="row my-4 border-bottom border-secondary" style="width:100%;">
+                        <h5>@v.Degree @v.Name @v.LastName</h5>
+                    </div>
                 </div>
-                <div class="col-lg-3 d-flex flex-wrap align-items-center">
-                    @{string picfile = "/pictures/picsEmployee/" + v.Id + "/" + v.Photo;
-                        if (string.IsNullOrEmpty(v.Photo))
-                        {
-                            <img class="mx-auto my-3 rounded" src="~/pictures/picsEmployee/default.jpg" style="height:150px; max-width:200px" />
-                        }
-                        else
-                        {
-                            <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:200px" />}
-                        }
-                </div>
-            </div>
-        }
 
-    </div>
+                <div class="row mb-5">
+                    <div class="col-lg-9">
+                        <ul class="list-group list-group-flush">
+                            @if (string.IsNullOrEmpty(v.Room) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;">Sala: @v.Room</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Phone) == false)
+                            {
+                                <li style="word-break:break-word;" class="list-group-item">Telefon: @v.Phone</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Mail) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;">Mail: @v.Mail</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Department) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;">Katedra: @v.Department</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Function) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;">Funkcja: @v.Function</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Position) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;">Stanowisko: @v.Position</li>
+                            }
+                            @if (string.IsNullOrEmpty(v.Timetable) == false)
+                            {
+                                <li class="list-group-item" style="word-break:break-word;"><a href="@v.Timetable" target="_blank">Link do planu zajęć</a></li>
+                            }
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-3 d-flex flex-wrap align-items-center">
+                        @{string picfile = "/pictures/picsEmployee/" + v.Id + "/" + v.Photo;
+                            if (string.IsNullOrEmpty(v.Photo))
+                            {
+                                <img class="mx-auto my-3 rounded" src="~/pictures/picsEmployee/default.jpg" style="height:150px; max-width:200px" />
+                            }
+                            else
+                            {
+                                <img class="mx-auto my-3 rounded" src="@picfile" style="height:150px; max-width:200px" />
+                            }
+                            }
+                    </div>
+                </div>
+             }
+        </div>
+      }
+      else
+      {
+        <p>Brak wyników wyszukiwania</p>
+      }
 
 
 
