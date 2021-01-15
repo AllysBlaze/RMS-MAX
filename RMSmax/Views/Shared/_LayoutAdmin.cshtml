@@ -15,17 +15,43 @@
         #Creators {
             margin-left: 30px;
         }
+        #title {
+            max-width: 800px;
+        }
+
+        @@media only screen and (max-width: 800px) {
+            #Creators {
+                margin-left: 3px;
+            }
+
+            #title {
+                max-width: 400px;
+            }
+        }
 
         @@media only screen and (max-width: 420px) {
             #Creators {
                 margin-left: 3px;
             }
+
+            #title {
+                max-width: 340px;
+            }
+        }
+        @@media only screen and (max-width: 340px) {
+            #Creators {
+                margin-left: 3px;
+            }
+
+            #title {
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar" style="background-color: @Model.Faculty.Color;">
-        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset"><h1>@Model.Faculty.Name</h1></a>
+    <nav class="navbar text-wrap" style="background-color: @Model.Faculty.Color;">
+        <a asp-controller="Home" asp-action="Index" id="title" class="text-decoration-none text-reset text-wrap" style="word-wrap: break-word;"><h1>@Model.Faculty.Name</h1></a>
         <p>Tryb administratora</p>
         <a class="navbar-brand" href="#">
             <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
