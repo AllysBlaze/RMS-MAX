@@ -76,9 +76,10 @@
     </div>
 </form>
 
-<div class="row" style=" border-top: solid 2px grey;">
+<div id="sliderEdition" class="row" style=" border-top: solid 2px grey;">
     <div class="col-lg-4">
         <form asp-controller="Admin" asp-action="UploadSliderPhoto" enctype="multipart/form-data" method="post">
+            <input type="hidden" name="scroll" value="sliderEdition" />
             <div class="form-row my-3 py-3" >
                 <div class="form-group mx-auto">
                     <label for="photo">Zdjęcie slidera strony głównej nr 1</label>
@@ -108,7 +109,8 @@
     </div>
     <div class="col-lg-4">
         <form asp-controller="Admin" asp-action="UploadSliderPhoto" enctype="multipart/form-data" method="post">
-            <div class="form-row my-3 py-3" >
+            <input type="hidden" name="scroll" value="sliderEdition" />
+            <div class="form-row my-3 py-3">
                 <div class="form-group mx-auto">
                     <label for="photo">Zdjęcie slidera strony głównej nr 2</label>
                     <input name="photo" value="@Model.SliderPhoto" type="file" class="form-control-file" accept="image/*" />
@@ -116,18 +118,18 @@
                 </div>
             </div>
             <div class="form-row">
-                @{if(string.IsNullOrEmpty(Model.SliderPic2))
-                  {
-                      <p class="mx-auto">Aktualne zdjęcie: Brak</p>
-                  }
-                  else
-                  {
-                      string picfile = "/pictures/picsSlider/2/" + Model.SliderPic2;
-                      <p class="mx-auto">
-                          Aktualne zdjęcie:
-                          <img src="@picfile" height="100" width="200" />
-                      </p>
-                  }
+                @{if (string.IsNullOrEmpty(Model.SliderPic2))
+                    {
+                        <p class="mx-auto">Aktualne zdjęcie: Brak</p>
+                    }
+                    else
+                    {
+                        string picfile = "/pictures/picsSlider/2/" + Model.SliderPic2;
+                        <p class="mx-auto">
+                            Aktualne zdjęcie:
+                            <img src="@picfile" height="100" width="200" />
+                        </p>
+                    }
                 }
             </div>
             <div class="form-group text-center">
@@ -137,7 +139,8 @@
     </div>
     <div class="col-lg-4">
         <form asp-controller="Admin" asp-action="UploadSliderPhoto" enctype="multipart/form-data" method="post">
-            <div class="form-row my-3 py-3" >
+            <input type="hidden" name="scroll" value="sliderEdition" />
+            <div class="form-row my-3 py-3">
                 <div class="form-group mx-auto">
                     <label for="photo">Zdjęcie slidera strony głównej nr 3</label>
                     <input name="photo" value="@Model.SliderPhoto" type="file" class="form-control-file" accept="image/*" />
@@ -145,18 +148,18 @@
                 </div>
             </div>
             <div class="form-row">
-                @{if(string.IsNullOrEmpty(Model.SliderPic3))
-                  {
-                      <p class="mx-auto">Aktualne zdjęcie: Brak</p>
-                  }
-                  else
-                  {
-                      string picfile = "/pictures/picsSlider/3/" + Model.SliderPic3;
-                      <p class="mx-auto">
-                          Aktualne zdjęcie:
-                          <img src="@picfile" height="100" width="200" />
-                      </p>
-                  }
+                @{if (string.IsNullOrEmpty(Model.SliderPic3))
+                    {
+                        <p class="mx-auto">Aktualne zdjęcie: Brak</p>
+                    }
+                    else
+                    {
+                        string picfile = "/pictures/picsSlider/3/" + Model.SliderPic3;
+                        <p class="mx-auto">
+                            Aktualne zdjęcie:
+                            <img src="@picfile" height="100" width="200" />
+                        </p>
+                    }
                 }
             </div>
             <div class="form-group text-center">

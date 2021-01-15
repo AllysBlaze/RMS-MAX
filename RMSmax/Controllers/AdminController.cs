@@ -124,7 +124,7 @@ namespace RMSmax.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadSliderPhoto(int id, IFormFile photo)
+        public IActionResult UploadSliderPhoto(int id, IFormFile photo, string scroll)
         {
             if (id >= 1 && id <= 3 && photo != null)
             {
@@ -153,7 +153,7 @@ namespace RMSmax.Controllers
                 }
 
                 EventLogs.LogInformation(GetCurrentUserAsync().Result, "Zmieniono " + id + " zdjęcie banera strony głównej.");
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Admin", scroll);
             }
             else
             {

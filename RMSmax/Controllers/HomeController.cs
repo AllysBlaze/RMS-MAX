@@ -85,13 +85,13 @@ namespace RMSmax.Controllers
         }
 
         [HttpGet]
-        public IActionResult Subjects(string course, int? degree = null, int? semester = null)
+        public IActionResult Subjects(string course, string scroll, int? degree = null, int? semester = null)
         {
             Dictionary<string, string> routeValues = new Dictionary<string, string>();
             routeValues.Add("course", course);
             routeValues.Add("degree", degree.ToString());
             routeValues.Add("semester", semester.ToString());
-            return RedirectToAction("Studies", "Home", routeValues, "subjects");
+            return RedirectToAction("Studies", "Home", routeValues, scroll);
         }
 
         [HttpGet]

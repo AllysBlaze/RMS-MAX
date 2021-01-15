@@ -85,6 +85,7 @@
             <h4 id="subjects">Karty przedmiotów</h4>
             <form asp-controller="Home" asp-action="Subjects" method="get">
                 <input type="hidden" name="course" value="@Model.Course.Name" />
+                <input type="hidden" name="scroll" value="subjects" />
                 <div class="form-row">
                     <div class="form-group col-lg-5 col-md-6 mb-2 mt-2">
                         <label for="inputState">Stopień</label>
