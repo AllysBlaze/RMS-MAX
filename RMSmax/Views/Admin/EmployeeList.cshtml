@@ -2,7 +2,15 @@
 @{
     Layout = "_LayoutAdmin";
 }
+<style>
+    table {
+        table-layout: fixed;
+    }
 
+    td, th {
+        word-wrap: break-word;
+    }
+</style>
 <form asp-controller="Admin" asp-action="EmployeeList" method="get">
     <div class="row" style="margin-bottom: 25px;">
         <div class="col-lg-5 col-md-6">
