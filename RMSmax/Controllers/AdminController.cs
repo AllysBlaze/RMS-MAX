@@ -60,6 +60,23 @@ namespace RMSmax.Controllers
             {
                 if (logoFile != null)
                 {
+                    string[] legalExts = new string[] {".jpg", ".jpeg", ".png", ".gif", ".svg", ".tiff", ".pjp", ".jfif", ".bmp", ".svgz", ".ico", ".dib", ".tif", ".pjpeg", ".avif"};
+                    string extension = Path.GetExtension(logoFile.FileName).ToLower();
+                    bool result = false;
+                    foreach (var v in legalExts)
+                    {
+                        if (extension == v)
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                    if (!result)
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Nieprawidłowy plik z logo wydziału.");
+                        return RedirectToAction("EventLog");
+                    }
+
                     string path = Path.Combine(Environment.WebRootPath, "pictures", "logo");
                     try
                     {
@@ -72,20 +89,20 @@ namespace RMSmax.Controllers
                     }
                     catch (Exception)
                     {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Problem z plikiem.");
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Problem z plikiem logo wydziału.");
                         return RedirectToAction("EventLog");
                     }
 
                     facultyInfo.Logo = logoFile.FileName;
                 }
-                facultyInfo.Name = faculty.Name;
-                facultyInfo.Street = faculty.Street;
-                facultyInfo.Postcode = faculty.Postcode;
-                facultyInfo.City = faculty.City;
-                facultyInfo.State = faculty.State;
-                facultyInfo.Phone = faculty.Phone;
-                facultyInfo.Email = faculty.Email;
-                facultyInfo.MapSource = faculty.MapSource;
+                facultyInfo.Name = faculty.Name.Trim();
+                facultyInfo.Street = faculty.Street.Trim();
+                facultyInfo.Postcode = faculty.Postcode.Trim();
+                facultyInfo.City = faculty.City.Trim();
+                facultyInfo.State = faculty.State.Trim();
+                facultyInfo.Phone = faculty.Phone.Trim();
+                facultyInfo.Email = faculty.Email.Trim();
+                facultyInfo.MapSource = faculty.MapSource.Trim();
                 facultyInfo.Color = faculty.Color;
                 facultyInfo.Serialize();
 
