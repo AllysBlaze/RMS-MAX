@@ -972,7 +972,7 @@ namespace RMSmax.Controllers
                 if (subject.Id == 0)
                 {
                     subjectRepo.AddSubject(subject);
-                    int? id = subjectRepo.Subjects.Where(x => x.Name == subject.Name && x.Course == subject.Course && x.Degree == subject.Degree && x.Semester == subject.Semester).Select(x => x.Id).FirstOrDefault();
+                    int? id = subjectRepo.Subjects.ToList().LastOrDefault().Id;
                     if (id != null)
                     {
                         System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
