@@ -58,6 +58,12 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!faculty.MapSource.StartsWith("https://www.google.com/maps/embed"))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Nieprawidłowe źródło mapy.");
+                    return RedirectToAction("EventLog");
+                }
+
                 if (logoFile != null)
                 {
                     string[] legalExts = new string[] {".jpg", ".jpeg", ".png", ".gif", ".svg", ".tiff", ".pjp", ".jfif", ".bmp", ".svgz", ".ico", ".dib", ".tif", ".pjpeg", ".avif"};
