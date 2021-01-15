@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.AspNetCore.Identity;
 using System.Text.RegularExpressions;
 using RMSmax.Data;
+using System.Diagnostics;
 
 namespace RMSmax.Controllers
 {
@@ -30,9 +31,11 @@ namespace RMSmax.Controllers
         private ILogger logger;
         private UserManager<IdentityUser> userManager;
         private AppIdentityDbContext context;
+        private RMSContext db;
+
         public int PageSize => 15;
 
-        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory, AppIdentityDbContext _context)
+        public AdminController(UserManager<IdentityUser> user, IArticleRepository artsRepo, IEmployeeRepository empRepo, IStudentsTimetableRepository timetableRepo, ISubjectRepository subjectRepo, IWebHostEnvironment env, ILoggerFactory loggerFactory, AppIdentityDbContext _context, RMSContext _db)
         {
             EventLogs.Initialize(env, loggerFactory);
             articlesRepo = artsRepo;
@@ -44,6 +47,7 @@ namespace RMSmax.Controllers
             logger = loggerFactory.CreateLogger("AdminController");
             userManager = user;
             context = _context;
+            db = _db;
         }
 
         #region Index(FacultyInfo)
@@ -324,6 +328,13 @@ namespace RMSmax.Controllers
             }
             if (courseP != null)
             {
+
+                var subjects = subjectRepo.Subjects.Where(x => x.Course == previousName).ToList();
+                foreach(Subject sub in subjects)
+                {
+                    sub.Course = newName;
+                    subjectRepo.EditSubject(sub);
+                }
                 courseP.Name = newName;
                 facultyInfo.Serialize();
 
