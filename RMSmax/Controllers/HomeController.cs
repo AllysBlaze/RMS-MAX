@@ -59,7 +59,7 @@ namespace RMSmax.Controllers
             Course c = facultyInfo.Courses.Where(x => x.Name == course).FirstOrDefault();
             if (c != null)
             {
-                IEnumerable<Subject> subjects = subjectRepo.Subjects;
+                IEnumerable<Subject> subjects = subjectRepo.Subjects.Where(x => x.Course == course);
                 if (degree is null && semester is null)
                     subjects = new List<Subject>();
 
@@ -72,7 +72,7 @@ namespace RMSmax.Controllers
                     subjects = subjects.Where(x => x.Semester == semester);
                 }
 
-                return View(new StudiesViewModel(Environment)
+                return View("Studies", new StudiesViewModel(Environment)
                 {
                     Faculty = facultyInfo,
                     Course = c,
@@ -82,7 +82,16 @@ namespace RMSmax.Controllers
             }
             else
                 return NotFound();
+        }
 
+        [HttpGet]
+        public IActionResult Subjects(string course, int? degree = null, int? semester = null)
+        {
+            Dictionary<string, string> routeValues = new Dictionary<string, string>();
+            routeValues.Add("course", course);
+            routeValues.Add("degree", degree.ToString());
+            routeValues.Add("semester", semester.ToString());
+            return RedirectToAction("Studies", "Home", routeValues, "subjects");
         }
 
         [HttpGet]

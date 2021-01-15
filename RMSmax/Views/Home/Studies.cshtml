@@ -73,8 +73,8 @@
 
 
 
-            <h4>Karty przedmiotów</h4>
-                <form asp-controller="Home" asp-action="Studies" method="get">
+            <h4 id="subjects">Karty przedmiotów</h4>
+                <form asp-controller="Home" asp-action="Subjects" method="get">
                     <input type="hidden" name="course" value="@Model.Course.Name" />
                     <div class="form-row">
                         <div class="form-group mb-0 col">
