@@ -19,12 +19,12 @@
             <div class="row">
                  <h1 class="mx-auto" style="word-break:break-word;">@Model.Course.Name</h1>
             </div>
-            @if (Model.Course.FirstDegreeSpecialties.Count != 0)
+            @if (Model.Course.FirstDegreeSpecialties.Count() != 0)
             {
                 <h3>Specjalności</h3>
                 <h4 class="text-secondary">Stopień I</h4>
                 <ul class="list-group list-group-flush">
-                    @foreach (var v in Model.Course.FirstDegreeSpecialties)
+                    @foreach (var v in Model.Course.FirstDegreeSpecialties.OrderBy(x => x))
                     {
                         <li class="list-group-item" style="word-break:break-word;">@v</li>
                     }
@@ -32,12 +32,12 @@
             }
 
 
-            @if (Model.Course.SecondDegreeSpecialties.Count != 0)
+            @if (Model.Course.SecondDegreeSpecialties.Count() != 0)
             {
                 <h4 class="text-secondary">Stopień II</h4>
 
                 <ul class="list-group list-group-flush">
-                    @foreach (var v in Model.Course.SecondDegreeSpecialties)
+                    @foreach (var v in Model.Course.SecondDegreeSpecialties.OrderBy(x => x))
                     {
                         <li class="list-group-item" style="word-break:break-word;">@v</li>
                     }

@@ -357,11 +357,13 @@ namespace RMSmax.Controllers
             Course course = facultyInfo.Courses.Where(x => x.Name == courseName).FirstOrDefault();
             if (course != null)
             {
-                if (!string.IsNullOrEmpty(spec))
+                if (!string.IsNullOrEmpty(spec) && !string.IsNullOrEmpty(spec.Trim()))
                 {
+                    spec = spec.Trim();
+
                     if (degree == 1)
                     {
-                        if (course.FirstDegreeSpecialties.Contains(spec))
+                        if (course.FirstDegreeSpecialties.Select(x => x.ToLower()).Contains(spec.ToLower()))
                         {
                             EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać specjalizacji.", "Kierunek: " + courseName + ", Specjalizacja " + spec + " już istnieje.");
                             return RedirectToAction("EventLog");
@@ -378,7 +380,7 @@ namespace RMSmax.Controllers
                     }
                     else if (degree == 2)
                     {
-                        if (course.SecondDegreeSpecialties.Contains(spec))
+                        if (course.SecondDegreeSpecialties.Select(x => x.ToLower()).Contains(spec.ToLower()))
                         {
                             EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać specjalizacji.", "Kierunek: " + courseName + ", Specjalizacja " + spec + " już istnieje.");
                             return RedirectToAction("EventLog");

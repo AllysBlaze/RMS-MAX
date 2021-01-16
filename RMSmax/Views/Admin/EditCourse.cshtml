@@ -36,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Course.FirstDegreeSpecialties)
+        @foreach (var v in Model.Course.FirstDegreeSpecialties.OrderBy(x => x))
         {
             <tr>
                 <td>@v</td>
@@ -94,7 +94,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var v in Model.Course.SecondDegreeSpecialties)
+        @foreach (var v in Model.Course.SecondDegreeSpecialties.OrderBy(x => x))
         {
             <tr>
                 <td>@v</td>
