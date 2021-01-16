@@ -65,7 +65,7 @@
             <div class="form-group">
                 <label asp-for="User.Password">Hasło</label>
                 <div class="form-row col-12">
-                    <input asp-for="User.Password" id="new" type="password" class="form-control col-11" placeholder="Podaj hasło" aria-describedby="passwordTip" autocomplete="off" required>
+                    <input asp-for="User.Password" id="new" type="password" class="form-control col-11" maxlength="32" placeholder="Podaj hasło" aria-describedby="passwordTip" autocomplete="off" required>
                     <div class="col-1 justify-content-start align-content-center text-left">
                         <a class="btn btn-xs col-12 text-left justify-content-start" id="show1" data-toggle="tooltip" data-placement="top" title="Pokaż hasło" style="background-color: Transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; max-width: 40px; min-width: 40px; padding-left: 5px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 30 30">
@@ -76,13 +76,13 @@
                     </div>
                 </div>
                 <small id="passwordTip" class="form-text text-muted ml-2">
-                    Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną dużą literę, jedną małą literę i jeden znak specjalny.
+                    Hasło musi mieć co najmniej 8 znaków, maksymalnie 32 znaki, zawierać co najmniej jedną dużą literę, jedną małą literę i jeden znak specjalny.
                 </small>
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword">Powtórz hasło</label>
                 <div class="form-row col-12">
-                    <input asp-for="ConfirmPassword" id="new2" type="password" class="form-control col-11" placeholder="Powtórz hasło" aria-describedby="passwordTip2" autocomplete="off" required>
+                    <input asp-for="ConfirmPassword" id="new2" type="password" class="form-control col-11" maxlength="32" placeholder="Powtórz hasło" aria-describedby="passwordTip2" autocomplete="off" required>
                     <div class="col-1 justify-content-start align-content-center text-left">
                         <a class="btn btn-xs col-12 text-left justify-content-start" id="show2" data-toggle="tooltip" data-placement="top" title="Pokaż hasło" style="background-color: Transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; max-width: 40px; min-width: 40px; padding-left: 5px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-eye" viewBox="0 0 30 30">
