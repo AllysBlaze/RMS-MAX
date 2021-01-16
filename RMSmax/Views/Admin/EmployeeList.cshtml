@@ -25,6 +25,9 @@
     </div>
 </form>
 
+
+@if (Model.Employees.Count() > 0)
+{
 <table class="table table-striped">
     <thead>
         <tr>
@@ -34,7 +37,7 @@
     </thead>
     <tbody>
         @foreach (var v in Model.Employees)
-         {
+        {
             <tr>
                 <td>@string.Concat(v.Degree, " ", v.Name, " ", v.LastName, " ") &#60;@v.Mail&#62;</td>
                 <td>
@@ -56,9 +59,14 @@
                     </form>
                 </td>
             </tr>
-         }
+        }
     </tbody>
 </table>
+}
+else
+{
+    <p class="pb-2 pt-2" style="border-bottom: solid gray 2px; border-top: solid gray 2px;">Brak wyników wyszukiwania.</p>
+}
 
 <div class="row align-content-center justify-content-center">
     <a class="btn btn-success" role="button" asp-controller="Admin" asp-action="AddEmployee">

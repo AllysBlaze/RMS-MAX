@@ -25,29 +25,29 @@
         </div>
         <div class="form-group col-md-5">
             <label asp-for="Employee.Name">Imię</label>
-            <input asp-for="Employee.Name" type="text" class="form-control" placeholder="Podaj imię" required autocomplete="off">
+            <input asp-for="Employee.Name" type="text" maxlength="30" class="form-control" placeholder="Podaj imię" required autocomplete="off">
         </div>
         <div class="form-group col-md-5">
             <label asp-for="Employee.LastName">Nazwisko</label>
-            <input asp-for="Employee.LastName" type="text" class="form-control" placeholder="Podaj nazwisko" required autocomplete="off">
+            <input asp-for="Employee.LastName" type="text" maxlength="40" class="form-control" placeholder="Podaj nazwisko" required autocomplete="off">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-4">
             <label asp-for="Employee.Department">Katedra</label>
-            <input asp-for="Employee.Department" type="text" class="form-control" placeholder="Podaj katedrę">
+            <input asp-for="Employee.Department" type="text" maxlength="40" class="form-control" placeholder="Podaj katedrę">
         </div>
         <div class="form-group col-md-3">
             <label asp-for="Employee.Function">Funkcja</label>
-            <input asp-for="Employee.Function" type="text" class="form-control" placeholder="Podaj funkcję">
+            <input asp-for="Employee.Function" type="text" maxlength="40" class="form-control" placeholder="Podaj funkcję">
         </div>
         <div class="form-group col-md-3">
             <label asp-for="Employee.Position">Stanowisko</label>
-            <input asp-for="Employee.Position" type="text" class="form-control" placeholder="Podaj stanowisko">
+            <input asp-for="Employee.Position" type="text" maxlength="30" class="form-control" placeholder="Podaj stanowisko">
         </div>
         <div class="form-group col-md-2">
             <label asp-for="Employee.Room">Pokój</label>
-            <input asp-for="Employee.Room" type="text" class="form-control" placeholder="Podaj numer pokoju" autocomplete="off">
+            <input asp-for="Employee.Room" type="text" maxlength="15" class="form-control" placeholder="Podaj numer pokoju" autocomplete="off">
         </div>
     </div>
     <div class="form-row">
@@ -60,7 +60,7 @@
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Employee.Mail">Email</label>
-            <input asp-for="Employee.Mail" type="email" class="form-control" placeholder="Podaj e-mail" required autocomplete="off">
+            <input asp-for="Employee.Mail" type="email" class="form-control" maxlength="40" placeholder="Podaj e-mail" required autocomplete="off">
         </div>
     </div>
     <div class="form-row">
