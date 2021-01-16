@@ -70,18 +70,7 @@ namespace RMSmax.Controllers
 
                 if (logoFile != null)
                 {
-                    string[] legalExts = new string[] {".jpg", ".jpeg", ".png", ".gif", ".svg", ".tiff", ".pjp", ".jfif", ".bmp", ".svgz", ".ico", ".dib", ".tif", ".pjpeg", ".avif"};
-                    string extension = Path.GetExtension(logoFile.FileName).ToLower();
-                    bool result = false;
-                    foreach (var v in legalExts)
-                    {
-                        if (extension == v)
-                        {
-                            result = true;
-                            break;
-                        }
-                    }
-                    if (!result)
+                    if (!IsPictureFile(logoFile.FileName))
                     {
                         EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić informacji o wydziale.", "Nieprawidłowy plik z logo wydziału.");
                         return RedirectToAction("EventLog");
@@ -465,14 +454,11 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                var timetables = studentsTimetableRepo.StudentsTimetables.ToList();
-                foreach(StudentsTimetable time in timetables)
+                var timetable = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == studentsTimetable.Course && x.Degree == studentsTimetable.Degree && x.Semester == studentsTimetable.Semester).FirstOrDefault();
+                if (timetable != null)
                 {
-                    if(time.Semester==studentsTimetable.Semester && time.Course==studentsTimetable.Course&&time.Degree==studentsTimetable.Degree)
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan lekcji jest już przypipsany do tego semestru");
-                        return RedirectToAction("EventLog");
-                    }
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan lekcji jest już przypipsany do tego semestru");
+                    return RedirectToAction("EventLog");
                 }
 
                 if (studentsTimetable != null)
@@ -676,51 +662,65 @@ namespace RMSmax.Controllers
 
                 if (photoIn != null)
                 {
-                    if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(dir, article.PhotoIn)))
+                    if (!IsPictureFile(photoIn.FileName))
+                    {
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności (" + article.Title + ").", "Nieprawidłowy plik z grafiką.");
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(article.PhotoIn) && System.IO.File.Exists(Path.Combine(dir, article.PhotoIn)) && article.PhotoIn != article.PhotoCover)
+                            try
+                            {
+                                System.IO.File.Delete(Path.Combine(dir, article.PhotoIn));
+                            }
+                            catch (Exception)
+                            {
+                                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
+                            }
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(dir, article.PhotoIn));
+                            using (FileStream fs = new FileStream(Path.Combine(dir, photoIn.FileName), FileMode.Create))
+                            {
+                                photoIn.CopyTo(fs);
+                            }
+                            article.PhotoIn = photoIn.FileName;
                         }
                         catch (Exception)
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoIn.FileName);
                         }
-                    try
-                    {
-                        using (FileStream fs = new FileStream(Path.Combine(dir, photoIn.FileName), FileMode.Create))
-                        {
-                            photoIn.CopyTo(fs);
-                        }
-                        article.PhotoIn = photoIn.FileName;
                     }
-                    catch (Exception)
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoIn.FileName);
-                    }    
                 }
 
                 if (photoCover != null)
                 {
-                    if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(dir, article.PhotoCover)))
+                    if (!IsPictureFile(photoCover.FileName))
+                    {
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności (" + article.Title + ").", "Nieprawidłowy plik z grafiką.");
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(article.PhotoCover) && System.IO.File.Exists(Path.Combine(dir, article.PhotoCover)) && article.PhotoIn != article.PhotoCover)
+                            try
+                            {
+                                System.IO.File.Delete(Path.Combine(dir, article.PhotoCover));
+                            }
+                            catch (Exception)
+                            {
+                                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
+                            }
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(dir, article.PhotoCover));
+                            using (FileStream fs = new FileStream(Path.Combine(dir, photoCover.FileName), FileMode.Create))
+                            {
+                                photoCover.CopyTo(fs);
+                            }
+                            article.PhotoCover = photoCover.FileName;
                         }
                         catch (Exception)
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Błąd serwera.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoCover.FileName);
                         }
-                    try
-                    {
-                        using (FileStream fs = new FileStream(Path.Combine(dir, photoCover.FileName), FileMode.Create))
-                        {
-                            photoCover.CopyTo(fs);
-                        }
-                        article.PhotoCover = photoCover.FileName;
-                    }
-                    catch (Exception)
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia aktualności.", "Problem z plikiem " + photoCover.FileName);
                     }
                 }
 
@@ -1269,6 +1269,26 @@ namespace RMSmax.Controllers
                     return result;
             }
 
+            return true;
+        }
+
+        private bool IsPictureFile(string fileName)
+        {
+            string[] legalExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".svg", ".tiff", ".pjp", ".jfif", ".bmp", ".svgz", ".ico", ".dib", ".tif", ".pjpeg", ".avif" };
+            string extension = Path.GetExtension(fileName).ToLower();
+            bool result = false;
+            foreach (var v in legalExts)
+            {
+                if (extension == v)
+                {
+                    result = true;
+                    break;
+                }
+            }
+            if (!result)
+            {
+                return false;
+            }
             return true;
         }
     }
