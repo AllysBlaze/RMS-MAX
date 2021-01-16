@@ -12,9 +12,14 @@
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
     </script>
     <style>
+        html {
+            width: 100%;
+            min-width: 330px;
+        }
         #Creators {
             margin-left: 30px;
         }
+
         #title {
             max-width: 800px;
         }
@@ -38,6 +43,7 @@
                 max-width: 340px;
             }
         }
+
         @@media only screen and (max-width: 340px) {
             #Creators {
                 margin-left: 3px;
@@ -47,6 +53,7 @@
                 max-width: 300px;
             }
         }
+        
     </style>
 </head>
 <body>
@@ -58,7 +65,7 @@
         </a>
     </nav>
     <div class="container-fluid flex-fill">
-        <div class="row wrapper flex-column flex-sm-row min-vh-100">
+        <div class="row wrapper flex-column flex-sm-row min-vh-100 bg-light">
             <aside class=" col-xl-2 col-lg-2 col-md-3 col-sm-4  bg-dark flex-shrink-1">
                 <nav class="navbar navbar-expand-sm navbar-dark bg-dark align-items-start flex-sm-column flex-row">
                     <a class="navbar-brand">MENU</a>

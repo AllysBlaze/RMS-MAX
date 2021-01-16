@@ -2,7 +2,12 @@
 @{
     Layout = "_LayoutAdmin";
 }
-
+<style>
+    #editorContainer {
+        padding-right: 80px;
+        margin-right: 0px;
+    }
+</style>
 <form asp-controller="Admin" asp-action="EditArticle" enctype="multipart/form-data" method="post">
     <input type="hidden" asp-for="Article.Id" />
     <div class="form-row">
@@ -74,7 +79,7 @@
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="form-group col-md-12" id="editorContainer">
             <label asp-for="Article.Content" style="font-weight: bold;">Treść aktualności</label>
             <textarea asp-for="Article.Content" id="editor" required placeholder="Podaj treść aktualności" autocomplete="off"></textarea>
         </div>
@@ -96,7 +101,7 @@
                     'bulletedList', 'numberedList', 'indent', 'outdent', '|',
                     'alignment', 'link', '|',
                     'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties', 'tableProperties'],
-                shouldNotGroupWhenFull: true
+                shouldNotGroupWhenFull: false
             }
         })
         .catch(error => {
