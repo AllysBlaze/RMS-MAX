@@ -1052,39 +1052,41 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (user.Password.Length <= 32)
-                {
-                    if (user.Password != confirmPassword)
-                    {
-
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
-                        return RedirectToAction("EventLog");
-                    }
-                    else
-                    {
-                        IdentityUser appUser = new IdentityUser { UserName = user.Name };
-                        IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
-                        if (result.Succeeded)
-                        {
-                            EventLogs.LogInformation(GetCurrentUserAsync().Result, "Utworzono nowego użytkownika.", user.Name);
-                            return RedirectToAction("AccountsList");
-                        }
-                        else
-                        {
-                            foreach (IdentityError e in result.Errors)
-                            {
-                                ModelState.AddModelError("", e.Description); //todo dziennik zdarzen
-                            }
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", user.Name);
-                            return RedirectToAction("EventLog");
-                        }
-                    }
-                }
-                else
+                if (user.Password.Length > 32)
                 {
                     EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Hasło jest za długie. " + user.Name);
                     return RedirectToAction("EventLog");
                 }
+                else if (user.Password != confirmPassword)
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
+                    return RedirectToAction("EventLog");
+                }
+                else if (user.Password.Contains(" "))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
+                    return RedirectToAction("EventLog");
+                }
+                else
+                {
+                    IdentityUser appUser = new IdentityUser { UserName = user.Name };
+                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                    if (result.Succeeded)
+                    {
+                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Utworzono nowego użytkownika.", user.Name);
+                        return RedirectToAction("AccountsList");
+                    }
+                    else
+                    {
+                        foreach (IdentityError e in result.Errors)
+                        {
+                            ModelState.AddModelError("", e.Description);
+                        }
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika. Hasło nie spełnia wymagań", user.Name);
+                        return RedirectToAction("EventLog");
+                    }
+                }
+                
             }
 
             return RedirectToAction("AccountsList");
@@ -1157,6 +1159,11 @@ namespace RMSmax.Controllers
             else if(newPassword.Length>32)
             {
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Wprowadzone nowe hasło jest za długie.");
+                return RedirectToAction("EventLog");
+            }
+            else if (newPassword.Contains(" "))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Hasło nie może posiadać białych znaków.");
                 return RedirectToAction("EventLog");
             }
             else if(user==null)
