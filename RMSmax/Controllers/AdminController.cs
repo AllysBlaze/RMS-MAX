@@ -335,6 +335,12 @@ namespace RMSmax.Controllers
                     sub.Course = newName;
                     subjectRepo.EditSubject(sub);
                 }
+                var st = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == previousName).ToList();
+                foreach(StudentsTimetable timetable in st)
+                {
+                    timetable.Course = newName;
+                    studentsTimetableRepo.EditStudentsTimetable(timetable);
+                }
                 courseP.Name = newName;
                 facultyInfo.Serialize();
 
@@ -459,6 +465,16 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                var timetables = studentsTimetableRepo.StudentsTimetables.ToList();
+                foreach(StudentsTimetable time in timetables)
+                {
+                    if(time.Semester==studentsTimetable.Semester && time.Course==studentsTimetable.Course&&time.Degree==studentsTimetable.Degree)
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan lekcji jest już przypipsany do tego semestru");
+                        return RedirectToAction("EventLog");
+                    }
+                }
+
                 if (studentsTimetable != null)
                 {
                     studentsTimetableRepo.AddStudentsTimetable(studentsTimetable);
