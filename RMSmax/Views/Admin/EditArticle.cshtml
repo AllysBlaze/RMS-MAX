@@ -10,6 +10,8 @@
 </style>
 <form asp-controller="Admin" asp-action="EditArticle" enctype="multipart/form-data" method="post">
     <input type="hidden" asp-for="Article.Id" />
+    <input type="hidden" asp-for="Article.PhotoCover" />
+    <input type="hidden" asp-for="Article.PhotoIn" />
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Article.Title">Tytuł</label>
@@ -24,7 +26,7 @@
             <small class="form-text text-muted ml-1">
                 Imię i nazwisko autora mogą mieć łącznie maksymalnie 80 znaków.
             </small>
-        </div>       
+        </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
@@ -40,26 +42,26 @@
         <div class="form-group col-md-6">
 
 
-            @{if(string.IsNullOrEmpty(Model.Article.PhotoIn))
-              {
-                  <p>Aktualne zdjęcie wewnętrzne: Brak</p>
-              }
-              else
-              {
-                  string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoIn;
-                  <div class="row">
-                    <p class="ml-3">
-                        Aktualne zdjęcie wewnętrzne:
-                    </p>
-                  </div>
-                  <div class="row">
-                      <img class="ml-3" src="@picfile" height="220" width="270" />
-                  </div>
-              }
+            @{if (string.IsNullOrEmpty(Model.Article.PhotoIn))
+                {
+                    <p>Aktualne zdjęcie wewnętrzne: Brak</p>
+                }
+                else
+                {
+                    string picfile = "/pictures/picsArticle/" + Model.Article.Id + "/" + @Model.Article.PhotoIn;
+                    <div class="row">
+                        <p class="ml-3">
+                            Aktualne zdjęcie wewnętrzne:
+                        </p>
+                    </div>
+                    <div class="row">
+                        <img class="ml-3" src="@picfile" height="220" width="270" />
+                    </div>
+                }
             }
         </div>
         <div class="form-group col-md-6">
-            @{if(string.IsNullOrEmpty(@Model.Article.PhotoCover))
+            @{if (string.IsNullOrEmpty(@Model.Article.PhotoCover))
                 {
                     <p>Aktualne zdjęcie aktualnościowe: Brak</p>
                 }
@@ -73,7 +75,7 @@
                     </div>
                     <div class="row">
                         <img class="ml-3" src="@picfile" height="220" width="270" />
-                    </div> 
+                    </div>
                 }
             }
         </div>
