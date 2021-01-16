@@ -1066,7 +1066,12 @@ namespace RMSmax.Controllers
         [HttpPost]
         public async Task <IActionResult> CreateUser(User user, string confirmPassword)
         {
-            if (ModelState.IsValid)
+            if (String.IsNullOrWhiteSpace(user.Password))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
+                return RedirectToAction("EventLog");
+            }
+            else if (ModelState.IsValid)
             {
                 if (user.Password.Length > 32)
                 {
@@ -1079,6 +1084,11 @@ namespace RMSmax.Controllers
                     return RedirectToAction("EventLog");
                 }
                 else if (user.Password.Contains(" "))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
+                    return RedirectToAction("EventLog");
+                }
+                else if(user.Password is null)
                 {
                     EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
                     return RedirectToAction("EventLog");
@@ -1177,7 +1187,7 @@ namespace RMSmax.Controllers
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się zmienić hasła.", "Wprowadzone nowe hasło jest za długie.");
                 return RedirectToAction("EventLog");
             }
-            else if (newPassword.Contains(" "))
+            else if (newPassword.Contains(" ") || String.IsNullOrWhiteSpace(newPassword))
             {
                 EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Hasło nie może posiadać białych znaków.");
                 return RedirectToAction("EventLog");
