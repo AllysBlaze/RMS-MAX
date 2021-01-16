@@ -1254,7 +1254,7 @@ namespace RMSmax.Controllers
             var users = context.Users.AsQueryable();
             return View(new AccountListViewModel() {
                 Faculty = facultyInfo,
-                UserList=users
+                UserList=users.OrderBy(x => x.UserName)
         });
         }
 
@@ -1289,20 +1289,10 @@ namespace RMSmax.Controllers
         {
             string[] legalExts = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".svg", ".tiff", ".pjp", ".jfif", ".bmp", ".svgz", ".ico", ".dib", ".tif", ".pjpeg", ".avif" };
             string extension = Path.GetExtension(fileName).ToLower();
-            bool result = false;
-            foreach (var v in legalExts)
-            {
-                if (extension == v)
-                {
-                    result = true;
-                    break;
-                }
-            }
-            if (!result)
-            {
+            if(legalExts.Contains(extension))
+                return true;
+            else
                 return false;
-            }
-            return true;
         }
     }
 }
