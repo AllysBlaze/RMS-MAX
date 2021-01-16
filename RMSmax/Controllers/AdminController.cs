@@ -1102,10 +1102,13 @@ namespace RMSmax.Controllers
                         return RedirectToAction("EventLog");
                     }
                 }
-                
-            }
 
-            return RedirectToAction("AccountsList");
+            }
+            else
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Nieprawidłowe dane.");
+                return RedirectToAction("EventLog");
+            }
         }
 
         [HttpPost]
