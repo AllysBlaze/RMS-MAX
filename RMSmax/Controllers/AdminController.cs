@@ -1068,7 +1068,12 @@ namespace RMSmax.Controllers
         {
             if (String.IsNullOrWhiteSpace(user.Password))
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, Wprowadź poprawną nazwę użytkownika.", user.Name);
+                return RedirectToAction("EventLog");
+            }
+            if (String.IsNullOrWhiteSpace(user.Name)||user.Name.Contains(" "))
+            {
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika. Nazwa użytkonika nie może posiadać białych znaków.", user.Name);
                 return RedirectToAction("EventLog");
             }
             else if (ModelState.IsValid)
