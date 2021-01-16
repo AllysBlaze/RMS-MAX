@@ -942,7 +942,7 @@ namespace RMSmax.Controllers
         [HttpPost]
         public IActionResult EditSubject(Subject subject, IFormFile doc = null)
         {
-            if (ModelState.IsValid && doc != null)
+            if (ModelState.IsValid && (!string.IsNullOrEmpty(subject.File) || doc != null))
             {
                 if (subject is null)
                 {
@@ -951,22 +951,37 @@ namespace RMSmax.Controllers
                 }
 
                 string path = Path.Combine(Environment.WebRootPath, "files", "subjectsDocs", subject.Course);
-                string dir = Path.Combine(path, subject.Id.ToString());
-                if (!System.IO.Directory.Exists(dir))
-                    System.IO.Directory.CreateDirectory(dir);
+                if (doc != null)
+                {
+                    string dir = Path.Combine(path, subject.Id.ToString());
+                    if (!System.IO.Directory.Exists(dir))
+                        System.IO.Directory.CreateDirectory(dir);
 
-                try
-                {
-                    using (FileStream fs = new FileStream(Path.Combine(dir, doc.FileName), FileMode.Create))
+                    if (System.IO.File.Exists(Path.Combine(dir, subject.File)))
                     {
-                        doc.CopyTo(fs);
+                        try
+                        {
+                            System.IO.File.Delete(Path.Combine(dir, subject.File));
+                        }
+                        catch (Exception)
+                        {
+                            EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie udało się usunąć poprzedniego pliku z kartą przedmiotu (" + subject.Name + ").", "Błąd serwera.");
+                        }
                     }
-                    subject.File = doc.FileName;
-                }
-                catch (Exception)
-                {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Problem z plikiem.");
-                    return RedirectToAction("EventLog");
+
+                    try
+                    {
+                        using (FileStream fs = new FileStream(Path.Combine(dir, doc.FileName), FileMode.Create))
+                        {
+                            doc.CopyTo(fs);
+                        }
+                        subject.File = doc.FileName;
+                    }
+                    catch (Exception)
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się edytować/dodać przedmiotu (" + subject.Name + ").", "Problem z plikiem.");
+                        return RedirectToAction("EventLog");
+                    }
                 }
 
                 if (subject.Id == 0)
