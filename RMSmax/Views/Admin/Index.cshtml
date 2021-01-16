@@ -55,12 +55,18 @@
         <div class="form-group col-md-3">
             <label asp-for="Faculty.Postcode">Kod pocztowy</label>
             <input asp-for="Faculty.Postcode" type="text" class="form-control" placeholder="xx-xxx" pattern="^\d{2}-\d{3}$" required autocomplete="off">
+            <small class="form-text text-muted ml-1">
+                Wymagany format: xx-xxx
+            </small>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Phone">Telefon</label>
-            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" required autocomplete="off">
+            <input asp-for="Faculty.Phone" type="tel" class="form-control" placeholder="Numer telefonu" pattern="[0-9]{9}" required autocomplete="off">
+            <small class="form-text text-muted ml-1">
+                Wymagany format: xxxxxxxxx
+            </small>
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Faculty.Email">Email</label>

@@ -6,7 +6,16 @@
 <form asp-controller="Admin" asp-action="EditSubject" enctype="multipart/form-data" method="post">
     <input type="hidden" asp-for="Subject.Id" />
     <input type="hidden" asp-for="Subject.Course" />
-    <input type="hidden" asp-for="Subject.File" value="0"/>
+    @{
+        if (string.IsNullOrEmpty(Model.Subject.File))
+        {
+            <input type="hidden" asp-for="Subject.File" value="0" />
+        }
+        else
+        {
+            <input type="hidden" asp-for="Subject.File" value="@Model.Subject.File" />
+        }
+    }
     <div class="align-content-center justify-content-center">
         <div class="form-row">
             <div class="form-group col-md-12">
@@ -20,25 +29,34 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Subject.Semester">Semestr</label>
-                <input asp-for="Subject.Semester" type="number" min="1" max="10" required/>
+                <input asp-for="Subject.Semester" type="number" min="1" max="10" required />
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Subject.Degree">Stopień</label>
-                <input asp-for="Subject.Degree" type="number" min="1" max="2" required/>
+                <input asp-for="Subject.Degree" type="number" min="1" max="2" required />
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <label asp-for="Doc">Karta Przedmiotu</label>
-                <input asp-for="Doc" type="file" class="form-control-file" accept=".pdf" required/>
+                @{
+                    if (string.IsNullOrEmpty(Model.Subject.File))
+                    {
+                        <input asp-for="Doc" type="file" class="form-control-file" accept=".pdf" required />
+                    }
+                    else
+                    {
+                        <input asp-for="Doc" type="file" class="form-control-file" accept=".pdf" />
+                    }
+                }
             </div>
         </div>
         <div class="row mt-1">
             <div class="col-md-12">
                 @{
-                    if(string.IsNullOrEmpty(Model.Subject.File))
+                    if (string.IsNullOrEmpty(Model.Subject.File))
                     {
                         <p>Aktualna Karta Przedmiotu: Brak</p>
                     }
