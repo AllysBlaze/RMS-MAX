@@ -16,9 +16,9 @@
 <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label asp-for="Faculty.Name">Nazwa</label>
-        <input asp-for="Faculty.Name" type="text" maxlength="20" class="form-control" placeholder="Nazwa wydziału" required autocomplete="off">
+        <input asp-for="Faculty.Name" type="text" maxlength="70" class="form-control" placeholder="Nazwa wydziału" required autocomplete="off">
         <small class="form-text text-muted ml-1">
-            Podana nazwa może mieć maksymalnie 20 znaków.
+            Podana nazwa może mieć maksymalnie 70 znaków.
         </small>
     </div>
     <div class="form-group">

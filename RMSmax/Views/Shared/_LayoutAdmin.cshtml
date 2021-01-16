@@ -16,50 +16,107 @@
             width: 100%;
             min-width: 330px;
         }
+
         #Creators {
             margin-left: 30px;
         }
 
-        #title {
-            max-width: 800px;
+        #facultyName {
+            font-size: 1.7vw;
+            max-width: 90vw;
         }
 
-        @@media only screen and (max-width: 800px) {
+        #logo {
+            width: 5vw;
+        }
+
+
+        @@media only screen and (max-width: 1300px) {
             #Creators {
                 margin-left: 3px;
             }
 
-            #title {
-                max-width: 400px;
+            #facultyName {
+                font-size: 2.1vw;
+                max-width: 85vw;
+            }
+
+            #logo {
+                width: 6vw;
             }
         }
 
-        @@media only screen and (max-width: 420px) {
-            #Creators {
-                margin-left: 3px;
+        @@media only screen and (max-width: 1100px) {
+            #facultyName {
+                font-size: 2.2vw;
+                max-width: 83vw;
             }
 
-            #title {
-                max-width: 340px;
+            #logo {
+                width: 7vw;
+            }
+        }
+
+        @@media only screen and (max-width: 900px) {
+            #facultyName {
+                font-size: 2.3vw;
+                max-width: 81vw;
+            }
+
+            #logo {
+                width: 8vw;
+            }
+        }
+
+        @@media only screen and (max-width: 700px) {
+            #facultyName {
+                font-size: 2.7vw;
+                max-width: 79vw;
+            }
+
+            #logo {
+                width: 9vw;
+            }
+        }
+
+        @@media only screen and (max-width: 550px) {
+            #facultyName {
+                font-size: 3.1vw;
+                max-width: 75vw;
+            }
+
+            #logo {
+                width: 10vw;
+            }
+        }
+
+        @@media only screen and (max-width: 435px) {
+            #facultyName {
+                font-size: 3.4vw;
+                max-width: 70vw;
+            }
+
+            #logo {
+                width: 12vw;
             }
         }
 
         @@media only screen and (max-width: 340px) {
-            #Creators {
-                margin-left: 3px;
+            #facultyName {
+                font-size: 4vw;
+                max-width: 68vw;
             }
 
-            #title {
-                max-width: 300px;
+            #logo {
+                width: 14vw;
             }
         }
         
     </style>
 </head>
 <body>
-    <nav class="navbar text-wrap" style="background-color: @Model.Faculty.Color;">
-        <a asp-controller="Home" asp-action="Index" id="title" class="text-decoration-none text-reset text-wrap" style="word-wrap: break-word;"><h1>@Model.Faculty.Name</h1></a>
-        <p>Tryb administratora</p>
+    <nav class="navbar text-wrap justify-content-between" style="background-color: @Model.Faculty.Color;">
+        <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset text-wrap" style="word-wrap: break-word;"><h1 id="facultyName">@Model.Faculty.Name</h1></a>
         <a class="navbar-brand" href="#">
             <img src="~/pictures/logo/@Model.Faculty.Logo" height="70" alt="rms logo">
         </a>
@@ -67,8 +124,9 @@
     <div class="container-fluid flex-fill">
         <div class="row wrapper flex-column flex-sm-row min-vh-100 bg-light">
             <aside class=" col-xl-2 col-lg-2 col-md-3 col-sm-4  bg-dark flex-shrink-1">
-                <nav class="navbar navbar-expand-sm navbar-dark bg-dark align-items-start flex-sm-column flex-row">
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark align-items-center flex-sm-column flex-row">
                     <a class="navbar-brand">MENU</a>
+                    <a class="navbar-brand pl-1 pr-1" style="border: solid 2px grey; border-radius: 15px; font-size: 14px;">Tryb administratora</a>
                     <a href class="navbar-toggler" data-toggle="collapse" data-target=".sidebar">
                         <span class="navbar-toggler-icon"></span>
                     </a>
