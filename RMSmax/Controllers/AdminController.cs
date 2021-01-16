@@ -1082,7 +1082,7 @@ namespace RMSmax.Controllers
                 }
                 else
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Nowe hasło jest za długie. "+user.Name);
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Hasło jest za długie. " + user.Name);
                     return RedirectToAction("EventLog");
                 }
             }
