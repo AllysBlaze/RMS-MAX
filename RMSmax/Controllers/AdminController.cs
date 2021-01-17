@@ -1065,7 +1065,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się usunąć przedmiotu (" + subject.Name + ").", "Przedmiot nie istnieje.");
                 return RedirectToAction("EventLog");
             }
         }
@@ -1077,34 +1077,29 @@ namespace RMSmax.Controllers
         {
             if (String.IsNullOrWhiteSpace(user.Password))
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, Wprowadź poprawną nazwę użytkownika.", user.Name);
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: " + user.Name + ".", "Hasło nie może posiadać białych znaków.");
                 return RedirectToAction("EventLog");
             }
             if (String.IsNullOrWhiteSpace(user.Name)||user.Name.Contains(" "))
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika. Nazwa użytkonika nie może posiadać białych znaków.", user.Name);
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć nowego użytkownika."," Nazwa użytkownika nie może posiadać białych znaków.");
                 return RedirectToAction("EventLog");
             }
             else if (ModelState.IsValid)
             {
                 if (user.Password.Length > 32)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Hasło jest za długie. " + user.Name);
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: "+user.Name+".", "Hasło jest za długie. " );
                     return RedirectToAction("EventLog");
                 }
                 else if (user.Password != confirmPassword)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasła nie są takie same.", user.Name);
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: " + user.Name + ".", "Hasła nie są takie same.");
                     return RedirectToAction("EventLog");
                 }
                 else if (user.Password.Contains(" "))
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
-                    return RedirectToAction("EventLog");
-                }
-                else if(user.Password is null)
-                {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika, hasło nie może posiadać białych znaków.", user.Name);
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: " + user.Name + ".", "Hasło nie może posiadać białych znaków.");
                     return RedirectToAction("EventLog");
                 }
                 else
@@ -1122,7 +1117,7 @@ namespace RMSmax.Controllers
                         {
                             ModelState.AddModelError("", e.Description);
                         }
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika. Hasło nie spełnia wymagań", user.Name);
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: " + user.Name + ".", "Hasło lub nazwa użytkownika nie spełnia wymagań");
                         return RedirectToAction("EventLog");
                     }
                 }
@@ -1130,7 +1125,7 @@ namespace RMSmax.Controllers
             }
             else
             {
-                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się utworzyć nowego użytkownika.", "Nieprawidłowe dane.");
+                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się stworzyć użytkownika: " + user.Name + ".", "Nieprawidłowe dane.");
                 return RedirectToAction("EventLog");
             }
         }
@@ -1148,7 +1143,7 @@ namespace RMSmax.Controllers
             {
                 if (user == currentUser)
                 {
-                    EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie można usunąć użytkownika.", "Użytkownik jest obecnie zalogowany na tym koncie");
+                    EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie można usunąć użytkownika.: "+user.UserName+".", "Użytkownik jest obecnie zalogowany na tym koncie.");
                     return RedirectToAction("EventLog");
                 }
                 else
@@ -1156,7 +1151,7 @@ namespace RMSmax.Controllers
                     IdentityResult result = await userManager.DeleteAsync(user);
                     if (result.Succeeded)
                     {
-                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika użytkownika. ", user.UserName);
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślnie usunięto użytkownika. ", user.UserName);
                         return RedirectToAction("AccountsList");
                     }
                     else
@@ -1221,7 +1216,7 @@ namespace RMSmax.Controllers
                     IdentityResult result = await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
                     if (result.Succeeded)
                     {
-                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", "");
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Pomyślna zmiana hasła.", user.UserName);
 
                         return RedirectToAction("Index");
                     }
