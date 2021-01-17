@@ -94,14 +94,15 @@ namespace RMSmax.Controllers
 
                     facultyInfo.Logo = logoFile.FileName;
                 }
-                facultyInfo.Name = faculty.Name.Trim();
-                facultyInfo.Street = faculty.Street.Trim();
-                facultyInfo.Postcode = faculty.Postcode.Trim();
-                facultyInfo.City = faculty.City.Trim();
-                facultyInfo.State = faculty.State.Trim();
-                facultyInfo.Phone = faculty.Phone.Trim();
-                facultyInfo.Email = faculty.Email.Trim();
-                facultyInfo.MapSource = faculty.MapSource.Trim();
+
+                facultyInfo.Name = string.IsNullOrEmpty(faculty.Name) ? faculty.Name : faculty.Name.Trim();
+                facultyInfo.Street = string.IsNullOrEmpty(faculty.Street) ? faculty.Street : faculty.Street.Trim();
+                facultyInfo.Postcode = string.IsNullOrEmpty(faculty.Postcode) ? faculty.Postcode : faculty.Postcode.Trim();
+                facultyInfo.City = string.IsNullOrEmpty(faculty.City) ? faculty.City : faculty.City.Trim();
+                facultyInfo.State = string.IsNullOrEmpty(faculty.State) ? faculty.State : faculty.State.Trim();
+                facultyInfo.Phone = string.IsNullOrEmpty(faculty.Phone) ? faculty.Phone : faculty.Phone.Trim();
+                facultyInfo.Email = string.IsNullOrEmpty(faculty.Email) ? faculty.Email : faculty.Email.Trim();
+                facultyInfo.MapSource = string.IsNullOrEmpty(faculty.MapSource) ? faculty.MapSource : faculty.MapSource.Trim();
                 facultyInfo.Color = faculty.Color;
                 facultyInfo.Serialize();
 
@@ -456,10 +457,16 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!studentsTimetable.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
+                    return RedirectToAction("EventLog");
+                }
+
                 var timetable = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == studentsTimetable.Course && x.Degree == studentsTimetable.Degree && x.Semester == studentsTimetable.Semester).FirstOrDefault();
                 if (timetable != null)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan lekcji jest już przypipsany do tego semestru");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan zajęć jest już przypipsany do tego semestru");
                     return RedirectToAction("EventLog");
                 }
 
