@@ -11,6 +11,15 @@
         word-wrap: break-word;
     }
 </style>
+<script>
+    $(function () {
+        var isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|webOS|BlackBerry|IEMobile|Opera Mini)/i);
+        if (isMobile) {
+            $("#show1").hide();
+            $("#show2").hide();
+        }
+    });
+</script>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -61,6 +70,9 @@
                 <div class="form-row col-12">
                     <input asp-for="User.Name" type="text" class="form-control col-11" placeholder="Podaj login" autocomplete="off" required>
                 </div>
+                <small id="passwordTip2" class="form-text text-muted ml-2">
+                    Nazwa użytkownika może składać się z liter od a do z, cyfr oraz znaków specjalnych: - . _ @@ oraz +
+                </small>
             </div>
             <div class="form-group">
                 <label asp-for="User.Password">Hasło</label>

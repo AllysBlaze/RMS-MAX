@@ -12,7 +12,16 @@
         word-wrap: break-word;
     }
 </style>
-
+<script>
+    $(function () {
+        var isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|webOS|BlackBerry|IEMobile|Opera Mini)/i);
+        if (isMobile) {
+            $("#show1").hide();
+            $("#show2").hide();
+            $("#show3").hide();
+        }
+    });
+</script>
 <form asp-controller="Admin" asp-action="EditFacultyInfo" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label asp-for="Faculty.Name">Nazwa</label>

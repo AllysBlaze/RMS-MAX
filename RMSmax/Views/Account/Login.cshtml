@@ -20,7 +20,12 @@
         #mainConainer {
             margin-top: 90px;
         }
-        @@media only screen and (max-width: 420px) {
+
+        .unvisible {
+            visibility: hidden;
+        }
+
+        @@media only screen and (max-width: 450px) {
             #mainConainer {
                 margin-top: 5px;
                 margin-left: 5px;
@@ -28,6 +33,14 @@
             }
         }
     </style>
+    <script>
+        $(function () {
+            var isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|webOS|BlackBerry|IEMobile|Opera Mini)/i);
+            if (isMobile) {
+                $("#show").hide();
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
