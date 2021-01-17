@@ -165,7 +165,7 @@
         @foreach (var v in Model.StudentsTimetables)
         {
             <tr>
-                <td><a href="@v.Timetable">Stopień: @v.Degree Semestr: @v.Semester</a></td>
+                <td><a href="@v.Timetable" target="_blank">Stopień: @v.Degree Semestr: @v.Semester</a></td>
                 <td class="align-content-center justify-content-center text-center">
                     <form asp-controller="Admin" asp-action="DeleteTimetable" method="post"> 
                         <div class="row">
@@ -226,7 +226,7 @@
         @foreach (var v in Model.StudyPlans)
         {
             <tr>
-                <td><a href="~/files/studyPlans/@Model.Course.Name/@v">@v</a></td>
+                <td><a href="~/files/studyPlans/@Model.Course.Name/@v" target="_blank">@v</a></td>
                 <td class="align-content-center justify-content-center text-center">
                     <form asp-controller="Admin" asp-action="DeleteStudyPlan" method="post">
                         <div class="row">
