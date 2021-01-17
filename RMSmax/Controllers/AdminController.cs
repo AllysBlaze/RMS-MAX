@@ -122,6 +122,12 @@ namespace RMSmax.Controllers
         {
             if (id >= 1 && id <= 3 && photo != null)
             {
+                if (!IsPictureFile(photo.FileName))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia do banera strony głównej.", "Nieprawidłowy plik.");
+                    return RedirectToAction("EventLog");
+                }
+
                 try
                 {
                     string dir = Path.Combine(Environment.WebRootPath, "pictures", "picsSlider", id.ToString());
