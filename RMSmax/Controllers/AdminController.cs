@@ -94,14 +94,15 @@ namespace RMSmax.Controllers
 
                     facultyInfo.Logo = logoFile.FileName;
                 }
-                facultyInfo.Name = faculty.Name.Trim();
-                facultyInfo.Street = faculty.Street.Trim();
-                facultyInfo.Postcode = faculty.Postcode.Trim();
-                facultyInfo.City = faculty.City.Trim();
-                facultyInfo.State = faculty.State.Trim();
-                facultyInfo.Phone = faculty.Phone.Trim();
-                facultyInfo.Email = faculty.Email.Trim();
-                facultyInfo.MapSource = faculty.MapSource.Trim();
+
+                facultyInfo.Name = string.IsNullOrEmpty(faculty.Name) ? faculty.Name : faculty.Name.Trim();
+                facultyInfo.Street = string.IsNullOrEmpty(faculty.Street) ? faculty.Street : faculty.Street.Trim();
+                facultyInfo.Postcode = string.IsNullOrEmpty(faculty.Postcode) ? faculty.Postcode : faculty.Postcode.Trim();
+                facultyInfo.City = string.IsNullOrEmpty(faculty.City) ? faculty.City : faculty.City.Trim();
+                facultyInfo.State = string.IsNullOrEmpty(faculty.State) ? faculty.State : faculty.State.Trim();
+                facultyInfo.Phone = string.IsNullOrEmpty(faculty.Phone) ? faculty.Phone : faculty.Phone.Trim();
+                facultyInfo.Email = string.IsNullOrEmpty(faculty.Email) ? faculty.Email : faculty.Email.Trim();
+                facultyInfo.MapSource = string.IsNullOrEmpty(faculty.MapSource) ? faculty.MapSource : faculty.MapSource.Trim();
                 facultyInfo.Color = faculty.Color;
                 facultyInfo.Serialize();
 
