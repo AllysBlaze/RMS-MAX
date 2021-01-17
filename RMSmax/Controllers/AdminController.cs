@@ -456,10 +456,16 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!studentsTimetable.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                {
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
+                    return RedirectToAction("EventLog");
+                }
+
                 var timetable = studentsTimetableRepo.StudentsTimetables.Where(x => x.Course == studentsTimetable.Course && x.Degree == studentsTimetable.Degree && x.Semester == studentsTimetable.Semester).FirstOrDefault();
                 if (timetable != null)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan lekcji jest już przypipsany do tego semestru");
+                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie można dodać planu zajęć.", "Plan zajęć jest już przypipsany do tego semestru");
                     return RedirectToAction("EventLog");
                 }
 
