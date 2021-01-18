@@ -883,28 +883,47 @@ namespace RMSmax.Controllers
 
                 if (photo != null)
                 {
-                    if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(dir, employee.Photo)))
+
+                    if (!IsPictureFile(photo.FileName))
+                    {
+                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name + " " + employee.LastName + ").", "Nieprawidłowy plik.");
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(employee.Photo) && System.IO.File.Exists(Path.Combine(dir, employee.Photo)))
+                            try
+                            {
+                                System.IO.File.Delete(Path.Combine(dir, employee.Photo));
+                            }
+                            catch (Exception)
+                            {
+                                EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name + " " + employee.LastName + ").", "Błąd serwera.");
+                            }
                         try
                         {
-                            System.IO.File.Delete(Path.Combine(dir, employee.Photo));
+                            using (FileStream fs = new FileStream(Path.Combine(dir, photo.FileName), FileMode.Create))
+                            {
+                                photo.CopyTo(fs);
+                            }
+                            employee.Photo = photo.FileName;
                         }
-                        catch (Exception) 
+                        catch (Exception)
                         {
-                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name +" " + employee.LastName+").", "Błąd serwera.");
+                            EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem " + photo.FileName);
                         }
-                    try
-                    {
-                        using (FileStream fs = new FileStream(Path.Combine(dir, photo.FileName), FileMode.Create))
-                        {
-                            photo.CopyTo(fs);
-                        }
-                        employee.Photo = photo.FileName;
-                    }
-                    catch (Exception)
-                    {
-                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać zdjęcia pracownika (" + employee.Name + " " + employee.LastName + ").", "Problem z plikiem " + photo.FileName);
                     }
                 }
+
+                employee.Name = string.IsNullOrEmpty(employee.Name) ? employee.Name : employee.Name.Trim();
+                employee.LastName = string.IsNullOrEmpty(employee.LastName) ? employee.LastName : employee.LastName.Trim();
+                employee.Degree = string.IsNullOrEmpty(employee.Degree) ? employee.Degree : employee.Degree.Trim();
+                employee.Department = string.IsNullOrEmpty(employee.Department) ? employee.Department : employee.Department.Trim();
+                employee.Function = string.IsNullOrEmpty(employee.Function) ? employee.Function : employee.Function.Trim();
+                employee.Position = string.IsNullOrEmpty(employee.Position) ? employee.Position : employee.Position.Trim();
+                employee.Room = string.IsNullOrEmpty(employee.Room) ? employee.Room : employee.Room.Trim();
+                employee.Mail = string.IsNullOrEmpty(employee.Mail) ? employee.Mail : employee.Mail.Trim();
+                employee.Phone = string.IsNullOrEmpty(employee.Phone) ? employee.Phone : employee.Phone.Trim();
+                employee.Timetable = string.IsNullOrEmpty(employee.Timetable) ? employee.Timetable : employee.Timetable.Trim();
 
                 if (employee.Id == 0)
                 {
@@ -915,10 +934,7 @@ namespace RMSmax.Controllers
                         System.IO.Directory.Move(Path.Combine(path, 0.ToString()), Path.Combine(path, id.ToString()));
                     }
 
-                    if (string.IsNullOrEmpty(employee.Photo))
-                        EventLogs.LogWarning(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").", "Brak zdjęcia.");
-                    else
-                        EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
+                    EventLogs.LogInformation(GetCurrentUserAsync().Result, "Dodano nowego pracownika (" + employee.Name + " " + employee.LastName + ").");
                 }
                 else
                 {
