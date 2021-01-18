@@ -92,8 +92,8 @@ namespace RMSmax.Infrastructure
         {
             TagBuilder tag = new TagBuilder("a");
             tag.AddCssClass("btn");
-            tag.AddCssClass("btn-secondary");
             tag.AddCssClass("dots");
+            tag.AddCssClass("disabled");
             tag.InnerHtml.Append(". . .");
 
             return tag;
