@@ -32,12 +32,23 @@
         opacity: 0.5;
     }
 
+    #over-img {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-position: center;
+        background-size: cover;
+        opacity: 0.5;
+    }
+
     .card {
         margin-top: 50px;
         margin-bottom: 40px;
     }
 
-    .containerCard {
+    .card-body{
         position: absolute;
         bottom: 0;
         left: 0;
@@ -48,13 +59,14 @@
 
 
     .card {
-        height: 20rem;
+        min-height:25rem;
         background-color: white;
         position: relative;
         background-position: center;
         background-size: cover;
         color: black;
     }
+
 
     @@media(min-width:780px){
         .card{
@@ -122,9 +134,19 @@
 
                      <div class="col-lg-4">
                         <div class="card">
-                            <div class="overlay-image" style="background-image: url('@picfile') "></div>
-                            <div class="containerCard" style="word-break: break-all">
-                                <h3 style="word-break: break-all">@v.Title</h3>
+                            <div class="overlay-image" id="over-img" style="background-image: url('@picfile') "></div>
+                            <div class="card-body">
+                                @if (v.Title.Length > 27)
+                                {
+                                    string newTitle = v.Title.Substring(0, 27);
+                                    string fullTitle = string.Concat(newTitle, "...");
+                                    <h4>@fullTitle</h4>
+                                }
+                                else
+                                {
+
+                                <h4>@v.Title</h4>
+                                }
                                 @{
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<strong.*?>", "");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<u.*?>", "");
@@ -142,13 +164,13 @@
                                     {
                                         string newContent = v.Content.Substring(0, 180);
                                         string fullContent = string.Concat(newContent, "...");
-                                        <p style="word-break: break-all">@fullContent</p>
+                                        <p>@fullContent</p>
                                     }
                                     else
                                     {
-                                        <p style="word-break: break-all">@v.Content</p>
+                                        <p>@v.Content</p>
                                     }
-                                    <a class="btn btn-outline-dark" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id">Zobacz więcej</a>
+                                    <a class="btn btn-outline-dark mx-auto my-1" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id" style="width:180px">Zobacz więcej</a>
                             </div>
                         </div>
                     </div>
