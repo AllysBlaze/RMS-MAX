@@ -141,11 +141,12 @@
                                     string newTitle = v.Title.Substring(0, 27);
                                     string fullTitle = string.Concat(newTitle, "...");
                                     <h4>@fullTitle</h4>
+
                                 }
                                 else
                                 {
 
-                                <h4>@v.Title</h4>
+                                    <h4>@v.Title</h4>
                                 }
                                 @{
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<strong.*?>", "");
@@ -159,10 +160,14 @@
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<table.*?table>", " ");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "&nbsp;", "  ");
                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<.*?>", " ");
-                                    }
-                                    @if (v.Content.Length > 180)
+                                }
+
+                                @if (v.Title.Length > 12)
+                                {
+
+                                    @if (v.Content.Length > 100)
                                     {
-                                        string newContent = v.Content.Substring(0, 180);
+                                        string newContent = v.Content.Substring(0, 100);
                                         string fullContent = string.Concat(newContent, "...");
                                         <p>@fullContent</p>
                                     }
@@ -170,7 +175,21 @@
                                     {
                                         <p>@v.Content</p>
                                     }
-                                    <a class="btn btn-outline-dark mx-auto my-1" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id" style="width:180px">Zobacz więcej</a>
+                                }
+                                else
+                                {
+                                    @if (v.Content.Length > 250)
+                                    {
+                                        string newContent = v.Content.Substring(0, 250);
+                                        string fullContent = string.Concat(newContent, "...");
+                                        <p>@fullContent</p>
+                                    }
+                                    else
+                                    {
+                                        <p>@v.Content</p>
+                                    }
+                                }
+                                <a class="btn btn-outline-dark mx-auto my-1" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id" style="width:180px">Zobacz więcej</a>
                             </div>
                         </div>
                     </div>
