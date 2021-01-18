@@ -862,10 +862,13 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!employee.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                if (employee.Timetable != null)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
-                    return RedirectToAction("EventLog");
+                    if (!employee.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
+                        return RedirectToAction("EventLog");
+                    }
                 }
                 string path = Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee");
                 string dir = Path.Combine(path, employee.Id.ToString());
