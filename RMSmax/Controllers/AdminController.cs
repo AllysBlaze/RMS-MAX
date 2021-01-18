@@ -57,6 +57,12 @@ namespace RMSmax.Controllers
             return View(new IndexViewModel(Environment) { Faculty = facultyInfo, CurrentUserName = GetCurrentUserAsync().Result.UserName });
         }
 
+        [HttpGet]
+        public IActionResult GoToIndex(string scroll)
+        {
+            return RedirectToAction("Index", "Admin", scroll);
+        }
+
         [HttpPost]
         public IActionResult EditFacultyInfo(Faculty faculty, IFormFile logoFile)
         {
