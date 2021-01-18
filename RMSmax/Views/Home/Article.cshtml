@@ -21,17 +21,21 @@
 <div>
     <div class="container-fluid padding">
         <div class="row padding showText">
-            @if (string.IsNullOrEmpty(Model.Article.PhotoIn) == true)
+            @if (string.IsNullOrEmpty(Model.Article.PhotoIn))
             {
-                <h4 style="width: 100%; word-break: break-all;">@Model.Article.Title</h4>
-                @Html.Raw(Model.Article.Content)
-                   
+                <h4 style="width: 100%; word-break: break-word;">@Model.Article.Title</h4>
+                <div style="word-break: break-word;">
+                    @Html.Raw(Model.Article.Content)
+                </div>
+                
             }
             else
             {
                 <div class="col-lg-6">
-                    <h4 style="width: 100%;">@Model.Article.Title</h4>
-                    @Html.Raw(Model.Article.Content)
+                    <h4 style="width: 100%; word-break: break-word;">@Model.Article.Title</h4>
+                    <div style="word-break: break-word;">
+                        @Html.Raw(Model.Article.Content)
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     @{string picfile = "/pictures/picsArticle/" + @Model.Article.Id + "/" + @Model.Article.PhotoIn;}

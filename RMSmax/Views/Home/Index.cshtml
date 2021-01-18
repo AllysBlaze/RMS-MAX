@@ -2,7 +2,8 @@
 
 <style>
     .carousel-item {
-        height:32rem;
+        height: 34vh;
+        min-height: 300px;
         background-color: rgb(8, 8, 8);
         position: relative;
         background-position: center;
@@ -10,16 +11,14 @@
         color: white;
     }
 
-        .carousel-item .container {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding-bottom: 50px;
-            margin-bottom: 50px;
-        }
-
-
+    .carousel-item .container {
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         right: 0;
+         padding-bottom: 50px;
+         margin-bottom: 50px;
+    }
 
     .overlay-image {
         position: absolute;
@@ -57,7 +56,6 @@
         padding: 10px;
     }
 
-
     .card {
         min-height:25rem;
         background-color: white;
@@ -67,15 +65,11 @@
         color: black;
     }
 
-
     @@media(min-width:780px){
         .card{
             display:flex;
         }
     }
-   
-
-   
 
 </style>
 
