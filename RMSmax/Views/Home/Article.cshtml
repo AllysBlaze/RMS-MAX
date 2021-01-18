@@ -11,6 +11,11 @@
     td, th {
         word-wrap: break-word;
     }
+    @@media only screen and (max-width: 991px) {
+        #photo {
+            margin-top: 20px;
+        }
+    }
 </style>
 
 <div>
@@ -18,19 +23,19 @@
         <div class="row padding showText">
             @if (string.IsNullOrEmpty(Model.Article.PhotoIn) == true)
             {
-                <h4 style="width: 100%; word-break:break-word;">@Model.Article.Title</h4>
+                <h4 style="width: 100%; word-break: break-all;">@Model.Article.Title</h4>
                 @Html.Raw(Model.Article.Content)
                    
             }
             else
             {
                 <div class="col-lg-6">
-                    <h4 style="width: 100%; word-break: break-word">@Model.Article.Title</h4>
+                    <h4 style="width: 100%;">@Model.Article.Title</h4>
                     @Html.Raw(Model.Article.Content)
                 </div>
                 <div class="col-lg-6">
                     @{string picfile = "/pictures/picsArticle/" + @Model.Article.Id + "/" + @Model.Article.PhotoIn;}
-                    <img src="@picfile" class="img-fluid" />
+                    <img id="photo" src="@picfile" class="img-fluid" />
                 </div>
             }
         </div>
