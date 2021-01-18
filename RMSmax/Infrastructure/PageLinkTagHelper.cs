@@ -41,11 +41,13 @@ namespace RMSmax.Infrastructure
                         {
                             result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
                         }
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
                         result.InnerHtml.AppendHtml(CreatePageBtnTag(PageModel.TotalPages));
                     }
                     else if (PageModel.CurrentPage >= PageModel.TotalPages - 2 && PageModel.CurrentPage <= PageModel.TotalPages)
                     {
                         result.InnerHtml.AppendHtml(CreatePageBtnTag(1));
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
                         for (int i = PageModel.TotalPages - 3; i <= PageModel.TotalPages; i++)
                         {
                             result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
@@ -54,10 +56,12 @@ namespace RMSmax.Infrastructure
                     else
                     {
                         result.InnerHtml.AppendHtml(CreatePageBtnTag(1));
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
                         for (int i = PageModel.CurrentPage - 1; i <= PageModel.CurrentPage + 1; i++)
                         {
                             result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
                         }
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
                         result.InnerHtml.AppendHtml(CreatePageBtnTag(PageModel.TotalPages));
                     }
                 }
@@ -86,10 +90,11 @@ namespace RMSmax.Infrastructure
         }
         private TagBuilder CreateDotsBtnTag()
         {
-            TagBuilder tag = new TagBuilder("p");
-            //tag.AddCssClass("btn");
-            //tag.AddCssClass("btn-secondary");
-            tag.InnerHtml.Append("...");
+            TagBuilder tag = new TagBuilder("a");
+            tag.AddCssClass("btn");
+            tag.AddCssClass("btn-secondary");
+            tag.AddCssClass("dots");
+            tag.InnerHtml.Append(". . .");
 
             return tag;
         }
