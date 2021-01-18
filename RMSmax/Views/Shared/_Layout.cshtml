@@ -127,7 +127,7 @@
 <body>
     <nav class="navbar text-wrap justify-content-between" style="background-color: @Model.Faculty.Color;">
         <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-reset text-wrap" style="word-wrap: break-word;"><h1 id="facultyName">@Model.Faculty.Name</h1></a>
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">
             <img id="logo" src="~/pictures/logo/@Model.Faculty.Logo" alt="logo">
         </a>
     </nav>

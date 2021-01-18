@@ -633,6 +633,9 @@ namespace RMSmax.Controllers
                 TotalItems = articles.Count()
             };
 
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
+
             articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new ArticleListViewModel() {
@@ -825,6 +828,9 @@ namespace RMSmax.Controllers
                 TotalItems = employees.Count()
             };
 
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
+
             employees = employees.OrderBy(x => x.LastName).ThenBy(x => x.Name).Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new EmployeesListViewModel()
@@ -862,10 +868,13 @@ namespace RMSmax.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!employee.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                if (employee.Timetable != null)
                 {
-                    EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
-                    return RedirectToAction("EventLog");
+                    if (!employee.Timetable.StartsWith("https://plan.polsl.pl/plan.php"))
+                    {
+                        EventLogs.LogError(GetCurrentUserAsync().Result, "Nie udało się dodać planu zajęć.", "Nieprawidłowe źródło planu zajęć.");
+                        return RedirectToAction("EventLog");
+                    }
                 }
                 string path = Path.Combine(Environment.WebRootPath, "pictures", "picsEmployee");
                 string dir = Path.Combine(path, employee.Id.ToString());
@@ -1263,6 +1272,10 @@ namespace RMSmax.Controllers
                 ItemsPerPage = PageSize,
                 TotalItems = logs.Count()
             };
+
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
+
             logs = logs.Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = logs, PagingInfo = pagingInfo });
