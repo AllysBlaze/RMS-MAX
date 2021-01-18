@@ -2,7 +2,7 @@
 
 <style>
     .carousel-item {
-        height: 32rem;
+        height:32rem;
         background-color: rgb(8, 8, 8);
         position: relative;
         background-position: center;
@@ -129,69 +129,73 @@
                 
                 @foreach (var v in Model.Articles)
                 {
-                    string picfile = "pictures/picsArticle/" + v.Id + "/" + v.PhotoCover;
-                    string picfile2 = "pictures/picsArticle/" + v.PhotoCover;
-
+                    
                      <div class="col-lg-4">
-                        <div class="card">
-                            <div class="overlay-image" id="over-img" style="background-image: url('@picfile') "></div>
-                            <div class="card-body">
-                                @if (v.Title.Length > 27)
-                                {
-                                    string newTitle = v.Title.Substring(0, 27);
-                                    string fullTitle = string.Concat(newTitle, "...");
-                                    <h4>@fullTitle</h4>
+                         <div class="card">
+                             @if (string.IsNullOrEmpty(v.PhotoCover) == false)
+                             {
 
-                                }
-                                else
-                                {
+                                string picfile2 = "pictures/picsArticle/" + v.PhotoCover;
+                                string picfile = "pictures/picsArticle/" + v.Id + "/" + v.PhotoCover;
+                                 <div class="overlay-image" id="over-img" style="background-image: url('@picfile') "></div>
+                             }
+                             <div class="card-body">
+                                 @if (v.Title.Length > 27)
+                                 {
+                                     string newTitle = v.Title.Substring(0, 27);
+                                     string fullTitle = string.Concat(newTitle, "...");
+                                     <h4>@fullTitle</h4>
 
-                                    <h4>@v.Title</h4>
-                                }
-                                @{
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<strong.*?>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<u.*?>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<span.*?>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<i.*?>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</strong>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</u>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</span>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</i>", "");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<table.*?table>", " ");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "&nbsp;", "  ");
-                                    v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<.*?>", " ");
-                                }
+                                 }
+                                 else
+                                 {
 
-                                @if (v.Title.Length > 12)
-                                {
+                                     <h4>@v.Title</h4>
+                                 }
+                                 @{
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<strong.*?>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<u.*?>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<span.*?>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<i.*?>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</strong>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</u>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</span>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "</i>", "");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<table.*?table>", " ");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "&nbsp;", "  ");
+                                     v.Content = System.Text.RegularExpressions.Regex.Replace(v.Content, "<.*?>", " ");
+                                 }
 
-                                    @if (v.Content.Length > 100)
-                                    {
-                                        string newContent = v.Content.Substring(0, 100);
-                                        string fullContent = string.Concat(newContent, "...");
-                                        <p>@fullContent</p>
-                                    }
-                                    else
-                                    {
-                                        <p>@v.Content</p>
-                                    }
-                                }
-                                else
-                                {
-                                    @if (v.Content.Length > 250)
-                                    {
-                                        string newContent = v.Content.Substring(0, 250);
-                                        string fullContent = string.Concat(newContent, "...");
-                                        <p>@fullContent</p>
-                                    }
-                                    else
-                                    {
-                                        <p>@v.Content</p>
-                                    }
-                                }
-                                <a class="btn btn-outline-dark mx-auto my-1" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id" style="width:180px">Zobacz więcej</a>
-                            </div>
-                        </div>
+                                 @if (v.Title.Length > 12)
+                                 {
+
+                                     @if (v.Content.Length > 100)
+                                     {
+                                         string newContent = v.Content.Substring(0, 100);
+                                         string fullContent = string.Concat(newContent, "...");
+                                         <p>@fullContent</p>
+                                     }
+                                     else
+                                     {
+                                         <p>@v.Content</p>
+                                     }
+                                 }
+                                 else
+                                 {
+                                     @if (v.Content.Length > 250)
+                                     {
+                                         string newContent = v.Content.Substring(0, 250);
+                                         string fullContent = string.Concat(newContent, "...");
+                                         <p>@fullContent</p>
+                                     }
+                                     else
+                                     {
+                                         <p>@v.Content</p>
+                                     }
+                                 }
+                                 <a class="btn btn-outline-dark mx-auto my-1" asp-controller="Home" asp-action="Article" asp-route-articleID="@v.Id" style="width:180px">Zobacz więcej</a>
+                             </div>
+                         </div>
                     </div>
                 }
         </div>
