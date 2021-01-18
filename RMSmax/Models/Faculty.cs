@@ -23,6 +23,11 @@ namespace RMSmax.Models
         public string Logo { get; set; }
         
         public Faculty() { }
+        public Faculty(string webRoot, string configfile) 
+        {
+            configFile = configfile;
+            configFile = Path.Combine(webRoot, "config", configFile);
+        }
         public Faculty(string webRoot)
         {
             configFile = Path.Combine(webRoot, "config", configFile);
@@ -47,7 +52,7 @@ namespace RMSmax.Models
 
         public void Serialize()
         {
-            string data = JsonSerializer.Serialize(FacultyInstance);
+            string data = JsonSerializer.Serialize(this);
             File.WriteAllText(configFile, data);
         }
         private void Deserialize(string path)

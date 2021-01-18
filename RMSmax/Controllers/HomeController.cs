@@ -103,14 +103,7 @@ namespace RMSmax.Controllers
         public IActionResult EmployeeList(int page = 1, string name = "", string surname="")
         {
             IEnumerable<Employee> employees = employeesRepo.Employees.OrderBy(x => x.LastName);
-            if (!string.IsNullOrEmpty(name))
-            {
-                employees = employees.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
-            }
-            if (!string.IsNullOrEmpty(surname))
-            {
-                employees = employees.Where(x => x.LastName.ToUpper().Contains(surname.ToUpper()));
-            }
+            employees = FilterEmployees(employees, name, surname);
 
             var pagingInfo = new PagingInfo
             {
@@ -141,6 +134,20 @@ namespace RMSmax.Controllers
             {
                 Faculty = facultyInfo
             });
+        }
+
+        private IEnumerable<Employee> FilterEmployees(IEnumerable<Employee> data, string name, string surname)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                data = data.Where(x => x.Name.ToUpper().Contains(name.ToUpper()));
+            }
+            if (!string.IsNullOrEmpty(surname))
+            {
+                data = data.Where(x => x.LastName.ToUpper().Contains(surname.ToUpper()));
+            }
+
+            return data;
         }
     }
 }
