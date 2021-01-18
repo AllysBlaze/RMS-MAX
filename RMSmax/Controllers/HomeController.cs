@@ -31,11 +31,16 @@ namespace RMSmax.Controllers
         [HttpGet]
         public IActionResult Index(int page = 1)
         {
+            PagingInfo pgi = new PagingInfo { CurrentPage = page, ItemsPerPage = ArticlesPageSize, TotalItems = articlesRepo.Articles.Count() };
+
+            if (page > pgi.TotalPages)
+                return NotFound();
+
             return View(new ArticlesListViewModel(Environment)
             {
                 Faculty = facultyInfo,
                 Articles = articlesRepo.Articles.OrderByDescending(a => a.DateTime).Skip((page - 1) * ArticlesPageSize).Take(ArticlesPageSize),
-                PagingInfo = new PagingInfo { CurrentPage = page, ItemsPerPage = ArticlesPageSize, TotalItems = articlesRepo.Articles.Count() }
+                PagingInfo = pgi
             });
         }
 
@@ -113,6 +118,9 @@ namespace RMSmax.Controllers
                 ItemsPerPage = EmployeesPageSize,
                 TotalItems = employees.Count()
             };
+
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
 
             employees = employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);
 

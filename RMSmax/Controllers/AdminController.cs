@@ -633,6 +633,9 @@ namespace RMSmax.Controllers
                 TotalItems = articles.Count()
             };
 
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
+
             articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new ArticleListViewModel() {
@@ -824,6 +827,9 @@ namespace RMSmax.Controllers
                 ItemsPerPage = PageSize,
                 TotalItems = employees.Count()
             };
+
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
 
             employees = employees.OrderBy(x => x.LastName).ThenBy(x => x.Name).Skip((page - 1) * PageSize).Take(PageSize);
 
@@ -1266,6 +1272,10 @@ namespace RMSmax.Controllers
                 ItemsPerPage = PageSize,
                 TotalItems = logs.Count()
             };
+
+            if (page > pagingInfo.TotalPages)
+                return NotFound();
+
             logs = logs.Skip((page - 1) * PageSize).Take(PageSize);
 
             return View(new EventLogViewModel() { Faculty = facultyInfo, Logs = logs, PagingInfo = pagingInfo });
