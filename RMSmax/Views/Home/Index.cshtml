@@ -134,8 +134,6 @@
                          <div class="card">
                              @if (string.IsNullOrEmpty(v.PhotoCover) == false)
                              {
-
-                                string picfile2 = "pictures/picsArticle/" + v.PhotoCover;
                                 string picfile = "pictures/picsArticle/" + v.Id + "/" + v.PhotoCover;
                                  <div class="overlay-image" id="over-img" style="background-image: url('@picfile') "></div>
                              }

@@ -18,14 +18,14 @@
         <div class="row padding showText">
             @if (string.IsNullOrEmpty(Model.Article.PhotoIn) == true)
             {
-                <h4 style="width: 100%;">@Model.Article.Title</h4>
+                <h4 style="width: 100%; word-break:break-word;">@Model.Article.Title</h4>
                 @Html.Raw(Model.Article.Content)
                    
             }
             else
             {
                 <div class="col-lg-6">
-                    <h4 style="width: 100%;">@Model.Article.Title</h4>
+                    <h4 style="width: 100%; word-break: break-word">@Model.Article.Title</h4>
                     @Html.Raw(Model.Article.Content)
                 </div>
                 <div class="col-lg-6">
