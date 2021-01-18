@@ -29,50 +29,74 @@ namespace RMSmax.Infrastructure
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
-            //if (PageModel.TotalPages > 5) //Zmniejszenie liczby wyswietlanych numerow stron
-            //{
-            //    TagBuilder tag = new TagBuilder("a");
-            //    if (PageModel.CurrentPage > 2)
-            //    {
-            //        tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = 1 });
-            //        tag.InnerHtml.Append(1.ToString());
-            //        result.InnerHtml.AppendHtml(tag);
-            //    }
-            //    for (int i = PageModel.CurrentPage - 1; i <= PageModel.CurrentPage + 1; i++)
-            //    {
-            //        if (i > 0 && i <= PageModel.TotalPages)
-            //        {
-            //            tag = new TagBuilder("a");
-            //            tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = i });
-            //            tag.InnerHtml.Append(i.ToString());
-            //            result.InnerHtml.AppendHtml(tag);
-            //        }
-            //    }
-            //    if (PageModel.CurrentPage < PageModel.TotalPages - 1)
-            //    {
-            //        tag = new TagBuilder("a");
-            //        tag.Attributes["href"] = urlHelper.Action(PageAction, new { page = PageModel.TotalPages });
-            //        tag.InnerHtml.Append(PageModel.TotalPages.ToString());
-            //        result.InnerHtml.AppendHtml(tag);
-            //    }
-            //}
-            //else //Wszystkie numery stron
-            //{
-            if(PageModel.TotalPages > 1)
-                for (int i = 1; i <= PageModel.TotalPages; i++)
+
+            if (PageModel.TotalPages > 1)
+            {
+                if (PageModel.TotalPages > 5)
                 {
-                    TagBuilder tag = new TagBuilder("a");
-                    PageArgumentsValues["page"] = i;
-                    tag.Attributes["href"] = urlHelper.Action(PageAction, PageArgumentsValues);
-                    tag.AddCssClass("btn");
-                    tag.AddCssClass(i == PageModel.CurrentPage ? "btn-primary" : "btn-secondary");
-                    tag.InnerHtml.Append(i.ToString());
-                    result.InnerHtml.AppendHtml(tag);
+                    if (PageModel.CurrentPage >= 1 && PageModel.CurrentPage <= 3)
+                    {
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
+                        }
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
+                        result.InnerHtml.AppendHtml(CreatePageBtnTag(PageModel.TotalPages));
+                    }
+                    else if (PageModel.CurrentPage >= PageModel.TotalPages - 2 && PageModel.CurrentPage <= PageModel.TotalPages)
+                    {
+                        result.InnerHtml.AppendHtml(CreatePageBtnTag(1));
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
+                        for (int i = PageModel.TotalPages - 3; i <= PageModel.TotalPages; i++)
+                        {
+                            result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
+                        }
+                    }
+                    else
+                    {
+                        result.InnerHtml.AppendHtml(CreatePageBtnTag(1));
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
+                        for (int i = PageModel.CurrentPage - 1; i <= PageModel.CurrentPage + 1; i++)
+                        {
+                            result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
+                        }
+                        result.InnerHtml.AppendHtml(CreateDotsBtnTag());
+                        result.InnerHtml.AppendHtml(CreatePageBtnTag(PageModel.TotalPages));
+                    }
                 }
-            //}
-            output.Content.AppendHtml(result.InnerHtml);
+                else
+                {
+                    for (int i = 1; i <= PageModel.TotalPages; i++)
+                    {
+                        result.InnerHtml.AppendHtml(CreatePageBtnTag(i));
+                    }
+                }
+                output.Content.AppendHtml(result.InnerHtml);
+            }
+        }
+
+        private TagBuilder CreatePageBtnTag(int i)
+        {
+            IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+            TagBuilder tag = new TagBuilder("a");
+            PageArgumentsValues["page"] = i;
+            tag.Attributes["href"] = urlHelper.Action(PageAction, PageArgumentsValues);
+            tag.AddCssClass("btn");
+            tag.AddCssClass(i == PageModel.CurrentPage ? "btn-primary" : "btn-secondary");
+            tag.InnerHtml.Append(i.ToString());
+
+            return tag;
+        }
+        private TagBuilder CreateDotsBtnTag()
+        {
+            TagBuilder tag = new TagBuilder("a");
+            tag.AddCssClass("btn");
+            tag.AddCssClass("dots");
+            tag.AddCssClass("disabled");
+            tag.InnerHtml.Append(". . .");
+
+            return tag;
         }
     }
 }
