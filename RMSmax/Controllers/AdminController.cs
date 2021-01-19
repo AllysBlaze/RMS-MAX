@@ -184,7 +184,7 @@ namespace RMSmax.Controllers
                 });
             }
             else
-                return NotFound();
+                return RedirectToAction("Index");
         }
 
         [HttpPost]
