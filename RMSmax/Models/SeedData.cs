@@ -209,7 +209,7 @@ namespace RMSmax.Models
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403",
 
                     }, new Employee
                     {
@@ -233,7 +233,7 @@ namespace RMSmax.Models
                         Department = "Katedra Informatyki",
                         Function = "Prodziekan",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685",
 
                     }, new Employee
                     {
@@ -245,7 +245,7 @@ namespace RMSmax.Models
                         Department = "Katedra Informatyki",
                         Position = "Asystent",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685",
 
                     }, new Employee
                     {
@@ -256,7 +256,7 @@ namespace RMSmax.Models
                         Photo = "woman2.jpg",
                         Department = "Katedra Informatyki",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403",
 
                     }, new Employee
                     {
@@ -277,7 +277,7 @@ namespace RMSmax.Models
                         Mail = "Alisa.Sikorska@uczelnia.pl",
                         Department = "Katedra Informatyki",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685",
 
                     }, new Employee
                     {
@@ -298,7 +298,7 @@ namespace RMSmax.Models
                         Photo = "man2.jpg",
                         Department = "Katedra Informatyki",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=189403",
 
                     },
                     new Employee
@@ -309,7 +309,7 @@ namespace RMSmax.Models
                         Mail = "Bogumil.Kalinowski@uczelnia.pl",
                         Department = "Katedra Matematyki",
                         Room = "MS 505",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685",
 
                     }, new Employee
                     {
@@ -329,7 +329,7 @@ namespace RMSmax.Models
                         Mail = "Matylda.Czerwinska@uczelnia.pl",
                         Photo = "woman2.jpg",
                         Department = "Katedra Matematyki",
-                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685&winW=740&winH=674&loadBG=000000",
+                        Timetable = "https://plan.polsl.pl/plan.php?type=10&id=4685",
 
                     }
                     );

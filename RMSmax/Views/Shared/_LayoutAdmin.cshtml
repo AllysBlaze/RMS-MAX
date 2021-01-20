@@ -7,7 +7,7 @@
           asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <link rel="shortcut icon" href="~/pictures/logo/logowyd.jpg">
     <script src="~/lib/wysiwyg/build/ckeditor.js"></script>
-    <title>RMS Max!</title>
+    <title>@Model.Faculty.Name</title>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
             integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
     </script>
@@ -178,7 +178,7 @@
     </div>
 
     <div class="row mt-auto col-12 bg-dark my-auto justify-content-between align-content-center mx-0 text-wrap p-1" style="height:50px; width:100%;">
-        <p class="text-white bg-dark text-wrap pt-2" id="Creators" style="font-size: 13px; max-width:250px;">Strona stworzona przez IOTeam</p>
+        <p class="text-white bg-dark text-wrap pt-2" id="Creators" style="font-size: 13px; max-width:250px;">RMS Max!</p>
         <a class="nav-link pl-0 text-decoration-none text-reset" asp-controller="Account" asp-action="Logout"><span style="font-size:15px; color: white;">Wyloguj</span></a>
         <button class="btn btn-primary btn-xs" id="upBtn" data-toggle="tooltip" data-placement="top" title="Do góry" style="max-height:40px; max-width:40px; margin-top:3px; margin-bottom:3px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
