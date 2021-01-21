@@ -112,7 +112,7 @@ namespace RMSmax.Controllers
                 TotalItems = employees.Count()
             };
 
-            if (page > pagingInfo.TotalPages)
+            if (page > pagingInfo.TotalPages && pagingInfo.TotalPages != 0)
                 return NotFound();
 
             employees = employees.OrderBy(x => x.LastName).Skip((page - 1) * EmployeesPageSize).Take(EmployeesPageSize);

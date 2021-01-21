@@ -633,7 +633,7 @@ namespace RMSmax.Controllers
                 TotalItems = articles.Count()
             };
 
-            if (page > pagingInfo.TotalPages)
+            if (page > pagingInfo.TotalPages && pagingInfo.TotalPages != 0)
                 return NotFound();
 
             articles = articles.OrderByDescending(x => x.DateTime).Skip((page - 1) * PageSize).Take(PageSize);
@@ -828,7 +828,7 @@ namespace RMSmax.Controllers
                 TotalItems = employees.Count()
             };
 
-            if (page > pagingInfo.TotalPages)
+            if (page > pagingInfo.TotalPages && pagingInfo.TotalPages != 0)
                 return NotFound();
 
             employees = employees.OrderBy(x => x.LastName).ThenBy(x => x.Name).Skip((page - 1) * PageSize).Take(PageSize);
